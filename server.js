@@ -293,8 +293,12 @@ var curr_year = d.getFullYear();
 // https://cuy.sogefi.cm:8443/generateAllShapeFromOsmBuilder/smartworld4
 
 var generateAllShapeFromOsmBuilder = function (projet_qgis) {
-	const pool = new Pool(pte_projet(projet_qgis).bd_access)
 	
+	var bd_access = pte_projet(projet_qgis).bd_access
+	var destination = pte_projet(projet_qgis).destination
+	var path_projet_qgis_projet = destination+'/../'+projet_qgis+'.qgs'
+	const pool = new Pool(bd_access)
+
 		pool.query('SELECT * from public.categorie where sql is not null', (err, response) => {
 			pool.end()
 			
@@ -309,8 +313,8 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 					var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g,'_')+'_'+query[i].sous_thematiques+'_'+query[i].key_couche+'_'+query[i].id_cat
 	
 					
-						if (query.sql.split(';').length==1) {
-							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+database+' password='+bd_access.password)
+						if (query[i].sql.split(';').length==1) {
+							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+bd_access.database+' password='+bd_access.password)
 							.format(type)
 							.options(["--config","-select","osm_id,hstore_to_json", "CPL_DEBUG", "ON","-sql",query[i].sql])
 							.project('EPSG:4326')
@@ -324,8 +328,8 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 							shapefile.exec(function (er, data) {
 								whrite_gpkg(i)
 							})
-						}else if (query.sql.split(';').length==2){
-							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+database+' password='+bd_access.password)
+						}else if (query[i].sql.split(';').length==2){
+							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+bd_access.database+' password='+bd_access.password)
 							.format(type)
 							.options(["--config","-select","osm_id,hstore_to_json", "CPL_DEBUG", "ON","-sql",query[i].sql.split(';')[0]])
 							.project('EPSG:4326')
@@ -338,7 +342,7 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 			
 							shapefile.exec(function (er, data) {
 								//console.log(query.sql.split(';')[0])
-								var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+database+' password='+bd_access.password)
+								var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+bd_access.database+' password='+bd_access.password)
 								.format(type)
 								.options(["-append","--config","-select","osm_id,hstore_to_json", "CPL_DEBUG", "ON","-sql",query[i].sql.split(';')[1]])
 								.project('EPSG:4326')
@@ -378,13 +382,13 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 							pythonPath: 'python3',
 							//pythonOptions: ['-u'], // get print results in real-time
 							//scriptPath: 'path/to/my/scripts',
-							args: [projet_qgis]
+							args: [path_projet_qgis_projet]
 						};
 						//python '/var/www/smartworld/reload_qgis_project.py' "/var/www/smartworld/smartworld4.qgs"
 						PythonShell.run(path_script_python+'/reload_qgis_project.py', options, function (err, results) {
 							
 							if (err) throw err;
-							console.log(results,'initialisation terminé')
+							console.log(results,'mise à jour terminé avec succès')
 							process.exit()
 							
 						});
@@ -403,7 +407,10 @@ app.get('/generateAllShapeFromOsmBuilder/:projet_qgis',cors(corsOptions),functio
 })
 
 var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
-	const pool = new Pool(pte_projet(projet_qgis).bd_access)
+	var bd_access = pte_projet(projet_qgis).bd_access
+	var destination = pte_projet(projet_qgis).destination
+	var path_projet_qgis_projet = destination+'/../'+projet_qgis+'.qgs'
+	const pool = new Pool(bd_access)
 	
 		pool.query('SELECT * from public.categorie where sql is not null', (err, response) => {
 			pool.end()
@@ -419,8 +426,8 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 					var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g,'_')+'_'+query[i].sous_thematiques+'_'+query[i].key_couche+'_'+query[i].id_cat
 	
 					
-						if (query.sql.split(';').length==1) {
-							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+database+' password='+bd_access.password)
+						if (query[i].sql.split(';').length==1) {
+							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+bd_access.database+' password='+bd_access.password)
 							.format(type)
 							.options(["--config","-select","osm_id,hstore_to_json", "CPL_DEBUG", "ON","-sql",query[i].sql])
 							.project('EPSG:4326')
@@ -434,8 +441,8 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 							shapefile.exec(function (er, data) {
 								whrite_gpkg(i,destination,nom_shp,name_layer,query[i].nom_cat.replace(/[^a-zA-Z0-9]/g,'_'),query[i].key_couche)
 							})
-						}else if (query.sql.split(';').length==2){
-							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+database+' password='+bd_access.password)
+						}else if (query[i].sql.split(';').length==2){
+							var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+bd_access.database+' password='+bd_access.password)
 							.format(type)
 							.options(["--config","-select","osm_id,hstore_to_json", "CPL_DEBUG", "ON","-sql",query[i].sql.split(';')[0]])
 							.project('EPSG:4326')
@@ -448,7 +455,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 			
 							shapefile.exec(function (er, data) {
 								//console.log(query.sql.split(';')[0])
-								var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+database+' password='+bd_access.password)
+								var shapefile = ogr2ogr('PG:host='+bd_access.host+' port=5432 user='+bd_access.user+' dbname='+bd_access.database+' password='+bd_access.password)
 								.format(type)
 								.options(["-append","--config","-select","osm_id,hstore_to_json", "CPL_DEBUG", "ON","-sql",query[i].sql.split(';')[1]])
 								.project('EPSG:4326')
@@ -477,7 +484,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 							pythonPath: 'python3',
 							//pythonOptions: ['-u'], // get print results in real-time 
 							//scriptPath: 'path/to/my/scripts',
-							args: [projet_qgis,destination +nom_shp+'.gpkg',name_layer ]
+							args: [path_projet_qgis_projet,destination +nom_shp+'.gpkg',name_layer ]
 						};
 	
 						PythonShell.run('/var/www/smartworld/add_vector_layer.py', options, function (err, results) {
@@ -520,7 +527,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 							pythonPath: 'python3',
 							//pythonOptions: ['-u'], // get print results in real-time
 							//scriptPath: 'path/to/my/scripts',
-							args: [projet_qgis]
+							args: [path_projet_qgis_projet]
 						};
 						//python '/var/www/smartworld/reload_qgis_project.py' "/var/www/smartworld/smartworld4.qgs"
 						PythonShell.run(path_script_python+'/reload_qgis_project.py', options, function (err, results) {
@@ -528,7 +535,8 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 							if (err) throw err;
 							
 							console.log(results,'yess')
-							
+							console.log(results,'initialisation terminé')
+							process.exit()
 							
 						});
 					}else{
@@ -1372,11 +1380,12 @@ app.get('/production_style_by_default/:projet_qgis/',cors(corsOptions),function 
 	
 })
 
-module.exports.test = function (a) {
-	console.log('hi', a);
-};
 
-module.exports.initialiser_projet = generateAllShapeFromOsmBuilder(projet)
+
+module.exports.initialiser_projet = function (projet) {
+	console.log('projet :', a);
+	generateAllShapeFromOsmBuilderCreate(projet)
+} 
 
 var httpServer = http.createServer(app);
 // var httpsServer = https.createServer(credentials, app);

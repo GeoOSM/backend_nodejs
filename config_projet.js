@@ -4,9 +4,9 @@ let list_projet = JSON.parse(fs.readFileSync('projet.json'))['projet'];
 
 const bd_access = {
 	user: 'postgres',
-	host: '217.70.189.38',
+	host: 'localhost',
 	database: '',
-	password: 'postgres237',
+	password: 'postgres',
 	port: 5432,
 }
 
