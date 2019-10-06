@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "initialiser_projet":"node -e 'require(\"./server\").test(process.env.npm_config_projet)'",
     "start": "node server.js"
   },
   "author": "Karl TAYOU",

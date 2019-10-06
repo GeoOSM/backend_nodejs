@@ -384,9 +384,8 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 						PythonShell.run(path_script_python+'/reload_qgis_project.py', options, function (err, results) {
 							
 							if (err) throw err;
-							
-							console.log(results,'yess')
-							
+							console.log(results,'initialisation terminé')
+							process.exit()
 							
 						});
 					}else{
@@ -1372,6 +1371,12 @@ app.get('/production_style_by_default/:projet_qgis/',cors(corsOptions),function 
 	})
 	
 })
+
+module.exports.test = function (a) {
+	console.log('hi', a);
+};
+
+module.exports.initialiser_projet = generateAllShapeFromOsmBuilder(projet)
 
 var httpServer = http.createServer(app);
 // var httpsServer = https.createServer(credentials, app);

@@ -1,6 +1,6 @@
 #!/bin/bash
 db="mali"
-roi="../mali.shp"
+roi="/var/www/GeoOSM_Backend/mali.shp"
 path_pbf="http://download.geofabrik.de/africa/mali-latest.osm.pbf"
 geosm_dir='/var/www/geosm/'
 urlNodejs_backend='http://service.geocameroun.cm/'

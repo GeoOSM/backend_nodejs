@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-let list_projet = JSON.parse(fs.readFileSync('projet.json'));
+let list_projet = JSON.parse(fs.readFileSync('projet.json'))['projet'];
 
 const bd_access = {
 	user: 'postgres',
