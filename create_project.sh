@@ -4,12 +4,7 @@ roi="../mali.shp"
 path_pbf="http://download.geofabrik.de/africa/mali-latest.osm.pbf"
 geosm_dir='/var/www/geosm/'
 urlNodejs_backend='http://service.geocameroun.cm/'
-path_backend="/var/www/geocameroun_admin/",
-
-jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend'importation' --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend'public/assets/config.js'
-sed  -i '1i var config_projet =' $path_backend'public/assets/config.js'
-
-exit
+path_backend="/var/www/GeoOSM_Backend/projet_laravel/"
 
 list_projet='./projet.json'
 psql -c "CREATE DATABASE $db"
@@ -37,8 +32,14 @@ rm -r style_default
 jq --arg db $db --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db}'  ${list_projet} |sponge  ${list_projet}
 echo "Fichier de configuration pour NODE js crée"
 
+jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
+sed  -i '1i var config_projet =' $path_backend"public/assets/config.js"
 
+sed -i 's/database_name/'${db}'/g' $path_backend".env"
+sed -i 's/database_username/postgres/g' $path_backend".env"
+sed -i 's/database_password/postgres/g' $path_backend".env"
 
+echo "Fichier de configuration pour laravel crée"
 
 
 echo "termne !!!!! !!! !"
