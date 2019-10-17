@@ -21,6 +21,7 @@ pathqgisproject = sys.argv[1]
 icon_png = sys.argv[2]
 layername = sys.argv[3]
 folder =sys.argv[4]
+template_cluster_qml =sys.argv[5]
 
 def set_icons(img_svg):
     os.environ["QT_QPA_PLATFORM"] = "offscreen"
@@ -34,6 +35,8 @@ def set_icons(img_svg):
     layer = project.mapLayersByName(layername)
     vlayer = layer[0]
 
+    encoded = base64.b64encode(open(img_svg, "rb").read()).decode()
+    img_svg_encoded = 'base64:{}'.format(encoded)
     # svgStyle = {}
     # svgStyle['name'] = '/var/www/smartworld/occitanie_gpkg/img/aed-2.svg'
     # svgStyle['size'] = '40'
@@ -48,7 +51,7 @@ def set_icons(img_svg):
     # class QgsPointClusterRenderer
     symbol_layer = vlayer.renderer()
     # afficher l'icone simple sans custer
-    symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).setPath(img_svg)
+    symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).setPath(img_svg_encoded)
     # tous les symbols pour le cluster contenu dans la symbologie
     symbols = symbol_layer.clusterSymbol().symbolLayers()
 
@@ -56,7 +59,7 @@ def set_icons(img_svg):
     for symbol in symbols:
         if  type(symbol) is QgsSvgMarkerSymbolLayer:
             # print(symbol.path(),'yess')
-            symbol.setPath(img_svg)
+            symbol.setPath(img_svg_encoded)
         if  type(symbol) is QgsSimpleMarkerSymbolLayer:
             print(symbol.properties(),'yess')
             symbol.setColor(QColor.fromRgb(33,150,243))
@@ -78,7 +81,7 @@ def set_style():
     layer = project.mapLayersByName(layername)
     #print layer
     for lay in layer:
-        lay.loadNamedStyle('/var/www/smartworld//template_point.qml')
+        lay.loadNamedStyle(template_cluster_qml)
     succes1 = project.write()
     if succes1 :print ('ok')
 
@@ -108,4 +111,5 @@ f.write(doc.toprettyxml())
 f.close()  
 set_style()
 set_icons(folder+"/"+layername+".svg")
+# set_icons('base64:{}'.format(encoded))
 print('finish')

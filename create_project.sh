@@ -29,7 +29,7 @@ fetcher --url="https://github.com/GeoOSM/backend_nodejs/tree/master/python_scrip
 cp ./style_default/*.qml $geosm_dir$db/style/
 rm -r style_default
 
-jq --arg db $db --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db}'  ${list_projet} |sponge  ${list_projet}
+jq --arg db $db --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
 echo "Fichier de configuration pour NODE js crée"
 
 jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
@@ -64,9 +64,10 @@ exit
 #  apt-get install moreutils
 #npm install -g github-files-fetcher
 #npm run initialiser_projet --projet=mali
+#npm run apply_style_projet --projet=mali
 # 2a01:e0d:1:c:58bf
 # @2a01:e0d:1:c:58bf:fac1:8000:167
 
 # http://[2a01:e0d:1:c:58bf:fac1:8000:167]
 
-# [2607:f0d0:1002:11::4:80]
+# [2607:f0d0:1002:11::4:80] 

@@ -15,6 +15,7 @@ let get_projet_pt = function(projet){
 		var destination =list_projet[projet].destination
 		var destination_style =list_projet[projet].destination_style
 		var database =list_projet[projet].database
+		var path_backend = list_projet[projet].path_backend
 	}
     
     bd_access.database = database
@@ -23,6 +24,7 @@ let get_projet_pt = function(projet){
         bd_access:bd_access,
         destination:destination,
         destination_style:destination_style,
+        path_backend:path_backend,
     }
 }
 

@@ -2,6 +2,7 @@
     "mali": {
         "destination": "/var/www/geosm/mali/gpkg/",
         "destination_style": "/var/www/geosm/mali/style/",
-        "database": "mali"
+        "database": "mali",
+        "path_backend":"/var/www/GeoOSM_Backend/projet_laravel/"
     }
 }
