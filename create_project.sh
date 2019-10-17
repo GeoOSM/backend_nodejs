@@ -63,6 +63,7 @@ exit
 #apt-get install jq
 #  apt-get install moreutils
 #npm install -g github-files-fetcher
+#npm run initialiser_projet --projet=mali
 # 2a01:e0d:1:c:58bf
 # @2a01:e0d:1:c:58bf:fac1:8000:167
 
