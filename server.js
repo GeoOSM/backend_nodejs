@@ -1378,29 +1378,51 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 	var i = 0
 	function set_qml(props) {
 		var style_file = destination_style + props["id_couche"] + '.qml'
-		let options = {
-			mode: 'text',
-			pythonPath: 'python3',
-			pythonOptions: ['-u'], // get print results in real-time
-			args: [props['projet_qgis'], style_file,props["layername"]]
-		};
 
-		PythonShell.run(path_script_python + '/set_style_on_layer.py', options, function (err, results) {
-
+		fs.access(path, fs.F_OK, (err) => {
 			if (err) {
-				console.error(err)
-			}
+			//   update_style_couche_qgis(projet_qgis,props["layername"])
 
-			i = i + 1
-			console.log(i, ' / ', pte.length, props["layername"])
+			  i = i + 1
+			  console.log(i, ' / ', pte.length, props["layername"],'Style par defaut non trouvé')
+  
+			  if (pte.length != i) {
+				  set_qml(pte[i])
+			  } else {
+				  console.log('termine')
+				  process.exit()
+			  }
 
-			if (pte.length != i) {
-				set_qml(pte[i])
-			} else {
-				console.log('termine')
-				process.exit()
+			  return
 			}
+		  
+			//file exists
+			let options = {
+				mode: 'text',
+				pythonPath: 'python3',
+				pythonOptions: ['-u'], // get print results in real-time
+				args: [props['projet_qgis'], style_file,props["layername"]]
+			};
+	
+			PythonShell.run(path_script_python + '/set_style_on_layer.py', options, function (err, results) {
+	
+				if (err) {
+					console.error(err)
+				}
+	
+				i = i + 1
+				console.log(i, ' / ', pte.length, props["layername"])
+	
+				if (pte.length != i) {
+					set_qml(pte[i])
+				} else {
+					console.log('termine')
+					process.exit()
+				}
+			})
 		})
+
+		
 	}
 
 	pool.query("SELECT identifiant,id_couche from public." + '"couche-sous-thematique"' + "where wms_type='osm' UNION SELECT identifiant,id_couche from public." + '"couche-thematique"' + "where wms_type='osm'", function (err, response) {
