@@ -1373,7 +1373,6 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 	const pool = new Pool(pte_projet(projet_qgis).bd_access)
 	var destination = pte_projet(["projet_qgis"]).destination
 	var destination_style = pte_projet(["projet_qgis"]).destination_style
-	const pool = new Pool(pte_projet(["projet_qgis"]).bd_access)
 
 	function set_qml(props) {
 		var style_file = destination_style + props["id_couche"] + '.qml'

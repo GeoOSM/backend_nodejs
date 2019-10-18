@@ -29,7 +29,7 @@ fetcher --url="https://github.com/GeoOSM/backend_nodejs/tree/master/python_scrip
 cp ./style_default/*.qml $geosm_dir$db/style/
 rm -r style_default
 
-jq --arg db $db --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
+jq --arg path_backend $path_backend --arg db $db --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
 echo "Fichier de configuration pour NODE js crée"
 
 jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
@@ -51,18 +51,32 @@ exit
 # composer install
 # sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 # sudo apt-get install gdal-bin
-
-#vim /etc/apt/sources.list
-# deb     https://qgis.org/debian buster main
-# deb-src https://qgis.org/debian buster main
-# wget -O - https://qgis.org/downloads/qgis-2019.gpg.key | gpg --import
-# gpg --fingerprint 51F523511C7028C3
-# gpg --export --armor 51F523511C7028C3 | sudo apt-key add -
-# apt install qgis-server
 #mkdir -m 777 -p /var/www/geosm/
 #apt-get install jq
 #  apt-get install moreutils
 #npm install -g github-files-fetcher
+
+####### pour debian 10 #######
+#vim /etc/apt/sources.list
+# deb     https://qgis.org/debian buster main
+# deb-src https://qgis.org/debian buster main
+
+####### pour ubuntu 18 #######
+#vim /etc/apt/sources.list
+# deb     https://qgis.org/ubuntu bionic main
+# deb-src https://qgis.org/ubuntu bionic main
+
+# wget -O - https://qgis.org/downloads/qgis-2019.gpg.key | gpg --import
+# gpg --fingerprint 51F523511C7028C3
+# gpg --export --armor 51F523511C7028C3 | sudo apt-key add -
+# sudo apt-get update
+# apt install qgis-server
+
+# Donner le mot de passe postgres à l'utilisateur postgres dans la bd
+#su postgres
+#psql
+#ALTER USER postgres WITH PASSWORD 'postgres';
+
 #npm run initialiser_projet --projet=mali
 #npm run apply_style_projet --projet=mali
 # 2a01:e0d:1:c:58bf
