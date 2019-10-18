@@ -1,25 +1,25 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis readOnly="0" labelsEnabled="0" simplifyLocal="1" hasScaleBasedVisibilityFlag="0" version="3.4.7-Madeira" simplifyDrawingHints="1" styleCategories="AllStyleCategories" minScale="1e+08" simplifyAlgorithm="0" maxScale="0" simplifyDrawingTol="1" simplifyMaxScale="1">
+<qgis simplifyAlgorithm="0" simplifyMaxScale="1" simplifyLocal="1" version="3.4.7-Madeira" simplifyDrawingTol="1" readOnly="0" styleCategories="AllStyleCategories" hasScaleBasedVisibilityFlag="0" maxScale="0" labelsEnabled="0" minScale="1e+08" simplifyDrawingHints="1">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 enableorderby="0" type="singleSymbol" forceraster="0" symbollevels="0">
+  <renderer-v2 enableorderby="0" symbollevels="0" type="singleSymbol" forceraster="0">
     <symbols>
-      <symbol alpha="1" name="0" type="fill" force_rhr="0" clip_to_extent="1">
-        <layer class="SimpleFill" enabled="1" pass="0" locked="0">
-          <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
-          <prop v="137,157,238,255" k="color"/>
-          <prop v="bevel" k="joinstyle"/>
-          <prop v="0,0" k="offset"/>
-          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
-          <prop v="MM" k="offset_unit"/>
-          <prop v="35,35,35,255" k="outline_color"/>
-          <prop v="solid" k="outline_style"/>
-          <prop v="0.26" k="outline_width"/>
-          <prop v="MM" k="outline_width_unit"/>
-          <prop v="solid" k="style"/>
+      <symbol clip_to_extent="1" alpha="1" force_rhr="0" name="0" type="fill">
+        <layer class="SimpleFill" enabled="1" locked="0" pass="0">
+          <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="color" v="137,157,238,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="35,35,35,255"/>
+          <prop k="outline_style" v="solid"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
           <data_defined_properties>
             <Option type="Map">
               <Option value="" name="name" type="QString"/>
@@ -37,7 +37,7 @@
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks type="StringList">
       <Option value="" type="QString"/>
     </activeChecks>
@@ -81,34 +81,34 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="fid" index="0" name=""/>
-    <alias field="osm_id" index="1" name=""/>
-    <alias field="name" index="2" name=""/>
-    <alias field="amenity" index="3" name=""/>
-    <alias field="hstore_to_json" index="4" name=""/>
+    <alias index="0" field="fid" name=""/>
+    <alias index="1" field="osm_id" name=""/>
+    <alias index="2" field="name" name=""/>
+    <alias index="3" field="amenity" name=""/>
+    <alias index="4" field="hstore_to_json" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" field="fid" applyOnUpdate="0"/>
-    <default expression="" field="osm_id" applyOnUpdate="0"/>
-    <default expression="" field="name" applyOnUpdate="0"/>
-    <default expression="" field="amenity" applyOnUpdate="0"/>
-    <default expression="" field="hstore_to_json" applyOnUpdate="0"/>
+    <default field="fid" expression="" applyOnUpdate="0"/>
+    <default field="osm_id" expression="" applyOnUpdate="0"/>
+    <default field="name" expression="" applyOnUpdate="0"/>
+    <default field="amenity" expression="" applyOnUpdate="0"/>
+    <default field="hstore_to_json" expression="" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="1" field="fid" unique_strength="1" constraints="3" exp_strength="0"/>
-    <constraint notnull_strength="0" field="osm_id" unique_strength="0" constraints="0" exp_strength="0"/>
-    <constraint notnull_strength="0" field="name" unique_strength="0" constraints="0" exp_strength="0"/>
-    <constraint notnull_strength="0" field="amenity" unique_strength="0" constraints="0" exp_strength="0"/>
-    <constraint notnull_strength="0" field="hstore_to_json" unique_strength="0" constraints="0" exp_strength="0"/>
+    <constraint field="fid" notnull_strength="1" unique_strength="1" constraints="3" exp_strength="0"/>
+    <constraint field="osm_id" notnull_strength="0" unique_strength="0" constraints="0" exp_strength="0"/>
+    <constraint field="name" notnull_strength="0" unique_strength="0" constraints="0" exp_strength="0"/>
+    <constraint field="amenity" notnull_strength="0" unique_strength="0" constraints="0" exp_strength="0"/>
+    <constraint field="hstore_to_json" notnull_strength="0" unique_strength="0" constraints="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="fid" exp="" desc=""/>
-    <constraint field="osm_id" exp="" desc=""/>
-    <constraint field="name" exp="" desc=""/>
-    <constraint field="amenity" exp="" desc=""/>
-    <constraint field="hstore_to_json" exp="" desc=""/>
+    <constraint field="fid" desc="" exp=""/>
+    <constraint field="osm_id" desc="" exp=""/>
+    <constraint field="name" desc="" exp=""/>
+    <constraint field="amenity" desc="" exp=""/>
+    <constraint field="hstore_to_json" desc="" exp=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions/>

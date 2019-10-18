@@ -1,14 +1,14 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyMaxScale="1" maxScale="0" simplifyDrawingHints="1" minScale="1e+08" hasScaleBasedVisibilityFlag="0" readOnly="0" version="3.4.7-Madeira" simplifyAlgorithm="0" styleCategories="AllStyleCategories" simplifyDrawingTol="1" labelsEnabled="0" simplifyLocal="1">
+<qgis simplifyDrawingHints="1" simplifyMaxScale="1" simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" minScale="1e+08" simplifyLocal="1" readOnly="0" styleCategories="AllStyleCategories" maxScale="0" labelsEnabled="0" version="3.4.7-Madeira">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" forceraster="0" enableorderby="0" type="singleSymbol">
+  <renderer-v2 enableorderby="0" type="singleSymbol" forceraster="0" symbollevels="0">
     <symbols>
-      <symbol alpha="1" clip_to_extent="1" name="0" force_rhr="0" type="line">
-        <layer enabled="1" locked="0" class="SimpleLine" pass="0">
+      <symbol alpha="1" force_rhr="0" type="line" clip_to_extent="1" name="0">
+        <layer pass="0" locked="0" enabled="1" class="SimpleLine">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -27,9 +27,9 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -138,30 +138,30 @@
     <default field="hstore_to_json" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint field="fid" unique_strength="1" notnull_strength="1" exp_strength="0" constraints="3"/>
-    <constraint field="osm_id" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="highway" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="bridge" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="name" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="oneway" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="junction" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="amenity" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
-    <constraint field="hstore_to_json" unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0"/>
+    <constraint field="fid" constraints="3" unique_strength="1" notnull_strength="1" exp_strength="0"/>
+    <constraint field="osm_id" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="highway" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="bridge" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="oneway" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="junction" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="amenity" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint field="hstore_to_json" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="fid" desc="" exp=""/>
-    <constraint field="osm_id" desc="" exp=""/>
-    <constraint field="highway" desc="" exp=""/>
-    <constraint field="bridge" desc="" exp=""/>
-    <constraint field="name" desc="" exp=""/>
-    <constraint field="oneway" desc="" exp=""/>
-    <constraint field="junction" desc="" exp=""/>
-    <constraint field="amenity" desc="" exp=""/>
-    <constraint field="hstore_to_json" desc="" exp=""/>
+    <constraint field="fid" exp="" desc=""/>
+    <constraint field="osm_id" exp="" desc=""/>
+    <constraint field="highway" exp="" desc=""/>
+    <constraint field="bridge" exp="" desc=""/>
+    <constraint field="name" exp="" desc=""/>
+    <constraint field="oneway" exp="" desc=""/>
+    <constraint field="junction" exp="" desc=""/>
+    <constraint field="amenity" exp="" desc=""/>
+    <constraint field="hstore_to_json" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions/>
-  <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
+  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns/>
   </attributetableconfig>
   <conditionalstyles>

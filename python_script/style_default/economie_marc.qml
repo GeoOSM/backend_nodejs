@@ -1,20 +1,20 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyDrawingHints="0" simplifyMaxScale="1" styleCategories="AllStyleCategories" version="3.4.7-Madeira" readOnly="0" maxScale="0" minScale="1e+08" simplifyAlgorithm="0" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" simplifyDrawingTol="1" labelsEnabled="0">
+<qgis styleCategories="AllStyleCategories" simplifyAlgorithm="0" simplifyMaxScale="1" simplifyLocal="1" minScale="1e+08" simplifyDrawingHints="0" version="3.4.7-Madeira" maxScale="0" simplifyDrawingTol="1" labelsEnabled="0" hasScaleBasedVisibilityFlag="0" readOnly="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 tolerance="20" enableorderby="0" forceraster="0" toleranceUnitScale="3x:0,0,0,0,0,0" toleranceUnit="MM" type="pointCluster">
-    <renderer-v2 symbollevels="0" enableorderby="0" forceraster="0" type="singleSymbol">
+  <renderer-v2 toleranceUnit="MM" toleranceUnitScale="3x:0,0,0,0,0,0" enableorderby="0" tolerance="20" type="pointCluster" forceraster="0">
+    <renderer-v2 enableorderby="0" type="singleSymbol" symbollevels="0" forceraster="0">
       <symbols>
-        <symbol alpha="1" clip_to_extent="1" name="0" type="marker" force_rhr="0">
-          <layer enabled="1" class="SvgMarker" pass="0" locked="0">
+        <symbol clip_to_extent="1" name="0" type="marker" alpha="1" force_rhr="0">
+          <layer class="SvgMarker" enabled="1" locked="0" pass="0">
             <prop k="angle" v="0"/>
             <prop k="color" v="231,113,72,255"/>
             <prop k="fixedAspectRatio" v="0"/>
             <prop k="horizontal_anchor_point" v="1"/>
-            <prop k="name" v="/var/www/smartworld/occitanie_gpkg/img/marc.svg"/>
+            <prop k="name" v="base64:PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIGlkPSJteVN2ZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+Cgk8aW1hZ2UgaGVpZ2h0PSIxNjAiIHdpZHRoPSIxNjAiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBS0FBQUFDZ0NBWUFBQUNMejJjdEFBQUFDWEJJV1hNQUFBN0VBQUFPeEFHVkt3NGJBQUFRcWtsRVFWUjRuTzJkVDQvczJGbUhuOWQyOTcyWGlZWlJHREYzRWlHeGlNSTZVbFpzbUQwc0loRHdEYkpod3dKUUVCSlp3Q2RnaGNRbklEdTJaQkVKaVdpaUpEQ0NNSXptZHZwZWtyNmRuc3BOcFdrNmxWSlB0VjhXOWprK2RydHYrVisxWGE3M2QvKzQ2ckhyK05nK2ZzLzVIUi9ib3FvY29tNis5dm1uRWVudkNmeERuM1JldlZpQUFrSXhoY1lzZVp6ODdkSGpvMzk4OCsrdmY5QW5IL3VxYU93TWpDV1I4bmNGRkVWYk1zMExVemh0eFh4KzVNNnhPQVFXdlc3QnVoL09WcW9JMVZLNW5ibUNMSGxrRTJuUHNtUTFMZExNOXZzaHNGSUJDeGQwMzhjK1EzYVZmclhsSVNKNWVOTjJMSnk0NnJVdDAzSWUzWDQvQkxZMXdsVUw1VmhzNlBSckpYa0JhOFBLayt4RFcxWk5YaVNxNW5tdUxPRkFKVUpFSlFybW9hZ1ZVL2RmUnhOU0pGa2NGUGY1RU5qZXRQRjJVQVZYSWl4azdxQWRrMnBWcnAzWUpKbzVZN0M5S1lCMTdkRStUS1Jxd0NCekIrMllWaU9aZEdLVGFPYU13ZmJDOVZZYnNrT3dhZ1RNWjlTdC9MVk1uS1BOc1l0c1RWa21MZTE3bCtkRFlLVTJZT1BHK2dOckYyZmdwMy81K1dIYWdHR2Jybk1iVUdyYlNWMjNiWi9ZSkNPZTZYRFVxZ0EyYldUdVFrTlh3MVZsd1ZEdVhQWFl4aVNZaHYvYXNMcDhodE01czFiZE1DNThobjA1ZFd3WEd0cUVVR240aTRKU3VjclJnR251UjF5dDdQcW5tekxBWDlnYnUwdGtERllxZ0UwN0U1dlc5ME4xV082aUcrRG1hNThyYytIdVpiY0dyTklmWFdvdU5tY3lXUU80YTIwMUlYMmkybENOMVIyWmtMb010emNoN3I4Qk82SVBTUWQ1MXBtbUl6TWh1Y3lFbUFuWnVtNHpJZk5qWmtJOE5CTXloc3lFbEdlWUNYbGdIZVJabDZ0OHdEVW9URzJZRzVjUVROdXc3R1AxbXVEaHFIVUJiRkxOdVFabnlQdXdwdXR0dzFTMXZncVdkcXhhcFVvWHBqWWNxN0dhTlBKVk5YWC9obUJOMTl1R2lVaE5CS3hFb2diTUI4SzhXdFV1VEd3NFZpTk40WXdaaW1ubHBwQ3NYRWpGblc1bmt2OVg3V1pwekFDcERoWThJTFVxZ0cxdGR0MXYrN0FodXdHa1lpd3liNkRWMm5ZcmMrM0JjTnFLQVZvZExuMUFPbVFUWXBxQXpJVDRoY3lFak1ITWhQaUZ6SVNNd2N5RTVESVRNbzdNaE9ReUV6S096SVNZUnBXWkVMK1FtWkF4bUprUXY1Q1prREdZbVpCY1prTEdrWm1RWEdaQ3hwR1pFTk9vTWhQaUZ6SVRNZ1l6RStJWE1oTXlCak1Ua3N0TXlEZ3lFNUxMVE1nNE1oTmlHbFdkQ21EVHFtN1MwbUNhdDhzQUYrS2FNL0JQT2cxcjBxWXNTOHFxWUdCN0lScTc0QTNhRnN3ZjBhdnVqNzlqdkIwTDMvL2huNExha3VrQjEwUmJOM3pYM1NFdGpVTTZGQ04vUksrNFB5TFpJM09sSFhOUFJzaFdsTG5jTml6L2VtOVgxdHhacXh2VG01cUdOc3VPeFh3VkdyZ0pSVE5IMm9sUnJraWJNa0NwNzNZYWNudW55ZzQyOUp1bUlUTWhaa0pHbFprUU15R2p5a3lJbVJBeklXTXdNeUhUWUFjYitrM1RVTUovLzhtYkNvaC9iR2ZlU05IS0ZDaWZ1L2V4L1doUXkyOSs3azErc3ZnVmZubVRBNHJzaDV2V2dMbTNKV2tIRmowNWZ2UG9OOTU2eXIvOHp1VXV0blBxU2pSTy95cllwNUZDR2w1bzMxYThIcXJJdWZ3UlBOZXZENHUvOUZ1ZlNkOTQvQVg5ejJmQlFvVzVhTXJjKzZzbExKZzBaMGVmalg3NytPMVAzMlp4dXV5M2gvWlRpUWgvVVl6dUNEb0VhZ0pjWFVHN1V5RHpLT29kbmhZSmRXWGk4aVVhTk56N01SNGRJYi82bVdJTGdvTGhoMGMxWUtVSHFMcEtoT1lzZXNLWEpVbS9UTG9wdGxmSWF4NW16eUovUUVvZFZzVys5djFmdnQ4c2lBUTFUUHhLMUtmUmwybWVzSE9TZ3pDbkFtWmNXN0o4dXpYY0gyMVlJTGVLc0g2Zk96TVRZaHBWQ2JpMlRCQUJnMnFtWE1lNG1jV2t5bFJCOG1vNEhFbmNpN2xzSUQ1NjlXWXU4YkNwb1pXWkRWa2ZFMUprb3hJcVM5UDVzc1RWelFyaDBTbzFyb3NESjc2czNjZEVzZ010T2ZIdjArakR3c0lvdzdJMmhxT085VFVoUWU2S1QzcTNscDRyUzRvQ2srK1Y0UHBROW91YWZRVklEYzJ1RExoMHd1LzBZbjVkVlNQUmd4VnJDeUs2eS9vRG1wQmkzd1dGUEZqZjNKbVprQUppSnVUaG1aa1EwNmd5RTZMaFNpb3pHekl6SWQyWm1SQmZPdnpHdG1KbVF2b3hNeUZoUkhkWk54UHlZTXhNU0FFeEUvTHd6RXlJYVZTWkNkRndKWldaRFptWmtPN01USWd2SFg1ald6RXpJZjJZbVpBd29ydXNtd2w1TUdZbXBJQ1lDWGw0WmliRU5Lck1oR2k0a3NyTWhzeE1TSGRtSnNTWERyK3hyWmlaa0g3TVRFZ1kwVjNXellROEdETVRVa0RNaER3OE14TmlHbFZtUWpSY1NXVm1RMlltcERzekUrSkxoOS9ZVnN4TVNEOW1KaVNNNkM3clprSWVqSmtKS1NCbVFoNmVKYVhJVTRTSThFUXZSd3RYalluV010Zlc4cEhWemV2Qi9JRnpHUnVBT1drWWlpU1B1bUVCMmNKOEZSenNMMmpPaW95QWYwQksvbGtPZ0VWNUVmTEhSMXo3UnQwY0tVZTdZSWZWTW9vUUc3NkNxZy9Mc25vM25QUmhoY3JuWmx0V1BVbmRtcHF5SWtkYXJNRUhnUG16eUZkSUN1ck9iSEZuZHI2YmluMWY2RDVHRVIzRFYxRDFZZG1CRnNydHpuNnNVRkVVc2tJaXJWZ1kwU1RZVlUxWmthWGdOSEVCOXdCWWt1MUtMZlpHWGdqZHpzcEtvZ3R0bGVOV3h5VGJ3ZG0wcVBiNnNDSzAxbVNnRHl0dFFHREVXakMvbi9JUHBkM1NnQlc1OENubE82RVNiMmZLa2pBQ0ZnY3JQR09Ed2hucU5jeVZIZGNtN010Y3d1VXV5ZjRzejIzd1NhZ1dqVzNNN3ljaExFS05XWkZvNE15RDVzZmNXVUowL0VTeUJ6ZEdRS29RNWQvTGh6LzV2MGkvOTgxL0V0WDNnT1BTZVIyR0FkL0xHazdweDVwRTNyWk1zNU14K1ZKY3pISThYSHdMKzdYazEvRzFSS20yYU1qV2dqNFhiaWw2UUYzSG1Pd2JFMEVpdmgyLzk4WGY1Y21URkRRU0pKaENsU1hBVFhDSWFzNzNuQ3VRcG1lZ1MrRHBuYU9xeFhlcFRGMjZYWms3MktWOERjV0NBcHBGM3NwMmIyTnBubUJZZ3dCRmordDI1cTdSU01EM2tzVzZJZUphNFRwYnhqVXN5djJ1SVV2a0MzL25IMXZyWG1kUVY3c0N5SGZmUFVmMUVwR241UWpvNmpmTi94Wm5oMXQxSCthNVVFU09xVEF0TEVwWTBGMVo2OFRxMHRzRGh1aEtZcTdrdlc5dENIa3dyVEwvbWdiMzNvYnFPelhDN3dvdlJTUjdsbkY1elhnbWtyY3pYZmRPSHFKN3NDemhmSk1ueGx4QkxIWnFzZHloTVlRclRWalFRcjRBTm5uZmh5Q3VDaTRYYVg5QUFDMjNEOFJmYSs3TzNObzEyUENwTUZYeHNib2NFUTZQSWJxVVJGL1NRdTJHWTZtZW9GeTArbzNwY0tSeW1pYlJ2N1g1aVMrQVlSVWNzdkM3SWhmQVVpSDFOVkcyb0ZzZ3E1WnlKcExQNjhsY2NHV0N6RzE2RmcyREh2OERaS1NjUndrZnVxOU5Yc05XcW9LcjdiODc3MXlMNG10MDh6T0JLeFhlb2xqUUh4eGZCV3VOdWVqSU1wNkhlWjBXMDlDRVNPajJEb3hGcEFpWDhpanliY0Ftcis1NmJRU3NmcGMvT2t1QlMxUVhwUWpvem9Fd0FoSVlpWjRzTzgzVVpXaFNMSXVBeGZYbUlpSWNHRXU0SWVZWDh0V1hhMXFvbFFuSnRVVGtEUFNMd1ZKWk5zSUlpSm1RZzJJUlY1TElpcFpxZjArSTZBWG9hZXZmbVdZdFNYZ2h4L3FxN2U5YW1aQ2NMa0hPUzFXd21aQThHazdEREl6QkZGNW9WTzRESE55RTVIUUovTGhVSjVrSjZkNTRud3RUL1FqaG5FQk5URWlyS3lFQXhMZFh1b2t2Qk5tb2FsS0VBNThydXhLU0wzYzRUR0hEc3loT1cvY1JGMzE4bXIyMWUrdWJ1My8vcHl0QmxzQ3lpSUxPRlpKSHdJeHBsa0J2bGgxenlZZkJUNHU1NGY2dU1pcGFKb2ZEU0VpNWxUUCtkTkc5RGRoR2lxd1UvcVBMYjAzemt6eVNTM25FWnZ1U2Q5WGFoSWhJSktvcmxKT2lBVkNwZ25ObUp1UXdtRVo2cmxGNVdCK1V5OUo5ckZRRjE1bVFlNnJrTmZDc2FCTFVWTUd1ZWdxcjFvNE1kYTB1bVJ4em01NmRlMkUxZFRpTVdFNkp1ZE1IdUJzVGtta2x5bW5lL01HZkZ5NEM1ak5jTkFQTWhNeVp4ZkloM0MyQVRkVGxTZ2lRcmhGT3lnZEZnZ2hvVjBJT2ljblI3WGNVcnVpZ1pQc2lOWHBuc1FJK2tzWFROY3JqVG1tWVpxUDRmeGYvck54dEF6WlJKeE9TZjB5Qkg2bXdOaFBpZ3YvMERNSXVHYUxJTVRjS041TGZIUk5xSjFkQ1NzdDk0OTBUNEcxVUg3dURZMWRDOGgxOUdHeER3bEwrV211N1lBWWZqbFd6aWxOQjEvNjhDQ01nZ1pIb3liSlRUMTJHSnNXeUNLZzRqMWhFaVFOZ3dscVNmaVBrTzVvUXIyZkEya3pJTk16QXd6TmRTeUs5UmtiMWUwU3Z5QWVLWFBkS3c3Uy9Vcm5VT1BwV255VDZtQkEwaWs4RlZtWkNYUENmamtGNEVCT2lYS0hSKzlraDIyNDQ2bGhuRXdJZzhkRXJOcmVYd0EzQ01XRVZiQ1prM2t4QUlsWVI4UWswTXh4MXJKOEorY3J6TmJCUTF3bHBKaVNJRWpObmtXNUlXUEZuTHk3cG9iNG1CQ0k1UjNVSnZGMktnSmdKbVRNallrMmluUzYvaGVyL25wQTBmU2FxZHJQNmdVbUZwUjV4MWplZFhpWWtKK2NRUEMvR1RJaVBsck5td2tJU2VZNy9Qb0lKeVhOM0Jsd0dPYTAxRW1aQzVzVlFMaVRtWTc5UE9wcVFyc094aWdTVDlJS05MQVZKVVNKRWJEaFd2dHljR1NublVjeEg5RlQ3ZTBLcUNmekJZaW5JVHhYV1JRVE1NcWxaQXIxWmRzeUZzZS8vcUdPYW56Q3VnbkxGYzlaTUJGSXU5T2VmOUw0L2ZLaVhGUzRFN0diMVE5R1JybmpFTCtYclczcElHbWdBRXdMQUVqalBHd3UrK2pRVE1sTVdzNVNFMGlYWThVeElwcVVxNTBVVmJDWmsxaXppZ3BoU0IvUm9KaVRYSmNLWmo0QjV1OGhGTThCTXlKeVk2STgwcHZVOXdIWHFmeVVFVU5HbHFMelVNQUppVjBMbXlpRDZ1Tzg0UUovU0VJa0lSeGZBcWZoM1Faam1MUG1VNzhSdlJCOXZYM0s3QmpJaG1wSzlHK0xNVEFoQmxUVkRkc1FHdUZhMC9INlpqaWFrNjQzcFpmM2hXUXFzRkU1OVg1N3JJd3Y3OXpveXRHSUdKc1JjS3lGc3FMdXFhbzZNaENzaTF2TFY4OUo5SU9NTXh5b252UVk5OVZHTXdFajBaTm1wcHk1RGsySlpCT3c1dEdtZldNSkNrbTYzWU5acEVCTUNnTEJDOVZrV0ljeUV6SlZGUjd3Z2V6VExJT3AyWTNxZFVya1c1SU1pNjZZNVNtUDVWNFdyZUtEMEJqRWhJaElSM2E2SmJrL01oTGlxYTZaTTAyOUhtdDU1RE1lb0prUlZVMks5SWRZTE1qT1NtZ21aRjBQSTN4Q3FINko2NTA3SXJpWkVOTitEcGJ2ZDdya1M0ajYvbG4zajNlZkFVOXd6WTl4cFZHN090V0p1akV6Uk96OGRkdnZ2RUY2bUcyU0RwOGhFSUdFVC84MVBqaGhRdzVrUUx6bEI5UzNReDJaQ1pzU0VqUngzZXdMVzZ6VFVjS3hDcWg4ZzJNM3FjNU93MW9TVG9aTWR6b1FVR2YyaGtqMHh5MHpJZkJpd0lwS1RPOGZiTFRQbWNLd1NVMDRFVnJocWxLQnF0ZUZZKzh1VWF5TDlQblEzSEhWc3FPRll4UXBJWHdpeVFpUzdZSkNIQ0J1T3RlZE11UUw5SGdOcmNCTWk3eXhlc0hqbkd0Z29KR1pDNXNMME9sNHRCaStBdzV1UTkzUUQ4Z0p0LytJNjB6UWxNUnVPV2ZIMS9rOUNxR3A0RXdLZ25Ldkkwa3pJUEJnUkt6a1NQd1IvMmlZRVFQU2x3R1ZXUFprSjJYZUdjRWxNcXplaE4yV0RtNUE4MTJlcUxGMDBBOHlFN0RGRFpFbk1qOW1CZG5BbEJFRE9CVjVsOXQxTXlMNHpsQXZpYVBCT2FOaUZDUUU0ZW53QzVaY1htL1pZdDN3c2V2VCtMcExlalFtQk5jclBnRXN6SVh2T1lrMkp1SktnVjJOSUV6TGNjS3hRWDNtK0FaYUNYdGh3ckQxbnNheUorUVYvL2o5K0dQNlFKbVRBZTBMdTZCSTRMMFUyQW5QUmdtV25vN29NVFlwbEVWQnhoNnlJSmpOaGtWNlJERGNFdjZvZG1SQUFYb0djdVJCaEptUlBXU3dMRW5vOUIvcDEybzBKQVVBV0NqL2NYZnFtQjFIRWgzTGMvMUc4OXllZmEyQVRBcVJMMEhJVmJDWms3NWdvL3lXUm5vZEhkdnBYUWpKNkpjZ0ZjSVBxc1YwSjJVL0dwM29pVWZrNU1QdGhRdjc0a3hYQ0V0V2xtWkE5WmJHbWJMamc1NS9zckEyNFN4TUMyV043VDFGOWFpWmsvNWdjc3hMWURQRWsxUHUwUXhNQ1pDOHkvR0MzNnpEdFNuSXNwM29zTyt1Q2dSMmFrSnl0UVo2WkNkbFBScFNlRUtWM0N1RDByNFFVYkpBblpxRVZNekFoTnVzcklURS9JTDU3aCtQMGgyUDVIN01XT00zYWRZQUc1Z0pzT05iVVdSeDlGM1o3aSsyT1RVaXlBazZGVFFwRW1BblpLNWE4RWIydjZPQTNvNGY2ZjdUdHRIZjBlTnM0QUFBQUFFbEZUa1N1UW1DQyI+PC9pbWFnZT4KPC9zdmc+Cg=="/>
             <prop k="offset" v="0,0"/>
             <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
             <prop k="offset_unit" v="MM"/>
@@ -29,9 +29,9 @@
             <prop k="vertical_anchor_point" v="1"/>
             <data_defined_properties>
               <Option type="Map">
-                <Option name="name" value="" type="QString"/>
+                <Option name="name" type="QString" value=""/>
                 <Option name="properties"/>
-                <Option name="type" value="collection" type="QString"/>
+                <Option name="type" type="QString" value="collection"/>
               </Option>
             </data_defined_properties>
           </layer>
@@ -40,13 +40,13 @@
       <rotation/>
       <sizescale/>
     </renderer-v2>
-    <symbol alpha="1" clip_to_extent="1" name="centerSymbol" type="marker" force_rhr="0">
-      <layer enabled="1" class="SvgMarker" pass="0" locked="0">
+    <symbol clip_to_extent="1" name="centerSymbol" type="marker" alpha="1" force_rhr="0">
+      <layer class="SvgMarker" enabled="1" locked="0" pass="0">
         <prop k="angle" v="0"/>
         <prop k="color" v="245,75,80,255"/>
         <prop k="fixedAspectRatio" v="0"/>
         <prop k="horizontal_anchor_point" v="1"/>
-        <prop k="name" v="/var/www/smartworld/occitanie_gpkg/img/marc.svg"/>
+        <prop k="name" v="base64:PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIGlkPSJteVN2ZyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+Cgk8aW1hZ2UgaGVpZ2h0PSIxNjAiIHdpZHRoPSIxNjAiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBS0FBQUFDZ0NBWUFBQUNMejJjdEFBQUFDWEJJV1hNQUFBN0VBQUFPeEFHVkt3NGJBQUFRcWtsRVFWUjRuTzJkVDQvczJGbUhuOWQyOTcyWGlZWlJHREYzRWlHeGlNSTZVbFpzbUQwc0loRHdEYkpod3dKUUVCSlp3Q2RnaGNRbklEdTJaQkVKaVdpaUpEQ0NNSXptZHZwZWtyNmRuc3BOcFdrNmxWSlB0VjhXOWprK2RydHYrVisxWGE3M2QvKzQ2ckhyK05nK2ZzLzVIUi9ib3FvY29tNis5dm1uRWVudkNmeERuM1JldlZpQUFrSXhoY1lzZVp6ODdkSGpvMzk4OCsrdmY5QW5IL3VxYU93TWpDV1I4bmNGRkVWYk1zMExVemh0eFh4KzVNNnhPQVFXdlc3QnVoL09WcW9JMVZLNW5ibUNMSGxrRTJuUHNtUTFMZExNOXZzaHNGSUJDeGQwMzhjK1EzYVZmclhsSVNKNWVOTjJMSnk0NnJVdDAzSWUzWDQvQkxZMXdsVUw1VmhzNlBSckpYa0JhOFBLayt4RFcxWk5YaVNxNW5tdUxPRkFKVUpFSlFybW9hZ1ZVL2RmUnhOU0pGa2NGUGY1RU5qZXRQRjJVQVZYSWl4azdxQWRrMnBWcnAzWUpKbzVZN0M5S1lCMTdkRStUS1Jxd0NCekIrMllWaU9aZEdLVGFPYU13ZmJDOVZZYnNrT3dhZ1RNWjlTdC9MVk1uS1BOc1l0c1RWa21MZTE3bCtkRFlLVTJZT1BHK2dOckYyZmdwMy81K1dIYWdHR2Jybk1iVUdyYlNWMjNiWi9ZSkNPZTZYRFVxZ0EyYldUdVFrTlh3MVZsd1ZEdVhQWFl4aVNZaHYvYXNMcDhodE01czFiZE1DNThobjA1ZFd3WEd0cUVVR240aTRKU3VjclJnR251UjF5dDdQcW5tekxBWDlnYnUwdGtERllxZ0UwN0U1dlc5ME4xV082aUcrRG1hNThyYytIdVpiY0dyTklmWFdvdU5tY3lXUU80YTIwMUlYMmkybENOMVIyWmtMb010emNoN3I4Qk82SVBTUWQ1MXBtbUl6TWh1Y3lFbUFuWnVtNHpJZk5qWmtJOE5CTXloc3lFbEdlWUNYbGdIZVJabDZ0OHdEVW9URzJZRzVjUVROdXc3R1AxbXVEaHFIVUJiRkxOdVFabnlQdXdwdXR0dzFTMXZncVdkcXhhcFVvWHBqWWNxN0dhTlBKVk5YWC9obUJOMTl1R2lVaE5CS3hFb2diTUI4SzhXdFV1VEd3NFZpTk40WXdaaW1ubHBwQ3NYRWpGblc1bmt2OVg3V1pwekFDcERoWThJTFVxZ0cxdGR0MXYrN0FodXdHa1lpd3liNkRWMm5ZcmMrM0JjTnFLQVZvZExuMUFPbVFUWXBxQXpJVDRoY3lFak1ITWhQaUZ6SVNNd2N5RTVESVRNbzdNaE9ReUV6S096SVNZUnBXWkVMK1FtWkF4bUprUXY1Q1prREdZbVpCY1prTEdrWm1RWEdaQ3hwR1pFTk9vTWhQaUZ6SVRNZ1l6RStJWE1oTXlCak1Ua3N0TXlEZ3lFNUxMVE1nNE1oTmlHbFdkQ21EVHFtN1MwbUNhdDhzQUYrS2FNL0JQT2cxcjBxWXNTOHFxWUdCN0lScTc0QTNhRnN3ZjBhdnVqNzlqdkIwTDMvL2huNExha3VrQjEwUmJOM3pYM1NFdGpVTTZGQ04vUksrNFB5TFpJM09sSFhOUFJzaFdsTG5jTml6L2VtOVgxdHhacXh2VG01cUdOc3VPeFh3VkdyZ0pSVE5IMm9sUnJraWJNa0NwNzNZYWNudW55ZzQyOUp1bUlUTWhaa0pHbFprUU15R2p5a3lJbVJBeklXTXdNeUhUWUFjYitrM1RVTUovLzhtYkNvaC9iR2ZlU05IS0ZDaWZ1L2V4L1doUXkyOSs3azErc3ZnVmZubVRBNHJzaDV2V2dMbTNKV2tIRmowNWZ2UG9OOTU2eXIvOHp1VXV0blBxU2pSTy95cllwNUZDR2w1bzMxYThIcXJJdWZ3UlBOZXZENHUvOUZ1ZlNkOTQvQVg5ejJmQlFvVzVhTXJjKzZzbExKZzBaMGVmalg3NytPMVAzMlp4dXV5M2gvWlRpUWgvVVl6dUNEb0VhZ0pjWFVHN1V5RHpLT29kbmhZSmRXWGk4aVVhTk56N01SNGRJYi82bVdJTGdvTGhoMGMxWUtVSHFMcEtoT1lzZXNLWEpVbS9UTG9wdGxmSWF4NW16eUovUUVvZFZzVys5djFmdnQ4c2lBUTFUUHhLMUtmUmwybWVzSE9TZ3pDbkFtWmNXN0o4dXpYY0gyMVlJTGVLc0g2Zk96TVRZaHBWQ2JpMlRCQUJnMnFtWE1lNG1jV2t5bFJCOG1vNEhFbmNpN2xzSUQ1NjlXWXU4YkNwb1pXWkRWa2ZFMUprb3hJcVM5UDVzc1RWelFyaDBTbzFyb3NESjc2czNjZEVzZ010T2ZIdjArakR3c0lvdzdJMmhxT085VFVoUWU2S1QzcTNscDRyUzRvQ2srK1Y0UHBROW91YWZRVklEYzJ1RExoMHd1LzBZbjVkVlNQUmd4VnJDeUs2eS9vRG1wQmkzd1dGUEZqZjNKbVprQUppSnVUaG1aa1EwNmd5RTZMaFNpb3pHekl6SWQyWm1SQmZPdnpHdG1KbVF2b3hNeUZoUkhkWk54UHlZTXhNU0FFeEUvTHd6RXlJYVZTWkNkRndKWldaRFptWmtPN01USWd2SFg1ald6RXpJZjJZbVpBd29ydXNtd2w1TUdZbXBJQ1lDWGw0WmliRU5Lck1oR2k0a3NyTWhzeE1TSGRtSnNTWERyK3hyWmlaa0g3TVRFZ1kwVjNXellROEdETVRVa0RNaER3OE14TmlHbFZtUWpSY1NXVm1RMlltcERzekUrSkxoOS9ZVnN4TVNEOW1KaVNNNkM3clprSWVqSmtKS1NCbVFoNmVKYVhJVTRTSThFUXZSd3RYalluV010Zlc4cEhWemV2Qi9JRnpHUnVBT1drWWlpU1B1bUVCMmNKOEZSenNMMmpPaW95QWYwQksvbGtPZ0VWNUVmTEhSMXo3UnQwY0tVZTdZSWZWTW9vUUc3NkNxZy9Mc25vM25QUmhoY3JuWmx0V1BVbmRtcHF5SWtkYXJNRUhnUG16eUZkSUN1ck9iSEZuZHI2YmluMWY2RDVHRVIzRFYxRDFZZG1CRnNydHpuNnNVRkVVc2tJaXJWZ1kwU1RZVlUxWmthWGdOSEVCOXdCWWt1MUtMZlpHWGdqZHpzcEtvZ3R0bGVOV3h5VGJ3ZG0wcVBiNnNDSzAxbVNnRHl0dFFHREVXakMvbi9JUHBkM1NnQlc1OENubE82RVNiMmZLa2pBQ0ZnY3JQR09Ed2hucU5jeVZIZGNtN010Y3d1VXV5ZjRzejIzd1NhZ1dqVzNNN3ljaExFS05XWkZvNE15RDVzZmNXVUowL0VTeUJ6ZEdRS29RNWQvTGh6LzV2MGkvOTgxL0V0WDNnT1BTZVIyR0FkL0xHazdweDVwRTNyWk1zNU14K1ZKY3pISThYSHdMKzdYazEvRzFSS20yYU1qV2dqNFhiaWw2UUYzSG1Pd2JFMEVpdmgyLzk4WGY1Y21URkRRU0pKaENsU1hBVFhDSWFzNzNuQ3VRcG1lZ1MrRHBuYU9xeFhlcFRGMjZYWms3MktWOERjV0NBcHBGM3NwMmIyTnBubUJZZ3dCRmordDI1cTdSU01EM2tzVzZJZUphNFRwYnhqVXN5djJ1SVV2a0MzL25IMXZyWG1kUVY3c0N5SGZmUFVmMUVwR241UWpvNmpmTi94Wm5oMXQxSCthNVVFU09xVEF0TEVwWTBGMVo2OFRxMHRzRGh1aEtZcTdrdlc5dENIa3dyVEwvbWdiMzNvYnFPelhDN3dvdlJTUjdsbkY1elhnbWtyY3pYZmRPSHFKN3NDemhmSk1ueGx4QkxIWnFzZHloTVlRclRWalFRcjRBTm5uZmh5Q3VDaTRYYVg5QUFDMjNEOFJmYSs3TzNObzEyUENwTUZYeHNib2NFUTZQSWJxVVJGL1NRdTJHWTZtZW9GeTArbzNwY0tSeW1pYlJ2N1g1aVMrQVlSVWNzdkM3SWhmQVVpSDFOVkcyb0ZzZ3E1WnlKcExQNjhsY2NHV0N6RzE2RmcyREh2OERaS1NjUndrZnVxOU5Yc05XcW9LcjdiODc3MXlMNG10MDh6T0JLeFhlb2xqUUh4eGZCV3VOdWVqSU1wNkhlWjBXMDlDRVNPajJEb3hGcEFpWDhpanliY0Ftcis1NmJRU3NmcGMvT2t1QlMxUVhwUWpvem9Fd0FoSVlpWjRzTzgzVVpXaFNMSXVBeGZYbUlpSWNHRXU0SWVZWDh0V1hhMXFvbFFuSnRVVGtEUFNMd1ZKWk5zSUlpSm1RZzJJUlY1TElpcFpxZjArSTZBWG9hZXZmbVdZdFNYZ2h4L3FxN2U5YW1aQ2NMa0hPUzFXd21aQThHazdEREl6QkZGNW9WTzRESE55RTVIUUovTGhVSjVrSjZkNTRud3RUL1FqaG5FQk5URWlyS3lFQXhMZFh1b2t2Qk5tb2FsS0VBNThydXhLU0wzYzRUR0hEc3loT1cvY1JGMzE4bXIyMWUrdWJ1My8vcHl0QmxzQ3lpSUxPRlpKSHdJeHBsa0J2bGgxenlZZkJUNHU1NGY2dU1pcGFKb2ZEU0VpNWxUUCtkTkc5RGRoR2lxd1UvcVBMYjAzemt6eVNTM25FWnZ1U2Q5WGFoSWhJSktvcmxKT2lBVkNwZ25ObUp1UXdtRVo2cmxGNVdCK1V5OUo5ckZRRjE1bVFlNnJrTmZDc2FCTFVWTUd1ZWdxcjFvNE1kYTB1bVJ4em01NmRlMkUxZFRpTVdFNkp1ZE1IdUJzVGtta2x5bW5lL01HZkZ5NEM1ak5jTkFQTWhNeVp4ZkloM0MyQVRkVGxTZ2lRcmhGT3lnZEZnZ2hvVjBJT2ljblI3WGNVcnVpZ1pQc2lOWHBuc1FJK2tzWFROY3JqVG1tWVpxUDRmeGYvck54dEF6WlJKeE9TZjB5Qkg2bXdOaFBpZ3YvMERNSXVHYUxJTVRjS041TGZIUk5xSjFkQ1NzdDk0OTBUNEcxVUg3dURZMWRDOGgxOUdHeER3bEwrV211N1lBWWZqbFd6aWxOQjEvNjhDQ01nZ1pIb3liSlRUMTJHSnNXeUNLZzRqMWhFaVFOZ3dscVNmaVBrTzVvUXIyZkEya3pJTk16QXd6TmRTeUs5UmtiMWUwU3Z5QWVLWFBkS3c3Uy9Vcm5VT1BwV255VDZtQkEwaWs4RlZtWkNYUENmamtGNEVCT2lYS0hSKzlraDIyNDQ2bGhuRXdJZzhkRXJOcmVYd0EzQ01XRVZiQ1prM2t4QUlsWVI4UWswTXh4MXJKOEorY3J6TmJCUTF3bHBKaVNJRWpObmtXNUlXUEZuTHk3cG9iNG1CQ0k1UjNVSnZGMktnSmdKbVRNallrMmluUzYvaGVyL25wQTBmU2FxZHJQNmdVbUZwUjV4MWplZFhpWWtKK2NRUEMvR1RJaVBsck5td2tJU2VZNy9Qb0lKeVhOM0Jsd0dPYTAxRW1aQzVzVlFMaVRtWTc5UE9wcVFyc094aWdTVDlJS05MQVZKVVNKRWJEaFd2dHljR1NublVjeEg5RlQ3ZTBLcUNmekJZaW5JVHhYV1JRVE1NcWxaQXIxWmRzeUZzZS8vcUdPYW56Q3VnbkxGYzlaTUJGSXU5T2VmOUw0L2ZLaVhGUzRFN0diMVE5R1JybmpFTCtYclczcElHbWdBRXdMQUVqalBHd3UrK2pRVE1sTVdzNVNFMGlYWThVeElwcVVxNTBVVmJDWmsxaXppZ3BoU0IvUm9KaVRYSmNLWmo0QjV1OGhGTThCTXlKeVk2STgwcHZVOXdIWHFmeVVFVU5HbHFMelVNQUppVjBMbXlpRDZ1Tzg0UUovU0VJa0lSeGZBcWZoM1Faam1MUG1VNzhSdlJCOXZYM0s3QmpJaG1wSzlHK0xNVEFoQmxUVkRkc1FHdUZhMC9INlpqaWFrNjQzcFpmM2hXUXFzRkU1OVg1N3JJd3Y3OXpveXRHSUdKc1JjS3lGc3FMdXFhbzZNaENzaTF2TFY4OUo5SU9NTXh5b252UVk5OVZHTXdFajBaTm1wcHk1RGsySlpCT3c1dEdtZldNSkNrbTYzWU5acEVCTUNnTEJDOVZrV0ljeUV6SlZGUjd3Z2V6VExJT3AyWTNxZFVya1c1SU1pNjZZNVNtUDVWNFdyZUtEMEJqRWhJaElSM2E2SmJrL01oTGlxYTZaTTAyOUhtdDU1RE1lb0prUlZVMks5SWRZTE1qT1NtZ21aRjBQSTN4Q3FINko2NTA3SXJpWkVOTitEcGJ2ZDdya1M0ajYvbG4zajNlZkFVOXd6WTl4cFZHN090V0p1akV6Uk96OGRkdnZ2RUY2bUcyU0RwOGhFSUdFVC84MVBqaGhRdzVrUUx6bEI5UzNReDJaQ1pzU0VqUngzZXdMVzZ6VFVjS3hDcWg4ZzJNM3FjNU93MW9TVG9aTWR6b1FVR2YyaGtqMHh5MHpJZkJpd0lwS1RPOGZiTFRQbWNLd1NVMDRFVnJocWxLQnF0ZUZZKzh1VWF5TDlQblEzSEhWc3FPRll4UXBJWHdpeVFpUzdZSkNIQ0J1T3RlZE11UUw5SGdOcmNCTWk3eXhlc0hqbkd0Z29KR1pDNXNMME9sNHRCaStBdzV1UTkzUUQ4Z0p0LytJNjB6UWxNUnVPV2ZIMS9rOUNxR3A0RXdLZ25Ldkkwa3pJUEJnUkt6a1NQd1IvMmlZRVFQU2x3R1ZXUFprSjJYZUdjRWxNcXplaE4yV0RtNUE4MTJlcUxGMDBBOHlFN0RGRFpFbk1qOW1CZG5BbEJFRE9CVjVsOXQxTXlMNHpsQXZpYVBCT2FOaUZDUUU0ZW53QzVaY1htL1pZdDN3c2V2VCtMcExlalFtQk5jclBnRXN6SVh2T1lrMkp1SktnVjJOSUV6TGNjS3hRWDNtK0FaYUNYdGh3ckQxbnNheUorUVYvL2o5K0dQNlFKbVRBZTBMdTZCSTRMMFUyQW5QUmdtV25vN29NVFlwbEVWQnhoNnlJSmpOaGtWNlJERGNFdjZvZG1SQUFYb0djdVJCaEptUlBXU3dMRW5vOUIvcDEybzBKQVVBV0NqL2NYZnFtQjFIRWgzTGMvMUc4OXllZmEyQVRBcVJMMEhJVmJDWms3NWdvL3lXUm5vZEhkdnBYUWpKNkpjZ0ZjSVBxc1YwSjJVL0dwM29pVWZrNU1QdGhRdjc0a3hYQ0V0V2xtWkE5WmJHbWJMamc1NS9zckEyNFN4TUMyV043VDFGOWFpWmsvNWdjc3hMWURQRWsxUHUwUXhNQ1pDOHkvR0MzNnpEdFNuSXNwM29zTyt1Q2dSMmFrSnl0UVo2WkNkbFBScFNlRUtWM0N1RDByNFFVYkpBblpxRVZNekFoTnVzcklURS9JTDU3aCtQMGgyUDVIN01XT00zYWRZQUc1Z0pzT05iVVdSeDlGM1o3aSsyT1RVaXlBazZGVFFwRW1BblpLNWE4RWIydjZPQTNvNGY2ZjdUdHRIZjBlTnM0QUFBQUFFbEZUa1N1UW1DQyI+PC9pbWFnZT4KPC9zdmc+Cg=="/>
         <prop k="offset" v="0,0"/>
         <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
         <prop k="offset_unit" v="MM"/>
@@ -61,13 +61,13 @@
         <prop k="vertical_anchor_point" v="1"/>
         <data_defined_properties>
           <Option type="Map">
-            <Option name="name" value="" type="QString"/>
+            <Option name="name" type="QString" value=""/>
             <Option name="properties"/>
-            <Option name="type" value="collection" type="QString"/>
+            <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
-      <layer enabled="1" class="SimpleMarker" pass="0" locked="0">
+      <layer class="SimpleMarker" enabled="1" locked="0" pass="0">
         <prop k="angle" v="0"/>
         <prop k="color" v="33,150,243,255"/>
         <prop k="horizontal_anchor_point" v="1"/>
@@ -88,13 +88,13 @@
         <prop k="vertical_anchor_point" v="1"/>
         <data_defined_properties>
           <Option type="Map">
-            <Option name="name" value="" type="QString"/>
+            <Option name="name" type="QString" value=""/>
             <Option name="properties"/>
-            <Option name="type" value="collection" type="QString"/>
+            <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
-      <layer enabled="1" class="FontMarker" pass="0" locked="0">
+      <layer class="FontMarker" enabled="1" locked="0" pass="0">
         <prop k="angle" v="0"/>
         <prop k="chr" v="A"/>
         <prop k="color" v="255,255,254,255"/>
@@ -114,23 +114,23 @@
         <prop k="vertical_anchor_point" v="1"/>
         <data_defined_properties>
           <Option type="Map">
-            <Option name="name" value="" type="QString"/>
+            <Option name="name" type="QString" value=""/>
             <Option name="properties" type="Map">
               <Option name="char" type="Map">
-                <Option name="active" value="true" type="bool"/>
-                <Option name="expression" value="@cluster_size" type="QString"/>
-                <Option name="type" value="3" type="int"/>
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="@cluster_size"/>
+                <Option name="type" type="int" value="3"/>
               </Option>
             </Option>
-            <Option name="type" value="collection" type="QString"/>
+            <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
     </symbol>
   </renderer-v2>
   <customproperties>
-    <property value="fid" key="dualview/previewExpressions"/>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="dualview/previewExpressions" value="fid"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -138,17 +138,17 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory scaleDependency="Area" minScaleDenominator="0" lineSizeScale="3x:0,0,0,0,0,0" labelPlacementMethod="XHeight" penAlpha="255" height="15" enabled="0" opacity="1" penWidth="0" diagramOrientation="Up" lineSizeType="MM" sizeType="MM" maxScaleDenominator="1e+08" scaleBasedVisibility="0" backgroundColor="#ffffff" backgroundAlpha="255" minimumSize="0" sizeScale="3x:0,0,0,0,0,0" barWidth="5" width="15" penColor="#000000" rotationOffset="270">
+    <DiagramCategory labelPlacementMethod="XHeight" width="15" diagramOrientation="Up" height="15" minScaleDenominator="0" backgroundColor="#ffffff" scaleBasedVisibility="0" barWidth="5" enabled="0" sizeScale="3x:0,0,0,0,0,0" opacity="1" sizeType="MM" penWidth="0" scaleDependency="Area" rotationOffset="270" minimumSize="0" maxScaleDenominator="1e+08" lineSizeType="MM" penColor="#000000" penAlpha="255" lineSizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255">
       <fontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute field="" color="#000000" label=""/>
+      <attribute label="" color="#000000" field=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings priority="0" zIndex="0" placement="0" dist="0" showAll="1" obstacle="0" linePlacementFlags="18">
+  <DiagramLayerSettings zIndex="0" placement="0" priority="0" showAll="1" linePlacementFlags="18" dist="0" obstacle="0">
     <properties>
       <Option type="Map">
-        <Option name="name" value="" type="QString"/>
+        <Option name="name" type="QString" value=""/>
         <Option name="properties"/>
-        <Option name="type" value="collection" type="QString"/>
+        <Option name="type" type="QString" value="collection"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -194,47 +194,47 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="fid" name="" index="0"/>
-    <alias field="osm_id" name="" index="1"/>
-    <alias field="name" name="" index="2"/>
-    <alias field="amenity" name="" index="3"/>
-    <alias field="hstore_to_json" name="" index="4"/>
+    <alias name="" field="fid" index="0"/>
+    <alias name="" field="osm_id" index="1"/>
+    <alias name="" field="name" index="2"/>
+    <alias name="" field="amenity" index="3"/>
+    <alias name="" field="hstore_to_json" index="4"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default field="fid" expression="" applyOnUpdate="0"/>
-    <default field="osm_id" expression="" applyOnUpdate="0"/>
-    <default field="name" expression="" applyOnUpdate="0"/>
-    <default field="amenity" expression="" applyOnUpdate="0"/>
-    <default field="hstore_to_json" expression="" applyOnUpdate="0"/>
+    <default applyOnUpdate="0" field="fid" expression=""/>
+    <default applyOnUpdate="0" field="osm_id" expression=""/>
+    <default applyOnUpdate="0" field="name" expression=""/>
+    <default applyOnUpdate="0" field="amenity" expression=""/>
+    <default applyOnUpdate="0" field="hstore_to_json" expression=""/>
   </defaults>
   <constraints>
-    <constraint field="fid" constraints="3" unique_strength="1" notnull_strength="1" exp_strength="0"/>
-    <constraint field="osm_id" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
-    <constraint field="name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
-    <constraint field="amenity" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
-    <constraint field="hstore_to_json" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+    <constraint constraints="3" unique_strength="1" field="fid" notnull_strength="1" exp_strength="0"/>
+    <constraint constraints="0" unique_strength="0" field="osm_id" notnull_strength="0" exp_strength="0"/>
+    <constraint constraints="0" unique_strength="0" field="name" notnull_strength="0" exp_strength="0"/>
+    <constraint constraints="0" unique_strength="0" field="amenity" notnull_strength="0" exp_strength="0"/>
+    <constraint constraints="0" unique_strength="0" field="hstore_to_json" notnull_strength="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" field="fid" desc=""/>
-    <constraint exp="" field="osm_id" desc=""/>
-    <constraint exp="" field="name" desc=""/>
-    <constraint exp="" field="amenity" desc=""/>
-    <constraint exp="" field="hstore_to_json" desc=""/>
+    <constraint desc="" field="fid" exp=""/>
+    <constraint desc="" field="osm_id" exp=""/>
+    <constraint desc="" field="name" exp=""/>
+    <constraint desc="" field="amenity" exp=""/>
+    <constraint desc="" field="hstore_to_json" exp=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
+  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column hidden="0" width="-1" name="fid" type="field"/>
-      <column hidden="0" width="-1" name="osm_id" type="field"/>
-      <column hidden="0" width="-1" name="name" type="field"/>
-      <column hidden="0" width="-1" name="amenity" type="field"/>
-      <column hidden="0" width="-1" name="hstore_to_json" type="field"/>
-      <column hidden="1" width="-1" type="actions"/>
+      <column name="fid" hidden="0" type="field" width="-1"/>
+      <column name="osm_id" hidden="0" type="field" width="-1"/>
+      <column name="name" hidden="0" type="field" width="-1"/>
+      <column name="amenity" hidden="0" type="field" width="-1"/>
+      <column name="hstore_to_json" hidden="0" type="field" width="-1"/>
+      <column hidden="1" type="actions" width="-1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -265,18 +265,18 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="amenity"/>
-    <field editable="1" name="fid"/>
-    <field editable="1" name="hstore_to_json"/>
-    <field editable="1" name="name"/>
-    <field editable="1" name="osm_id"/>
+    <field name="amenity" editable="1"/>
+    <field name="fid" editable="1"/>
+    <field name="hstore_to_json" editable="1"/>
+    <field name="name" editable="1"/>
+    <field name="osm_id" editable="1"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="amenity"/>
-    <field labelOnTop="0" name="fid"/>
-    <field labelOnTop="0" name="hstore_to_json"/>
-    <field labelOnTop="0" name="name"/>
-    <field labelOnTop="0" name="osm_id"/>
+    <field name="amenity" labelOnTop="0"/>
+    <field name="fid" labelOnTop="0"/>
+    <field name="hstore_to_json" labelOnTop="0"/>
+    <field name="name" labelOnTop="0"/>
+    <field name="osm_id" labelOnTop="0"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>fid</previewExpression>

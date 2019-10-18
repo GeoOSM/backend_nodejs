@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis styleCategories="AllStyleCategories" minScale="1e+08" readOnly="0" maxScale="0" version="3.4.7-Madeira" hasScaleBasedVisibilityFlag="0">
+<qgis styleCategories="AllStyleCategories" maxScale="0" version="3.4.7-Madeira" hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+08">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
@@ -50,34 +50,34 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="fid" index="0" name=""/>
-    <alias field="osm_id" index="1" name=""/>
-    <alias field="name" index="2" name=""/>
-    <alias field="amenity" index="3" name=""/>
-    <alias field="hstore_to_json" index="4" name=""/>
+    <alias name="" index="0" field="fid"/>
+    <alias name="" index="1" field="osm_id"/>
+    <alias name="" index="2" field="name"/>
+    <alias name="" index="3" field="amenity"/>
+    <alias name="" index="4" field="hstore_to_json"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default field="fid" applyOnUpdate="0" expression=""/>
-    <default field="osm_id" applyOnUpdate="0" expression=""/>
-    <default field="name" applyOnUpdate="0" expression=""/>
-    <default field="amenity" applyOnUpdate="0" expression=""/>
-    <default field="hstore_to_json" applyOnUpdate="0" expression=""/>
+    <default expression="" field="fid" applyOnUpdate="0"/>
+    <default expression="" field="osm_id" applyOnUpdate="0"/>
+    <default expression="" field="name" applyOnUpdate="0"/>
+    <default expression="" field="amenity" applyOnUpdate="0"/>
+    <default expression="" field="hstore_to_json" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint field="fid" exp_strength="0" unique_strength="1" constraints="3" notnull_strength="1"/>
-    <constraint field="osm_id" exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint field="name" exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint field="amenity" exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0"/>
-    <constraint field="hstore_to_json" exp_strength="0" unique_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint exp_strength="0" unique_strength="1" notnull_strength="1" field="fid" constraints="3"/>
+    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="osm_id" constraints="0"/>
+    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="name" constraints="0"/>
+    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="amenity" constraints="0"/>
+    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="hstore_to_json" constraints="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="fid" exp="" desc=""/>
-    <constraint field="osm_id" exp="" desc=""/>
-    <constraint field="name" exp="" desc=""/>
-    <constraint field="amenity" exp="" desc=""/>
-    <constraint field="hstore_to_json" exp="" desc=""/>
+    <constraint desc="" exp="" field="fid"/>
+    <constraint desc="" exp="" field="osm_id"/>
+    <constraint desc="" exp="" field="name"/>
+    <constraint desc="" exp="" field="amenity"/>
+    <constraint desc="" exp="" field="hstore_to_json"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions/>

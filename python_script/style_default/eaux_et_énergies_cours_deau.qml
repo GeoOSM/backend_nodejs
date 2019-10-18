@@ -1,14 +1,14 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis maxScale="0" labelsEnabled="0" simplifyMaxScale="1" readOnly="0" version="3.4.7-Madeira" simplifyDrawingTol="1" minScale="1e+08" simplifyAlgorithm="0" styleCategories="AllStyleCategories" hasScaleBasedVisibilityFlag="0" simplifyDrawingHints="1" simplifyLocal="1">
+<qgis simplifyAlgorithm="0" readOnly="0" styleCategories="AllStyleCategories" labelsEnabled="0" simplifyDrawingHints="1" maxScale="0" simplifyDrawingTol="1" minScale="1e+08" simplifyMaxScale="1" simplifyLocal="1" version="3.4.7-Madeira" hasScaleBasedVisibilityFlag="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" enableorderby="0" forceraster="0" type="singleSymbol">
+  <renderer-v2 symbollevels="0" forceraster="0" enableorderby="0" type="singleSymbol">
     <symbols>
-      <symbol name="0" force_rhr="0" type="line" alpha="1" clip_to_extent="1">
-        <layer pass="0" class="SimpleLine" enabled="1" locked="0">
+      <symbol clip_to_extent="1" alpha="1" force_rhr="0" type="line" name="0">
+        <layer enabled="1" class="SimpleLine" pass="0" locked="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -27,9 +27,9 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -42,7 +42,7 @@
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
-  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
     <activeChecks type="StringList">
       <Option value="" type="QString"/>
     </activeChecks>
@@ -114,54 +114,54 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" index="0" field="fid"/>
-    <alias name="" index="1" field="osm_id"/>
-    <alias name="" index="2" field="highway"/>
-    <alias name="" index="3" field="bridge"/>
-    <alias name="" index="4" field="name"/>
-    <alias name="" index="5" field="oneway"/>
-    <alias name="" index="6" field="junction"/>
-    <alias name="" index="7" field="amenity"/>
-    <alias name="" index="8" field="hstore_to_json"/>
+    <alias field="fid" index="0" name=""/>
+    <alias field="osm_id" index="1" name=""/>
+    <alias field="highway" index="2" name=""/>
+    <alias field="bridge" index="3" name=""/>
+    <alias field="name" index="4" name=""/>
+    <alias field="oneway" index="5" name=""/>
+    <alias field="junction" index="6" name=""/>
+    <alias field="amenity" index="7" name=""/>
+    <alias field="hstore_to_json" index="8" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" applyOnUpdate="0" field="fid"/>
-    <default expression="" applyOnUpdate="0" field="osm_id"/>
-    <default expression="" applyOnUpdate="0" field="highway"/>
-    <default expression="" applyOnUpdate="0" field="bridge"/>
-    <default expression="" applyOnUpdate="0" field="name"/>
-    <default expression="" applyOnUpdate="0" field="oneway"/>
-    <default expression="" applyOnUpdate="0" field="junction"/>
-    <default expression="" applyOnUpdate="0" field="amenity"/>
-    <default expression="" applyOnUpdate="0" field="hstore_to_json"/>
+    <default applyOnUpdate="0" field="fid" expression=""/>
+    <default applyOnUpdate="0" field="osm_id" expression=""/>
+    <default applyOnUpdate="0" field="highway" expression=""/>
+    <default applyOnUpdate="0" field="bridge" expression=""/>
+    <default applyOnUpdate="0" field="name" expression=""/>
+    <default applyOnUpdate="0" field="oneway" expression=""/>
+    <default applyOnUpdate="0" field="junction" expression=""/>
+    <default applyOnUpdate="0" field="amenity" expression=""/>
+    <default applyOnUpdate="0" field="hstore_to_json" expression=""/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" unique_strength="1" notnull_strength="1" constraints="3" field="fid"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="osm_id"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="highway"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="bridge"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="name"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="oneway"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="junction"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="amenity"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" constraints="0" field="hstore_to_json"/>
+    <constraint unique_strength="1" field="fid" constraints="3" notnull_strength="1" exp_strength="0"/>
+    <constraint unique_strength="0" field="osm_id" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="highway" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="bridge" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="name" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="oneway" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="junction" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="amenity" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="hstore_to_json" constraints="0" notnull_strength="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" exp="" field="fid"/>
-    <constraint desc="" exp="" field="osm_id"/>
-    <constraint desc="" exp="" field="highway"/>
-    <constraint desc="" exp="" field="bridge"/>
-    <constraint desc="" exp="" field="name"/>
-    <constraint desc="" exp="" field="oneway"/>
-    <constraint desc="" exp="" field="junction"/>
-    <constraint desc="" exp="" field="amenity"/>
-    <constraint desc="" exp="" field="hstore_to_json"/>
+    <constraint field="fid" desc="" exp=""/>
+    <constraint field="osm_id" desc="" exp=""/>
+    <constraint field="highway" desc="" exp=""/>
+    <constraint field="bridge" desc="" exp=""/>
+    <constraint field="name" desc="" exp=""/>
+    <constraint field="oneway" desc="" exp=""/>
+    <constraint field="junction" desc="" exp=""/>
+    <constraint field="amenity" desc="" exp=""/>
+    <constraint field="hstore_to_json" desc="" exp=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions/>
-  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+  <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
     <columns/>
   </attributetableconfig>
   <conditionalstyles>

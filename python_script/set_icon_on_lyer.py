@@ -33,40 +33,43 @@ def set_icons(img_svg):
     project.read(pathqgisproject)
 
     layer = project.mapLayersByName(layername)
-    vlayer = layer[0]
 
-    encoded = base64.b64encode(open(img_svg, "rb").read()).decode()
-    img_svg_encoded = 'base64:{}'.format(encoded)
-    # svgStyle = {}
-    # svgStyle['name'] = '/var/www/smartworld/occitanie_gpkg/img/aed-2.svg'
-    # svgStyle['size'] = '40'
-    # svgStyle['size_unit'] = 'Pixel'
-    # symbolLayer =  	QgsSvgMarkerSymbolLayer.create(svgStyle)
+    if len(layer) > 0:
+        vlayer = layer[0]
 
-    # symbol = QgsSymbol.defaultSymbol(vlayer.geometryType()) 
-    # symbol.changeSymbolLayer(0, symbolLayer)
+        encoded = base64.b64encode(open(img_svg, "rb").read()).decode()
+        img_svg_encoded = 'base64:{}'.format(encoded)
+        # svgStyle = {}
+        # svgStyle['name'] = '/var/www/smartworld/occitanie_gpkg/img/aed-2.svg'
+        # svgStyle['size'] = '40'
+        # svgStyle['size_unit'] = 'Pixel'
+        # symbolLayer =  	QgsSvgMarkerSymbolLayer.create(svgStyle)
 
-    # vlayer.renderer().setSymbol(symbol)
+        # symbol = QgsSymbol.defaultSymbol(vlayer.geometryType()) 
+        # symbol.changeSymbolLayer(0, symbolLayer)
 
-    # class QgsPointClusterRenderer
-    symbol_layer = vlayer.renderer()
-    # afficher l'icone simple sans custer
-    symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).setPath(img_svg_encoded)
-    # tous les symbols pour le cluster contenu dans la symbologie
-    symbols = symbol_layer.clusterSymbol().symbolLayers()
+        # vlayer.renderer().setSymbol(symbol)
 
-    #on cherche le symbol en svg pour le changer
-    for symbol in symbols:
-        if  type(symbol) is QgsSvgMarkerSymbolLayer:
-            # print(symbol.path(),'yess')
-            symbol.setPath(img_svg_encoded)
-        if  type(symbol) is QgsSimpleMarkerSymbolLayer:
-            print(symbol.properties(),'yess')
-            symbol.setColor(QColor.fromRgb(33,150,243))
-           #,symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).properties(),
+        # class QgsPointClusterRenderer
+        symbol_layer = vlayer.renderer()
+        # afficher l'icone simple sans custer
+        symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).setPath(img_svg_encoded)
+        # tous les symbols pour le cluster contenu dans la symbologie
+        symbols = symbol_layer.clusterSymbol().symbolLayers()
 
-    print('ok',project.write())
+        #on cherche le symbol en svg pour le changer
+        for symbol in symbols:
+            if  type(symbol) is QgsSvgMarkerSymbolLayer:
+                # print(symbol.path(),'yess')
+                symbol.setPath(img_svg_encoded)
+            if  type(symbol) is QgsSimpleMarkerSymbolLayer:
+                print(symbol.properties(),'yess')
+                symbol.setColor(QColor.fromRgb(33,150,243))
+            #,symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).properties(),
 
+        print('ok',project.write())
+    else:
+        print ('ok','Couche non trouvée')
 
 def set_style():
     os.environ["QT_QPA_PLATFORM"] = "offscreen"

@@ -71,6 +71,12 @@ exit
 # gpg --export --armor 51F523511C7028C3 | sudo apt-key add -
 # sudo apt-get update
 # apt install qgis-server
+#apt install apache2 libapache2-mod-fcgid
+#a2enmod fcgid
+# mkdir /var/log/qgis/
+# chown www-data:www-data /var/log/qgis
+# mkdir /home/qgis/qgisserverdb
+# chown www-data:www-data /home/qgis/qgisserverdb
 
 # Donner le mot de passe postgres à l'utilisateur postgres dans la bd
 #su postgres

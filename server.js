@@ -1371,16 +1371,18 @@ app.get('/addRasterToWMS/:projet_qgis/:nom/', cors(corsOptions), function (req, 
 
 var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 	const pool = new Pool(pte_projet(projet_qgis).bd_access)
-	var destination = pte_projet(["projet_qgis"]).destination
-	var destination_style = pte_projet(["projet_qgis"]).destination_style
-
+	var destination = pte_projet(projet_qgis).destination
+	var destination_style = pte_projet(projet_qgis).destination_style
+	var path_projet_qgis_projet = destination + '/../' + projet_qgis + '.qgs'
+	var pte = []
+	var i = 0
 	function set_qml(props) {
 		var style_file = destination_style + props["id_couche"] + '.qml'
 		let options = {
 			mode: 'text',
 			pythonPath: 'python3',
 			pythonOptions: ['-u'], // get print results in real-time
-			args: [props['projet_qgis'], props["layername"], style_file]
+			args: [props['projet_qgis'], style_file,props["layername"]]
 		};
 
 		PythonShell.run(path_script_python + '/set_style_on_layer.py', options, function (err, results) {
@@ -1396,6 +1398,7 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 				set_qml(pte[i])
 			} else {
 				console.log('termine')
+				process.exit()
 			}
 		})
 	}
@@ -1410,7 +1413,7 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 			var layername = element['identifiant']
 			var id_couche = element['id_couche']
 			pte.push({
-				'projet_qgis': projet_qgis,
+				'projet_qgis': path_projet_qgis_projet,
 				'id_couche': id_couche,
 				'layername': layername,
 			})
