@@ -3,7 +3,7 @@ db="mali"
 roi="/var/www/GeoOSM_Backend/mali.shp"
 path_pbf="http://download.geofabrik.de/africa/mali-latest.osm.pbf"
 geosm_dir='/var/www/geosm/'
-urlNodejs_backend='http://service.geocameroun.cm/'
+urlNodejs_backend='http://servicetest.geocameroun.xyz/'
 path_backend="/var/www/GeoOSM_Backend/projet_laravel/"
 
 list_projet='./projet.json'
@@ -48,13 +48,18 @@ exit
 
 # sudo apt-get install php7.3-xml
 # sudo apt-get install php-mbstring
+#sudo apt-get install php7.3-zip
 # composer install
 # sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 # sudo apt-get install gdal-bin
-#mkdir -m 777 -p /var/www/geosm/
+#mkdir -m 777 -p /var/www/geosm/style
+#mkdir -m 777 -p /var/www/geosm/analyse
 #apt-get install jq
 #  apt-get install moreutils
 #npm install -g github-files-fetcher
+#npm install forever -g
+#sudo a2enmod proxy_http
+# sudo a2enmod rewrite
 
 ####### pour debian 10 #######
 #vim /etc/apt/sources.list
@@ -73,6 +78,8 @@ exit
 # apt install qgis-server
 #apt install apache2 libapache2-mod-fcgid
 #a2enmod fcgid
+#apt-get install php7.2-gd
+
 # mkdir /var/log/qgis/
 # chown www-data:www-data /var/log/qgis
 # mkdir /home/qgis/qgisserverdb
@@ -85,6 +92,10 @@ exit
 
 #npm run initialiser_projet --projet=mali
 #npm run apply_style_projet --projet=mali
+
+#étant root, si non il ecrira pas les log : forever start   --minUptime 5000  --spinSleepTime 5000 -l process.log -o out.log -e err.log server.js
+# log de forver alors sont cat /root/.forever/process.log
+
 # 2a01:e0d:1:c:58bf
 # @2a01:e0d:1:c:58bf:fac1:8000:167
 

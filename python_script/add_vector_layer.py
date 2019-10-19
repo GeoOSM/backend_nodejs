@@ -54,9 +54,12 @@ def run():
 
     succes = project.write()
     
-    if succes :print ('ok')
+    if layer.isValid() :
+        print ('ok')
+    else:
+        print('Le geopackage a un problème')
 
-    if not layer: print ("ko")
+    # if not layer: print ("ko")
 
 run()
 

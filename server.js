@@ -292,7 +292,6 @@ var curr_year = d.getFullYear();
 //   });
 // });
 
-// https://cuy.sogefi.cm:8443/generateAllShapeFromOsmBuilder/smartworld4
 
 var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 
@@ -403,8 +402,7 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 }
 
 app.get('/generateAllShapeFromOsmBuilder/:projet_qgis', cors(corsOptions), function (req, res) {
-	var projet_qgis = path_projet_qgis + req.params["projet_qgis"] + ".qgs"
-	generateAllShapeFromOsmBuilder(projet_qgis)
+	generateAllShapeFromOsmBuilder(req.params["projet_qgis"])
 	res.send("ok")
 })
 
@@ -420,7 +418,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 		var query = response.rows
 		var i = 0
 
-		console.log(query.length)
+		console.log(query.length, ' Opérations')
 
 		var executeOgr2ogr = function (i) {
 
@@ -435,7 +433,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 					.project('EPSG:4326')
 					.timeout(1800000)
 					.onStderr(function (data) {
-						//console.log('azerty',data);
+						// console.log('azerty1',data);
 					})
 					.skipfailures()
 					.destination(destination + nom_shp + '.gpkg');
@@ -450,31 +448,28 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 					.project('EPSG:4326')
 					.timeout(1800000)
 					.onStderr(function (data) {
-						//console.log('azerty',data);
+						// console.log('azerty2',data);
 					})
 					.skipfailures()
 					.destination(destination + nom_shp + '.gpkg');
 
 				shapefile.exec(function (er, data) {
-					//console.log(query.sql.split(';')[0])
 					var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
 						.format(type)
 						.options(["-append", "--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[1]])
 						.project('EPSG:4326')
 						.timeout(1800000)
 						.onStderr(function (data) {
-							//console.log('azerty',data);
 						})
 						.skipfailures()
 						.destination(destination + nom_shp + '.gpkg');
 
 					shapefile.exec(function (er, data) {
-						//console.log(query.sql.split(';')[1])
 						whrite_gpkg(i, destination, nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'), query[i].key_couche)
 					})
 				})
 			}
-			console.log(i, nom_shp)
+			console.log(i, ' sur ',query.length, nom_shp)
 
 
 		}
@@ -488,7 +483,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 				//scriptPath: 'path/to/my/scripts',
 				args: [path_projet_qgis_projet, destination + nom_shp + '.gpkg', name_layer]
 			};
-
+			
 			PythonShell.run(path_script_python + '/add_vector_layer.py', options, function (err, results) {
 				if (err) throw err;
 				if (Array.isArray(results) && results[0] == 'ok') {
@@ -509,6 +504,9 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 						check_function(i)
 					})
 
+				}else{
+					console.log('un problème est survenu ' , results)
+					process.exit(1)
 				}
 
 			})
@@ -536,7 +534,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 
 					if (err) throw err;
 
-					console.log('initialisation terminé')
+					console.log(results,'initialisation terminé')
 					process.exit()
 
 				});
@@ -558,9 +556,9 @@ app.get('/generateAllShapeFromOsmBuilderCreate/:projet_qgis', cors(corsOptions),
 
 // https://cuy.sogefi.cm:8443/generateShapeFromOsmBuilder/171/false
 app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(corsOptions), function (req, res) {
-	var projet_qgis = path_projet_qgis + req.params["projet_qgis"] + ".qgs"
 	var destination = pte_projet(req.params["projet_qgis"]).destination
-
+	var bd_access = pte_projet(req.params["projet_qgis"]).bd_access
+	var path_projet_qgis_projet = destination + '/../' + req.params["projet_qgis"] + '.qgs'
 	const pool = new Pool(pte_projet(req.params["projet_qgis"]).bd_access)
 
 	pool.query('SELECT * from public.categorie where id_cat = ' + req.params["id_cat"], (err, response) => {
@@ -585,9 +583,9 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 					pythonPath: 'python3',
 					//pythonOptions: ['-u'], // get print results in real-time
 					//scriptPath: 'path/to/my/scripts',
-					args: [projet_qgis, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_')]
+					args: [path_projet_qgis_projet, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_')]
 				};
-				console.log(1, projet_qgis, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
+				console.log(1, path_projet_qgis_projet, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
 				PythonShell.run(path_script_python + '/add_vector_layer.py', options, function (err, results) {
 
 					if (err) throw err;
@@ -597,7 +595,7 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 
 						const pool1 = new Pool(pte_projet(req.params["projet_qgis"]).bd_access)
 
-						var url = config.url_qgis_server + projet_qgis
+						var url = config.url_qgis_server + path_projet_qgis_projet
 
 						if (query.sous_thematiques) {
 							var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '\' WHERE id =' + query.key_couche
@@ -632,7 +630,7 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 
 		//console.log(query.sql.split(';').length, "sql")
 		if (query.sql.split(';').length == 1) {
-			var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + database + ' password=' + bd_access.password)
+			var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
 				.format(type)
 				.options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query.sql])
 				.project('EPSG:4326')
@@ -647,7 +645,7 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 				add_to_qgis()
 			})
 		} else if (query.sql.split(';').length == 2) {
-			var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + database + ' password=' + bd_access.password)
+			var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
 				.format(type)
 				.options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query.sql.split(';')[0]])
 				.project('EPSG:4326')
@@ -660,7 +658,7 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 
 			shapefile.exec(function (er, data) {
 				//console.log(query.sql.split(';')[0])
-				var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + database + ' password=' + bd_access.password)
+				var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
 					.format(type)
 					.options(["-append", "--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query.sql.split(';')[1]])
 					.project('EPSG:4326')
@@ -677,7 +675,6 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 				})
 			})
 		}
-
 
 	})
 
@@ -718,11 +715,10 @@ var update_style_couche_qgis = function (projet_qgis, identifiant) {
 		if (rows.length > 0) {
 			var couche = rows[0]
 			if (couche.geom == 'point') {
-				couche.image_src
-				var icon_path = path_backend + element['image_src']
-				var layername = element['identifiant']
-
-				pte = {
+				var icon_path = path_backend +'public/'+ couche['image_src']
+				var layername = couche['identifiant']
+				var id_couche = couche['id_couche']
+				var pte = {
 					'projet_qgis': path_projet_qgis,
 					'icon_png': icon_path,
 					'layername': layername,
@@ -737,6 +733,11 @@ var update_style_couche_qgis = function (projet_qgis, identifiant) {
 
 	})
 }
+
+app.get('/update_style_couche_qgis/:projet_qgis/:identifiant', cors(corsOptions), function (req, res){
+	update_style_couche_qgis(req.params["projet_qgis"],req.params["identifiant"])
+	res.send({'status': 'ok'})
+})
 
 app.post('/download', cors(corsOptions), upload.single('file'), function (req, res, next) {
 	var file = req.file
@@ -863,15 +864,14 @@ app.get('/set_style_qgs/:projet_qgis/:style_file/:idndifiant', cors(corsOptions)
 						var element = rows[index];
 						var layername = element['identifiant']
 						var id_couche = element['id_couche']
-						pte.push({
+						var pte = {
 							'id_couche': id_couche,
 							'layername': layername,
-						})
+						}
 
 					}
 
-					console.log('start', pte.length)
-					save_qml_layer_projet(pte[i], req.params["projet_qgis"])
+					save_qml_layer_projet(pte, req.params["projet_qgis"])
 
 				}
 
@@ -891,9 +891,10 @@ app.get('/set_style_qgs/:projet_qgis/:style_file/:idndifiant', cors(corsOptions)
 })
 //////////////////////////////////////////
 
-// https://cuy.sogefi.cm:8443/get_source_file/communes
 app.get('/get_source_file/:projet_qgis/:idndifiant', cors(corsOptions), function (req, res) {
-	var projet_qgis = path_projet_qgis + req.params["projet_qgis"] + ".qgs"
+	var destination = pte_projet(req.params["projet_qgis"]).destination
+	var projet_qgis = destination + '/../' + req.params["projet_qgis"] + '.qgs'
+
 	var layername = req.params["idndifiant"]
 	console.log(layername)
 	let options = {
@@ -920,8 +921,6 @@ app.get('/get_source_file/:projet_qgis/:idndifiant', cors(corsOptions), function
 
 })
 
-// https://cuy.sogefi.cm:8443/downloadVectorToWMS/occitanie/Association_false_54_198.gpkg
-// https://cuy.sogefi.cm:8443/downloadVectorToWMS/madagascar/grand_bassin_versant_lac_itasy_mars.zip
 app.get('/downloadVectorToWMS/:projet_qgis/:file/', cors(corsOptions), function (req, res) {
 
 	var destination = pte_projet(req.params["projet_qgis"]).destination
@@ -1379,7 +1378,7 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 	function set_qml(props) {
 		var style_file = destination_style + props["id_couche"] + '.qml'
 
-		fs.access(path, fs.F_OK, (err) => {
+		fs.access(style_file, fs.F_OK, (err) => {
 			if (err) {
 			//   update_style_couche_qgis(projet_qgis,props["layername"])
 

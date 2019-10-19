@@ -31,8 +31,11 @@ def run():
 
     succes = project.write()
 
-    if succes :print ('ok')
+    if succes :
+        print ('ok')
+    else:
+        print ('Un problème est survenu')
 
-    QgsApplication.exitQgis()
+    # QgsApplication.exitQgis()
 
 run()
