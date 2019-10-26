@@ -572,10 +572,25 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 		var add_to_qgis = function () {
 
 			if (req.params["addtowms"] == 'false') {
-				res.send({
-					'status': 'ok',
-					'addtowms': false
-				})
+				
+
+				let options = {
+					mode: 'text',
+					pythonPath: 'python3',
+					//pythonOptions: ['-u'], // get print results in real-time
+					//scriptPath: 'path/to/my/scripts',
+					args: [path_projet_qgis_projet]
+				};
+				//python '/var/www/smartworld/reload_qgis_project.py' "/var/www/smartworld/smartworld4.qgs"
+				PythonShell.run(path_script_python + '/reload_qgis_project.py', options, function (err, results) {
+
+					if (err) throw err;
+					res.send({
+						'status': 'ok',
+						'addtowms': false
+					})
+				});
+
 			} else if (req.params["addtowms"] == 'true') {
 
 				let options = {

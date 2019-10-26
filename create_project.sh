@@ -93,8 +93,11 @@ exit
 #npm run initialiser_projet --projet=mali
 #npm run apply_style_projet --projet=mali
 
-#étant root, si non il ecrira pas les log : forever start   --minUptime 5000  --spinSleepTime 5000 -l process.log -o out.log -e err.log server.js
+#étant root, si non il ecrira pas les log : forever start  -a --minUptime 5000  --spinSleepTime 5000 -l process.log -o out.log -e err.log server.js
 # log de forver alors sont cat /root/.forever/process.log
+
+
+#php artisan migrate
 
 # 2a01:e0d:1:c:58bf
 # @2a01:e0d:1:c:58bf:fac1:8000:167
