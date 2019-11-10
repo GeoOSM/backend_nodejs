@@ -1206,7 +1206,11 @@ app.post('/analyse_spatiale', cors(corsOptions), function (req, res) {
 			var typeGestion = donne['querry'][k]['type']
 
 			if (methode == 'qgis') {
-				var projet_qgis = path_projet_qgis + donne['querry'][k]['projet_qgis'] + ".qgs"
+
+				// var projet_qgis = destination +donne['querry'][k]['projet_qgis'] + ".qgs"
+				var destination = pte_projet(donne['querry'][k]['projet_qgis']).destination
+				var projet_qgis = destination + '/../' + donne['querry'][k]['projet_qgis'] + '.qgs'
+
 				var layername = donne['querry'][k]['identifiant']
 				let options = {
 					mode: 'text',
