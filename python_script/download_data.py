@@ -42,7 +42,7 @@ def run():
                 alg_params_dissolve = {
                     'INPUT': layer[0],
                     'OVERLAY': layer_roi,
-                    'OUTPUT': 'memomry:'
+                    'OUTPUT': 'memory:'
                 }
 
                 result = processing.run('native:clip', alg_params_dissolve)
