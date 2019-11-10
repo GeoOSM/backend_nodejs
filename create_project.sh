@@ -49,6 +49,7 @@ exit
 # sudo apt-get install php7.3-xml
 # sudo apt-get install php-mbstring
 #sudo apt-get install php7.3-zip
+#sudo apt-get install python3-shapely
 # composer install
 # sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 # sudo apt-get install gdal-bin
