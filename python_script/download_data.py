@@ -12,8 +12,8 @@ import json
 # pour avoir les outils de processing
 sys.path.append('/usr/share/qgis/python/plugins/')
 
-pathqgisproject = sys.argv[1] 
-layername =  sys.argv[2] 
+pathqgisproject = sys.argv[1]
+layername =  sys.argv[2]
 path_roi = sys.argv[3]
 path_to_save = sys.argv[4]
 layernames = [layername]
@@ -42,10 +42,12 @@ def run():
                 alg_params_dissolve = {
                     'INPUT': layer[0],
                     'OVERLAY': layer_roi,
-                    'OUTPUT': path_to_save+lay_name+'.gpkg'
+                    'OUTPUT': 'memomry:'
                 }
+
                 result = processing.run('native:clip', alg_params_dissolve)
-                layer_filtrer = QgsVectorLayer(result['OUTPUT'], lay_name, "ogr")
+                layer_filtrer = result['OUTPUT']
+                QgsVectorFileWriter.writeAsVectorFormat(layer_filtrer, path_to_save+lay_name+'.gpkg', "utf-8", layer_filtrer.crs(), "GPKG")
                 # print (result['OUTPUT'],layer_filtrer.featureCount())
                 print(layer_filtrer.featureCount())
     else :
