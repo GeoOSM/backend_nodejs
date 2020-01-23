@@ -7,6 +7,7 @@ urlNodejs_backend='http://servicetest.geocameroun.xyz/'
 path_backend="/var/www/GeoOSM_Backend/projet_laravel/"
 
 list_projet='./projet.json'
+psql -c "DROP DATABASE $db"
 psql -c "CREATE DATABASE $db"
 echo "db created"
 psql -d  $db -c "CREATE EXTENSION postgis"
@@ -35,6 +36,7 @@ echo "Fichier de configuration pour NODE js crée"
 jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
 sed  -i '1i var config_projet =' $path_backend"public/assets/config.js"
 
+cp $path_backend".env.exemple" $path_backend".env"
 sed -i 's/database_name/'${db}'/g' $path_backend".env"
 sed -i 's/database_username/postgres/g' $path_backend".env"
 sed -i 's/database_password/postgres/g' $path_backend".env"
@@ -50,7 +52,6 @@ exit
 # sudo apt-get install php-mbstring
 #sudo apt-get install php7.3-zip
 #sudo apt-get install python3-shapely
-# composer install
 # sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
 # sudo apt-get install gdal-bin
 #mkdir -m 777 -p /var/www/geosm/style

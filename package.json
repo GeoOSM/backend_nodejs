@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "initialiser_projet":"node -e 'require(\"./server\").initialiser_projet(process.env.npm_config_projet)'",
-    "apply_style_projet":"node -e 'require(\"./server\").apply_style_projet(process.env.npm_config_projet)'",
+    "initialiser_projet": "node -e 'require(\"./server\").initialiser_projet(process.env.npm_config_projet)'",
+    "apply_style_projet": "node -e 'require(\"./server\").apply_style_projet(process.env.npm_config_projet)'",
     "start": "node server.js"
   },
   "author": "Karl TAYOU",
