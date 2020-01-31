@@ -25,6 +25,7 @@ psql -d $db -c "TRUNCATE temp_table;"
 
 mkdir -m 777 -p $geosm_dir$db/gpkg/
 mkdir -m 777 -p $geosm_dir$db/style/
+mkdir -m 777 -p $geosm_dir/style/
 
 fetcher --url="https://github.com/GeoOSM/backend_nodejs/tree/master/python_script/style_default"
 cp ./style_default/*.qml $geosm_dir$db/style/

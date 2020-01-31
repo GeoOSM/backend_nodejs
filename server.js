@@ -25,7 +25,7 @@ const path_script_python = config.path_script_python
 const path_projet_qgis = config.path_projet_qgis
 const path_style_qml = config.path_style_qml
 
-const path_style_qml_default  = config.path_style_qml_default
+const path_style_qml_default = config.path_style_qml_default
 const path_style_qml_template = config.path_style_qml_template
 
 var multer = require('multer')
@@ -469,7 +469,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 					})
 				})
 			}
-			console.log(i, ' sur ',query.length, nom_shp)
+			console.log(i, ' sur ', query.length, nom_shp)
 
 
 		}
@@ -483,7 +483,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 				//scriptPath: 'path/to/my/scripts',
 				args: [path_projet_qgis_projet, destination + nom_shp + '.gpkg', name_layer]
 			};
-			
+
 			PythonShell.run(path_script_python + '/add_vector_layer.py', options, function (err, results) {
 				if (err) throw err;
 				if (Array.isArray(results) && results[0] == 'ok') {
@@ -504,8 +504,8 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 						check_function(i)
 					})
 
-				}else{
-					console.log('un problème est survenu ' , results)
+				} else {
+					console.log('un problème est survenu ', results)
 					process.exit(1)
 				}
 
@@ -534,7 +534,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 
 					if (err) throw err;
 
-					console.log(results,'initialisation terminé')
+					console.log(results, 'initialisation terminé')
 					process.exit()
 
 				});
@@ -572,7 +572,7 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 		var add_to_qgis = function () {
 
 			if (req.params["addtowms"] == 'false') {
-				
+
 
 				let options = {
 					mode: 'text',
@@ -697,25 +697,32 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 })
 
 
-var cluster_layer_point = function (props,projet_qgis) {
+var cluster_layer_point = async function (props, projet_qgis) {
 	// console.log(props)
 	let options = {
 		mode: 'text',
 		pythonPath: 'python3',
 		pythonOptions: ['-u'], // get print results in real-time
-		args: [props['projet_qgis'], props['icon_png'], props["layername"], props["destination"],path_style_qml_template+'clusters.qml']
+		args: [props['projet_qgis'], props['icon_png'], props["layername"], props["destination"], path_style_qml_template + 'clusters.qml']
 	};
 
-	PythonShell.run(path_script_python + '/set_icon_on_lyer.py', options, function (err, results) {
-		if (err) {
-			console.error(err)
-		}
-		save_qml_layer_projet(props,projet_qgis)
-		console.log('Clusterisation termine')
+	return await new Promise(resolve => {
+
+		PythonShell.run(path_script_python + '/set_icon_on_lyer.py', options, function (err, results) {
+			if (err) {
+				console.error(err)
+				resolve(false)
+			}
+			save_qml_layer_projet(props, projet_qgis)
+
+			console.log('Clusterisation termine')
+			resolve(true)
+		})
 	})
+
 }
 
-var update_style_couche_qgis = function (projet_qgis, identifiant) {
+var update_style_couche_qgis = async function (projet_qgis, identifiant) {
 	var destination = pte_projet(projet_qgis).destination
 	var destination_style = pte_projet(projet_qgis).destination_style
 	var path_projet_qgis = destination + '/../' + projet_qgis + '.qgs'
@@ -723,35 +730,49 @@ var update_style_couche_qgis = function (projet_qgis, identifiant) {
 
 	const pool = new Pool(pte_projet(projet_qgis).bd_access)
 
-	pool.query("SELECT identifiant,id_couche,geom,image_src from public." + '"couche-sous-thematique"' + "where identifiant='"+identifiant+"' UNION SELECT identifiant,id_couche,geom,image_src from public." + '"couche-thematique"' + "where identifiant='" + identifiant + "'", function (err, response) {
-		pool.end()
+	return await new Promise(resolve => {
+		pool.query("SELECT identifiant,id_couche,geom,image_src from public." + '"couche-sous-thematique"' + "where identifiant='" + identifiant + "' UNION SELECT identifiant,id_couche,geom,image_src from public." + '"couche-thematique"' + "where identifiant='" + identifiant + "'", function (err, response) {
+			pool.end()
 
-		var rows = response.rows
-		if (rows.length > 0) {
-			var couche = rows[0]
-			if (couche.geom == 'point') {
-				var icon_path = path_backend +'public/'+ couche['image_src']
-				var layername = couche['identifiant']
-				var id_couche = couche['id_couche']
-				var pte = {
-					'projet_qgis': path_projet_qgis,
-					'icon_png': icon_path,
-					'layername': layername,
-					'id_couche': id_couche,
-					'destination': destination,
+			var rows = response.rows
+			if (rows.length > 0) {
+				var couche = rows[0]
+				if (couche.geom == 'point') {
+					var icon_path = path_backend + 'public/' + couche['image_src']
+					var layername = couche['identifiant']
+					var id_couche = couche['id_couche']
+					var pte = {
+						'projet_qgis': path_projet_qgis,
+						'icon_png': icon_path,
+						'layername': layername,
+						'id_couche': id_couche,
+						'destination': destination,
+					}
+
+					cluster_layer_point(pte, projet_qgis)
+						.then((data) => {
+							console.log(data, 'Clusterisation termine, a t il marché ?')
+							resolve(data)
+						})
+						.catch(console.error)
 				}
-
-				cluster_layer_point(pte,projet_qgis)
 			}
-
-		}
+		})
 
 	})
 }
 
-app.get('/update_style_couche_qgis/:projet_qgis/:identifiant', cors(corsOptions), function (req, res){
-	update_style_couche_qgis(req.params["projet_qgis"],req.params["identifiant"])
-	res.send({'status': 'ok'})
+app.get('/update_style_couche_qgis/:projet_qgis/:identifiant', cors(corsOptions), function (req, res) {
+	update_style_couche_qgis(req.params["projet_qgis"], req.params["identifiant"])
+		.then((data) => {
+			console.log(data, 'update_style_couche_qgis termine, a t il marché ?')
+			res.send({ 'status': 'ok' })
+		})
+		.catch((err) => {
+			console.log(err)
+			res.send({ 'status': 'ko' })
+		})
+
 })
 
 app.post('/download', cors(corsOptions), upload.single('file'), function (req, res, next) {
@@ -869,7 +890,7 @@ app.get('/set_style_qgs/:projet_qgis/:style_file/:idndifiant', cors(corsOptions)
 		if (results == 'ok') {
 			const pool = new Pool(pte_projet(req.params["projet_qgis"]).bd_access)
 
-			pool.query("SELECT identifiant,id_couche from public." + '"couche-sous-thematique"' + "where identifiant='"+layername+"' UNION SELECT identifiant,id_couche from public." + '"couche-thematique"' + "where identifiant='" + layername + "'", function (err, response) {
+			pool.query("SELECT identifiant,id_couche from public." + '"couche-sous-thematique"' + "where identifiant='" + layername + "' UNION SELECT identifiant,id_couche from public." + '"couche-thematique"' + "where identifiant='" + layername + "'", function (err, response) {
 				pool.end()
 
 				var rows = response.rows
@@ -1300,7 +1321,7 @@ app.get('/change_all_style_point/:projet_qgis/', cors(corsOptions), function (re
 			mode: 'text',
 			pythonPath: 'python3',
 			pythonOptions: ['-u'], // get print results in real-time
-			args: [props['projet_qgis'], props['icon_png'], props["layername"], props["destination"],path_style_qml_template+'clusters.qml']
+			args: [props['projet_qgis'], props['icon_png'], props["layername"], props["destination"], path_style_qml_template + 'clusters.qml']
 		};
 
 		PythonShell.run(path_script_python + '/set_icon_on_lyer.py', options, function (err, results) {
@@ -1400,38 +1421,38 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 
 		fs.access(style_file, fs.F_OK, (err) => {
 			if (err) {
-			//   update_style_couche_qgis(projet_qgis,props["layername"])
+				//   update_style_couche_qgis(projet_qgis,props["layername"])
 
-			  i = i + 1
-			  console.log(i, ' / ', pte.length, props["layername"],'Style par defaut non trouvé')
-  
-			  if (pte.length != i) {
-				  set_qml(pte[i])
-			  } else {
-				  console.log('termine')
-				  process.exit()
-			  }
+				i = i + 1
+				console.log(i, ' / ', pte.length, props["layername"], 'Style par defaut non trouvé')
 
-			  return
+				if (pte.length != i) {
+					set_qml(pte[i])
+				} else {
+					console.log('termine')
+					process.exit()
+				}
+
+				return
 			}
-		  
+
 			//file exists
 			let options = {
 				mode: 'text',
 				pythonPath: 'python3',
 				pythonOptions: ['-u'], // get print results in real-time
-				args: [props['projet_qgis'], style_file,props["layername"]]
+				args: [props['projet_qgis'], style_file, props["layername"]]
 			};
-	
+
 			PythonShell.run(path_script_python + '/set_style_on_layer.py', options, function (err, results) {
-	
+
 				if (err) {
 					console.error(err)
 				}
-	
+
 				i = i + 1
 				console.log(i, ' / ', pte.length, props["layername"])
-	
+
 				if (pte.length != i) {
 					set_qml(pte[i])
 				} else {
@@ -1441,7 +1462,7 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 			})
 		})
 
-		
+
 	}
 
 	pool.query("SELECT identifiant,id_couche from public." + '"couche-sous-thematique"' + "where wms_type='osm' UNION SELECT identifiant,id_couche from public." + '"couche-thematique"' + "where wms_type='osm'", function (err, response) {
@@ -1543,9 +1564,5 @@ module.exports.apply_style_projet = function (projet) {
 var httpServer = http.createServer(app);
 // var httpsServer = https.createServer(credentials, app);
 
-// httpServer.listen(3000);
-// httpsServer.listen(8443);
-app.listen(3000)
-
-
-
+httpServer.listen(3000);
+//httpsServer.listen(8443);
