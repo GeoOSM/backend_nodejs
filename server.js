@@ -2,6 +2,8 @@
 var http = require('http');
 var https = require('https');
 var fs = require("fs");
+const promiseFinally = require('promise.prototype.finally');
+promiseFinally.shim();
 // https://stackoverflow.com/questions/30782693/run-function-in-script-from-command-line-node-js
 var unrar = require("node-unrar-js");
 var express = require('express');
@@ -750,8 +752,11 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
 					}
 
 					cluster_layer_point(pte, projet_qgis)
+						.finally(()=>{
+							
+						})
 						.then((data) => {
-							console.log(data, 'Clusterisation termine, a t il marché ?')
+							console.log('Clusterisation termine !')
 							resolve(data)
 						})
 						.catch(console.error)
@@ -764,9 +769,12 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
 
 app.get('/update_style_couche_qgis/:projet_qgis/:identifiant', cors(corsOptions), function (req, res) {
 	update_style_couche_qgis(req.params["projet_qgis"], req.params["identifiant"])
+		.finally(()=>{
+			
+		})
 		.then((data) => {
-			console.log(data, 'update_style_couche_qgis termine, a t il marché ?')
 			res.send({ 'status': 'ok' })
+			console.log(data, 'update_style_couche_qgis termine, a t il marché ?')
 		})
 		.catch((err) => {
 			console.log(err)
