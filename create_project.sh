@@ -5,6 +5,9 @@ path_pbf="http://download.geofabrik.de/africa/mali-latest.osm.pbf"
 geosm_dir='/var/www/geosm/'
 urlNodejs_backend='http://servicetest.geocameroun.xyz/'
 path_backend="/var/www/GeoOSM_Backend/projet_laravel/"
+user_bd='postgres'
+pass_bd='postgres237'
+port_bd=5432
 
 list_projet='./projet.json'
 psql -c "DROP DATABASE $db"
@@ -19,7 +22,7 @@ wget $path_pbf -O osm.pbf
 echo "import termine et telechargement du osm.pbf"
 osm2pgsql --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
 echo "import du osm.pbf termine"
-ogr2ogr -f "PostgreSQL" PG:"host=localhost user=postgres dbname=$db password=postgres"  $roi -nln temp_table -nlt MULTIPOLYGON  -lco GEOMETRY_NAME=geom
+ogr2ogr -f "PostgreSQL" PG:"host=localhost user=$user_bd dbname=$db password=$pass_bd"  $roi -nln temp_table -nlt MULTIPOLYGON  -lco GEOMETRY_NAME=geom
 psql -d $db -c "UPDATE instances_gc SET geom = st_transform(limite.geom,4326), true_geom = st_transform(limite.geom,4326) FROM (SELECT * from temp_table limit 1) as limite WHERE instances_gc.id = 1;"
 psql -d $db -c "TRUNCATE temp_table;"
 
@@ -31,7 +34,7 @@ fetcher --url="https://github.com/GeoOSM/backend_nodejs/tree/master/python_scrip
 cp ./style_default/*.qml $geosm_dir$db/style/
 rm -r style_default
 
-jq --arg path_backend $path_backend --arg db $db --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
+jq --arg path_backend $path_backend --arg db $db --arg user_bd $user_bd --arg pass_bd $pass_bd --arg port_bd $port_bd --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"user":$user_bd,"password":$pass_bd,"port":$port_bd,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
 echo "Fichier de configuration pour NODE js crée"
 
 jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
