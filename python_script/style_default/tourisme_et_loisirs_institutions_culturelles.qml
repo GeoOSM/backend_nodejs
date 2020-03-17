@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis styleCategories="AllStyleCategories" maxScale="0" version="3.4.7-Madeira" hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+08">
+<qgis readOnly="0" maxScale="0" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" minScale="1e+08" version="3.4.7-Madeira">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
@@ -8,7 +8,7 @@
   <customproperties/>
   <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
     <activeChecks type="StringList">
-      <Option type="QString" value=""/>
+      <Option value="" type="QString"/>
     </activeChecks>
     <checkConfiguration/>
   </geometryOptions>
@@ -50,11 +50,11 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" index="0" field="fid"/>
-    <alias name="" index="1" field="osm_id"/>
-    <alias name="" index="2" field="name"/>
-    <alias name="" index="3" field="amenity"/>
-    <alias name="" index="4" field="hstore_to_json"/>
+    <alias index="0" name="" field="fid"/>
+    <alias index="1" name="" field="osm_id"/>
+    <alias index="2" name="" field="name"/>
+    <alias index="3" name="" field="amenity"/>
+    <alias index="4" name="" field="hstore_to_json"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -66,11 +66,11 @@
     <default expression="" field="hstore_to_json" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" unique_strength="1" notnull_strength="1" field="fid" constraints="3"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="osm_id" constraints="0"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="name" constraints="0"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="amenity" constraints="0"/>
-    <constraint exp_strength="0" unique_strength="0" notnull_strength="0" field="hstore_to_json" constraints="0"/>
+    <constraint constraints="3" notnull_strength="1" exp_strength="0" unique_strength="1" field="fid"/>
+    <constraint constraints="0" notnull_strength="0" exp_strength="0" unique_strength="0" field="osm_id"/>
+    <constraint constraints="0" notnull_strength="0" exp_strength="0" unique_strength="0" field="name"/>
+    <constraint constraints="0" notnull_strength="0" exp_strength="0" unique_strength="0" field="amenity"/>
+    <constraint constraints="0" notnull_strength="0" exp_strength="0" unique_strength="0" field="hstore_to_json"/>
   </constraints>
   <constraintExpressions>
     <constraint desc="" exp="" field="fid"/>
@@ -81,7 +81,7 @@
   </constraintExpressions>
   <expressionfields/>
   <attributeactions/>
-  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+  <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
     <columns/>
   </attributetableconfig>
   <conditionalstyles>
