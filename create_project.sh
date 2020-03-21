@@ -22,6 +22,7 @@ wget $path_pbf -O osm.pbf
 echo "import termine et telechargement du osm.pbf"
 osm2pgsql --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
 echo "import du osm.pbf termine"
+psql -d $db -c "DROP TABLE IF EXISTS temp_table;"
 ogr2ogr -f "PostgreSQL" PG:"host=localhost user=$user_bd dbname=$db password=$pass_bd"  $roi -nln temp_table -nlt MULTIPOLYGON  -lco GEOMETRY_NAME=geom
 psql -d $db -c "UPDATE instances_gc SET geom = st_transform(limite.geom,4326), true_geom = st_transform(limite.geom,4326) FROM (SELECT * from temp_table limit 1) as limite WHERE instances_gc.id = 1;"
 psql -d $db -c "TRUNCATE temp_table;"
@@ -42,8 +43,8 @@ sed  -i '1i var config_projet =' $path_backend"public/assets/config.js"
 
 cp $path_backend".env.exemple" $path_backend".env"
 sed -i 's/database_name/'${db}'/g' $path_backend".env"
-sed -i 's/database_username/postgres/g' $path_backend".env"
-sed -i 's/database_password/postgres/g' $path_backend".env"
+sed -i 's/database_username/'${user_bd}'/g' $path_backend".env"
+sed -i 's/database_password/'${pass_bd}'/g' $path_backend".env"
 
 echo "Fichier de configuration pour laravel crée"
 
