@@ -50,11 +50,9 @@ def run():
     WFSLayers = project.readListEntry('WFSLayers','')
     b = list(WFSLayers)[0]
     b.append(u'%s' % layer.id())
-    ff = project.writeEntry('WFSLayers', '',  b) 
-
-    succes = project.write()
-    
     if layer.isValid() :
+        ff = project.writeEntry('WFSLayers', '',  b) 
+        succes = project.write()
         print ('ok')
     else:
         print('Le geopackage a un problème')

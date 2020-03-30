@@ -408,6 +408,79 @@ app.get('/generateAllShapeFromOsmBuilder/:projet_qgis', cors(corsOptions), funct
 	res.send("ok")
 })
 
+var addGpkgLayerToProjet = async function (path_projet_qgis_projet, nom_shp, name_layer) {
+
+	let options = {
+		mode: 'text',
+		pythonPath: 'python3',
+		//pythonOptions: ['-u'], // get print results in real-time 
+		//scriptPath: 'path/to/my/scripts',
+		args: [path_projet_qgis_projet, nom_shp + '.gpkg', name_layer]
+	};
+	return await new Promise(resolve => {
+		PythonShell.run(path_script_python + '/add_vector_layer.py', options, function (err, results) {
+			if (err) throw err;
+			if (Array.isArray(results) && results[0] == 'ok') {
+				resolve(true)
+
+			} else {
+				console.log('un problème est survenu lors de l ajout d une couche :  ',nom_shp, results)
+				resolve(false)
+				// process.exit(1)
+			}
+
+		})
+	})
+
+}
+
+var resetProjet = function (projet_qgis) {
+	var bd_access = pte_projet(projet_qgis).bd_access
+	var destination = pte_projet(projet_qgis).destination
+	var path_projet_qgis_projet = destination + '/../' + projet_qgis + '.qgs'
+	const pool = new Pool(bd_access)
+
+	try {
+		fs.unlinkSync(path_projet_qgis_projet);
+	} catch (error) {
+
+	}
+	
+	pool.query('SELECT * from public.categorie where sql is not null', (err, response) => {
+		pool.end()
+
+		var query = response.rows
+		var i = 0
+		console.log(query.length, ' Couche à ajouter')
+		
+
+		var addLayer = function (i) {
+			var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat
+
+			addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
+				.finally(() => {
+				})
+				.then((response_whrite_gpkg) => {
+					console.log(i, "couche ajoutée", response_whrite_gpkg)
+					i++
+					if (query.length - 1 == i) {
+						console.log('reset du projet terminé')
+						process.exit()
+					}else{
+						addLayer(i)
+					}
+					
+				})
+		}
+
+		if (query.length>0) {
+			addLayer(i)
+		}
+
+	})
+
+}
+
 var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 	var bd_access = pte_projet(projet_qgis).bd_access
 	var destination = pte_projet(projet_qgis).destination
@@ -441,7 +514,26 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 					.destination(destination + nom_shp + '.gpkg');
 
 				shapefile.exec(function (er, data) {
-					whrite_gpkg(i, destination, nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'), query[i].key_couche)
+					addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')).finally(() => {
+
+					})
+						.then((response_whrite_gpkg) => {
+							var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
+
+							var url = config.url_qgis_server + path_projet_qgis_projet
+
+							if (query[i].sous_thematiques) {
+								var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+							} else {
+								var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+							}
+
+							pool1.query(query_update, (err, response) => {
+								pool1.end()
+
+								check_function(i)
+							})
+						})
 				})
 			} else if (query[i].sql.split(';').length == 2) {
 				var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
@@ -467,52 +559,33 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 						.destination(destination + nom_shp + '.gpkg');
 
 					shapefile.exec(function (er, data) {
-						whrite_gpkg(i, destination, nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'), query[i].key_couche)
+						addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')).finally(() => {
+
+						})
+							.then((response_whrite_gpkg) => {
+								var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
+
+								var url = config.url_qgis_server + path_projet_qgis_projet
+
+								if (query[i].sous_thematiques) {
+									var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+								} else {
+									var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+								}
+
+								pool1.query(query_update, (err, response) => {
+									pool1.end()
+
+									check_function(i)
+								})
+							})
 					})
 				})
 			}
 			console.log(i, ' sur ', query.length, nom_shp)
-
-
 		}
 
-		var whrite_gpkg = function (i, destination, nom_shp, name_layer, key_couche) {
 
-			let options = {
-				mode: 'text',
-				pythonPath: 'python3',
-				//pythonOptions: ['-u'], // get print results in real-time 
-				//scriptPath: 'path/to/my/scripts',
-				args: [path_projet_qgis_projet, destination + nom_shp + '.gpkg', name_layer]
-			};
-
-			PythonShell.run(path_script_python + '/add_vector_layer.py', options, function (err, results) {
-				if (err) throw err;
-				if (Array.isArray(results) && results[0] == 'ok') {
-
-					var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
-
-					var url = config.url_qgis_server + path_projet_qgis_projet
-
-					if (query[i].sous_thematiques) {
-						var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
-					} else {
-						var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
-					}
-
-					//console.log(query_update)
-					pool1.query(query_update, (err, response) => {
-						pool1.end()
-						check_function(i)
-					})
-
-				} else {
-					console.log('un problème est survenu ', results)
-					process.exit(1)
-				}
-
-			})
-		}
 
 		if (query.length > 0) {
 			executeOgr2ogr(i)
@@ -752,8 +825,8 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
 					}
 
 					cluster_layer_point(pte, projet_qgis)
-						.finally(()=>{
-							
+						.finally(() => {
+
 						})
 						.then((data) => {
 							console.log('Clusterisation termine !')
@@ -769,8 +842,8 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
 
 app.get('/update_style_couche_qgis/:projet_qgis/:identifiant', cors(corsOptions), function (req, res) {
 	update_style_couche_qgis(req.params["projet_qgis"], req.params["identifiant"])
-		.finally(()=>{
-			
+		.finally(() => {
+
 		})
 		.then((data) => {
 			res.send({ 'status': 'ok' })
@@ -1165,7 +1238,7 @@ app.post('/analyse_spatiale', cors(corsOptions), function (req, res) {
 					compeur.push(1)
 					if (results != null) {
 						donne['querry'][compeur.length - 1]['number'] = results[0]
-						donne['querry'][compeur.length - 1]['nom_file'] = config.url_node_js + config.path_for_download_result + layername + '.gpkg'
+						donne['querry'][compeur.length - 1]['nom_file'] = config.path_for_download_result + layername + '.gpkg'
 					} else {
 						donne['querry'][compeur.length - 1]['number'] = 0
 						donne['querry'][compeur.length - 1]['nom_file'] = false
@@ -1256,7 +1329,7 @@ app.post('/analyse_spatiale', cors(corsOptions), function (req, res) {
 					compeur.push(1)
 					if (results != null) {
 						donne['querry'][compeur.length - 1]['number'] = results[1]
-						donne['querry'][compeur.length - 1]['nom_file'] = config.url_node_js + results[0]
+						donne['querry'][compeur.length - 1]['nom_file'] = results[0]
 					} else {
 						donne['querry'][compeur.length - 1]['number'] = 0
 						donne['querry'][compeur.length - 1]['nom_file'] = false
@@ -1558,6 +1631,11 @@ app.get('/production_style_by_default/:projet_qgis/', cors(corsOptions), functio
 })
 
 
+
+module.exports.reset_projet = function (projet) {
+	console.log('projet :', projet);
+	resetProjet(projet)
+}
 
 module.exports.initialiser_projet = function (projet) {
 	console.log('projet :', projet);
