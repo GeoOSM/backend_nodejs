@@ -22,6 +22,18 @@ wget $path_pbf -O osm.pbf
 echo "import termine et telechargement du osm.pbf"
 osm2pgsql --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
 echo "import du osm.pbf termine"
+
+colones=`psql -d $db  -c "select distinct(action) as key from sous_categorie"`
+
+for col in $colones; do
+    echo "Creation des index sur la colomne $col"
+    psql -d $db  -c "CREATE INDEX planet_osm_point${col}_idx on planet_osm_point($col)"
+    psql -d $db  -c "CREATE INDEX planet_osm_polygon${col}_idx on planet_osm_polygon($col)"
+    psql -d $db  -c "CREATE INDEX planet_osm_line${col}_idx on planet_osm_line($col)"
+done
+
+echo "creation des index sur les colomnes terminées"
+
 psql -d $db -c "DROP TABLE IF EXISTS temp_table;"
 ogr2ogr -f "PostgreSQL" PG:"host=localhost user=$user_bd dbname=$db password=$pass_bd"  $roi -nln temp_table -nlt MULTIPOLYGON  -lco GEOMETRY_NAME=geom
 psql -d $db -c "UPDATE instances_gc SET geom = ST_Buffer(st_transform(limite.geom ,4326)::geography,10)::geometry, true_geom = st_transform(limite.geom,4326) FROM (SELECT * from temp_table limit 1) as limite WHERE instances_gc.id = 1;"
