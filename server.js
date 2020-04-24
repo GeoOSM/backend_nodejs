@@ -1,7 +1,9 @@
 #! /usr/bin/env node
 var http = require('http');
 var https = require('https');
+const getPort = require('get-port');
 var fs = require("fs");
+var timeout = require('connect-timeout');
 const promiseFinally = require('promise.prototype.finally');
 promiseFinally.shim();
 // https://stackoverflow.com/questions/30782693/run-function-in-script-from-command-line-node-js
@@ -89,6 +91,14 @@ var corsOptions = {
 }
 
 app.use(express.static('/'));
+
+//toujours comme dernier des middleware
+app.use(timeout(900000));
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
 
 var dir_project = '/var/www/cuy/public/assets/nodejs/'
 var d = new Date();
@@ -499,7 +509,8 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 
 			var type = 'GPKG'
 			var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat
-
+			var name_layer = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')
+			var key_couche = query[i].key_couche
 
 			if (query[i].sql.split(';').length == 1) {
 				var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
@@ -514,7 +525,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 					.destination(destination + nom_shp + '.gpkg');
 
 				shapefile.exec(function (er, data) {
-					addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')).finally(() => {
+					addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, name_layer).finally(() => {
 
 					})
 						.then((response_whrite_gpkg) => {
@@ -559,7 +570,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 						.destination(destination + nom_shp + '.gpkg');
 
 					shapefile.exec(function (er, data) {
-						addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')).finally(() => {
+						addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, name_layer).finally(() => {
 
 						})
 							.then((response_whrite_gpkg) => {
@@ -630,6 +641,16 @@ app.get('/generateAllShapeFromOsmBuilderCreate/:projet_qgis', cors(corsOptions),
 })
 
 // https://cuy.sogefi.cm:8443/generateShapeFromOsmBuilder/171/false
+app.use('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', function(req, res, next) {
+    req.clearTimeout(); // clear request timeout
+    req.setTimeout(900000); //set a 20s timeout for this request
+    next();
+})
+app.use('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', function(req, res, next) {
+    req.clearTimeout(); // clear request timeout
+    req.setTimeout(900000); //set a 20s timeout for this request
+    next();
+})
 app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(corsOptions), function (req, res) {
 	var destination = pte_projet(req.params["projet_qgis"]).destination
 	var bd_access = pte_projet(req.params["projet_qgis"]).bd_access
@@ -643,7 +664,7 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 
 		var type = "GPKG"
 		var nom_shp = query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query.sous_thematiques + '_' + query.key_couche + '_' + query.id_cat
-
+		
 		var add_to_qgis = function () {
 
 			if (req.params["addtowms"] == 'false') {
@@ -675,12 +696,25 @@ app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(cors
 					//scriptPath: 'path/to/my/scripts',
 					args: [path_projet_qgis_projet, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_')]
 				};
-				console.log(1, path_projet_qgis_projet, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
+				var d = new Date,
+				dformat = [d.getMonth()+1,
+					d.getDate(),
+					d.getFullYear()].join('/')+' '+
+					[d.getHours(),
+					d.getMinutes(),
+					d.getSeconds()].join(':');
+				console.log(dformat,1, path_projet_qgis_projet, destination + nom_shp + '.gpkg', query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
 				PythonShell.run(path_script_python + '/add_vector_layer.py', options, function (err, results) {
 
-					if (err) throw err;
-
-					console.log(11, err, results)
+					if (err) {
+						res.send({
+							'status': false,
+							'message':results
+						})
+					};
+					
+					
+					console.log(dformat,11, err, results)
 					if (Array.isArray(results) && results[0] == 'ok') {
 
 						const pool1 = new Pool(pte_projet(req.params["projet_qgis"]).bd_access)
@@ -1650,5 +1684,15 @@ module.exports.apply_style_projet = function (projet) {
 var httpServer = http.createServer(app);
 // var httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(3000);
+
+async function getRandomPort (preferredPort = 3000) {
+  const port = await getPort({ port: preferredPort });
+  return port;
+}
+getRandomPort(3000).then(port =>{
+	console.log(port)
+	httpServer.listen(port);
+}); 
+
+  
 //httpsServer.listen(8443);

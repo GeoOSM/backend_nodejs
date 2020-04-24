@@ -3,8 +3,12 @@ db="mali"
 roi="/var/www/GeoOSM_Backend/mali.shp"
 path_pbf="http://download.geofabrik.de/africa/mali-latest.osm.pbf"
 geosm_dir='/var/www/geosm/'
+geosm_nodejs_dir='/var/www/geosm/'
 urlNodejs_backend='http://servicetest.geocameroun.xyz/'
-path_backend="/var/www/GeoOSM_Backend/projet_laravel/"
+url_projet_backend =""
+path_projet="var/www/civ"
+path_backend_reppo="/var/www/GeoOSM_Backend"
+path_backend=$path_backend_reppo"/projet_laravel/"
 user_bd='postgres'
 pass_bd='postgres237'
 port_bd=5432
@@ -21,9 +25,11 @@ pg_restore -U postgres -d $db  ./BD/template_bd.backup --verbose
 wget $path_pbf -O osm.pbf
 echo "import termine et telechargement du osm.pbf"
 osm2pgsql --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
-echo "import du osm.pbf termine"
+echo "====== import du osm.pbf termine ======"
 
 colones=`psql -d $db  -c "select distinct(action) as key from sous_categorie"`
+
+echo "====== CReation des index ======"
 
 for col in $colones; do
     echo "Creation des index sur la colomne $col"
@@ -32,22 +38,47 @@ for col in $colones; do
     psql -d $db  -c "CREATE INDEX planet_osm_line${col}_idx on planet_osm_line($col)"
 done
 
-echo "creation des index sur les colomnes terminées"
+echo "====== creation des index sur les colomnes terminées ======"
+
+
+echo "====== IMPORT DE LA ZONE D'INTERET ======"
 
 psql -d $db -c "DROP TABLE IF EXISTS temp_table;"
 ogr2ogr -f "PostgreSQL" PG:"host=localhost user=$user_bd dbname=$db password=$pass_bd"  $roi -nln temp_table -nlt MULTIPOLYGON  -lco GEOMETRY_NAME=geom
 psql -d $db -c "UPDATE instances_gc SET geom = ST_Buffer(st_transform(limite.geom ,4326)::geography,10)::geometry, true_geom = st_transform(limite.geom,4326) FROM (SELECT * from temp_table limit 1) as limite WHERE instances_gc.id = 1;"
 psql -d $db -c "TRUNCATE temp_table;"
 
+echo "====== IMPORT DE LA ZONE D'INTERET TERMINE ======"
+
+echo "====== CREATION DES REPERTOIRE POUR QGIS SERVEUR (GPKG,STYLE) ======"
+
 mkdir -m 777 -p $geosm_dir$db/gpkg/
 mkdir -m 777 -p $geosm_dir$db/style/
 mkdir -m 777 -p $geosm_dir/style/
+
+echo "====== CREATION DES REPERTOIRE POUR QGIS SERVEUR TERMINE ======"
+
+echo "====== TELECHARGEMENT DES STYLES PAR DEFAUT DE GEOSM ======"
 
 fetcher --url="https://github.com/GeoOSM/backend_nodejs/tree/master/python_script/style_default"
 cp ./style_default/*.qml $geosm_dir$db/style/
 rm -r style_default
 
+echo "====== TELECHARGEMENT DES STYLES PAR DEFAUT DE GEOSM TERMINE ======"
+
+echo "====== clone de GeoOSM_Backend ======"
+
+git clone https://github.com/GeoOSM/GeoOSM_Backend/
+mv GeoOSM_Backend $path_backend_reppo
+cd $path_backend && composer install
+
+
+echo "====== clone de GeoOSM_Backend TERMINE======"
+
+echo "====== CONFIGURATION DES FICHIERS DE CONFIG DE NODE JS ET LARAVEL ======"
+
 jq --arg path_backend $path_backend --arg db $db --arg user_bd $user_bd --arg pass_bd $pass_bd --arg port_bd $port_bd --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"user":$user_bd,"password":$pass_bd,"port":$port_bd,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
+
 echo "Fichier de configuration pour NODE js crée"
 
 jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
@@ -59,7 +90,28 @@ sed -i 's/database_username/'${user_bd}'/g' $path_backend".env"
 sed -i 's/database_password/'${pass_bd}'/g' $path_backend".env"
 
 echo "Fichier de configuration pour laravel crée"
+echo "====== CONFIGURATION DES FICHIERS DE CONFIG DE NODE JS ET LARAVEL TERMINE ======"
 
+
+
+mkdir -m 777 -p $path_projet/docker/
+cp -r  $geosm_nodejs_dir/docker/ $path_projet/docker/
+
+mkdir -m 777 -p $path_projet/docker/public/upload
+mkdir -m 777 -p $path_projet/docker/public/assets/images
+mkdir -m 777 -p $path_projet/docker/public/assets/admin/images
+
+mkdir -m 777 -p $path_projet/docker/client/assets
+
+fetcher --url="https://github.com/GeoOSM/GeoOSM_Backend/tree/master/projet_laravel/public/assets/images" --out=$path_projet/docker/public/assets/
+fetcher --url="https://github.com/GeoOSM/GeoOSM_Backend/tree/master/projet_laravel/public/assets/admin/images" --out=$path_projet/docker/public/assets/admin/images
+
+fetcher --url="https://github.com/GeoOSM/GeoOSM_Frontend/tree/dev/src/assets" --out=$path_projet/docker/client/assets
+
+cp $path_projet/docker/htaccess.txt $path_projet/docker/client/htaccess.txt
+
+curl "https://raw.githubusercontent.com/GeoOSM/GeoOSM_Frontend/dev/src/environments/environment-exemple.ts"
+cp environment-exemple.ts $path_projet/docker/client/environment.ts 
 
 echo "termne !!!!! !!! !"
 exit
@@ -111,6 +163,8 @@ exit
 
 #npm run initialiser_projet --projet=mali
 #npm run apply_style_projet --projet=mali
+#a2ensite la conf
+#systemctl reload apache2
 
 #étant root, si non il ecrira pas les log : forever start  -a --minUptime 5000  --spinSleepTime 5000 -l process.log -o out.log -e err.log server.js
 # log de forver alors sont cat /root/.forever/process.log

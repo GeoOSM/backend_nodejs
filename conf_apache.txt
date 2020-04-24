@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+      ServerAdmin nelsontayou1@gmail.com
+      ServerName url_projet_backend
+      ServerAlias   url_projet_backend
+      DocumentRoot path_projet
+      <Directory path_projet>
+              Options Indexes FollowSymLinks
+              AllowOverride All
+
+              allow from all
+              Require all granted
+      </Directory>
+</VirtualHost>

@@ -1,0 +1,29 @@
+version: '3'
+services:
+  backend:
+    image: geosm
+    container_name: geosm_civ
+    restart: unless-stopped
+    tty: true
+    volumes: 
+
+        - ./public/.env:/var/www/GeoOSM_Backend/projet_laravel/.env
+        - ./public/assets/config.js:/var/www/GeoOSM_Backend/projet_laravel/public/assets/config.js
+        - ./public/assets/images/:/var/www/GeoOSM_Backend/projet_laravel/public/assets/images/
+        - ./public/assets/admin/images/:/var/www/GeoOSM_Backend/projet_laravel/public/assets/admin/images/
+        - ./public/upload/:/var/www/GeoOSM_Backend/projet_laravel/public/upload
+
+        - ./client/environment.ts:/var/www/GeoOSM_Frontend/src/environments/environment.ts
+        - ./client/htaccess.txt:/var/www/GeoOSM_Frontend/htaccess.txt
+        - ./client/assets:/var/www/GeoOSM_Frontend/assets
+
+        - ./php/php.ini:/etc/php/7.4/cli/conf.d/30local.ini 
+        - ./vhost-apache/:/etc/apache2/sites-available/
+        - ./boot.sh:/var/www/boot.sh
+
+    environment:
+        DEFAULT_ROOT: "/"
+        WEB_ROOT: /var/www/GeoOSM_Frontend/dist/
+    ports:
+        - 8060:8060
+        - 8070:8070

@@ -6,9 +6,9 @@ from pathlib import Path
 from datetime import date,datetime
 
 
-backup_dir = "/var/www/geosm/mali/backup/"
-projet = "mali"
-file_projet = "/var/www/geosm/mali/"
+backup_dir = "/var/www/geosm/france/backup/"
+projet = "france"
+file_projet = "/var/www/geosm/france/"
 
 now = datetime.now()
 today = date.today().strftime("%d%m%Y")

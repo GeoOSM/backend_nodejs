@@ -49,8 +49,9 @@ def run():
 
     WFSLayers = project.readListEntry('WFSLayers','')
     b = list(WFSLayers)[0]
-    b.append(u'%s' % layer.id())
+    
     if layer.isValid() :
+        b.append(u'%s' % layer.id())
         ff = project.writeEntry('WFSLayers', '',  b) 
         succes = project.write()
         print ('ok')
