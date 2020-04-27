@@ -56,7 +56,7 @@ def run():
         succes = project.write()
         print ('ok')
     else:
-        print('Le geopackage a un problème')
+        print('Le geopackage '+zipfile+' a un probleme')
 
     # if not layer: print ("ko")
 

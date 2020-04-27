@@ -1,18 +1,13 @@
 #!/bin/bash
-db="mali"
-roi="/var/www/GeoOSM_Backend/mali.shp"
-path_pbf="http://download.geofabrik.de/africa/mali-latest.osm.pbf"
-geosm_dir='/var/www/geosm/'
-geosm_nodejs_dir='/var/www/geosm/'
-urlNodejs_backend='http://servicetest.geocameroun.xyz/'
-url_projet_backend =""
-path_projet="var/www/civ"
-path_backend_reppo="/var/www/GeoOSM_Backend"
-path_backend=$path_backend_reppo"/projet_laravel/"
-user_bd='postgres'
-pass_bd='postgres237'
-port_bd=5432
 
+for s in $(cat "./new_project_config.json" | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
+    export $s
+done
+
+geosm_nodejs_dir='./'
+list_projet='./projet.json'
+
+echo "====== Création et initialisation de la BD ======"
 list_projet='./projet.json'
 psql -c "DROP DATABASE $db"
 psql -c "CREATE DATABASE $db"
@@ -23,7 +18,9 @@ psql -d $db -c "CREATE EXTENSION hstore"
 echo "extention created"
 pg_restore -U postgres -d $db  ./BD/template_bd.backup --verbose
 wget $path_pbf -O osm.pbf
-echo "import termine et telechargement du osm.pbf"
+echo "====== Création et initialisation de la BD terminé ======"
+
+echo "====== import termine et telechargement du osm.pbf ======"
 osm2pgsql --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
 echo "====== import du osm.pbf termine ======"
 
@@ -60,58 +57,69 @@ echo "====== CREATION DES REPERTOIRE POUR QGIS SERVEUR TERMINE ======"
 
 echo "====== TELECHARGEMENT DES STYLES PAR DEFAUT DE GEOSM ======"
 
-fetcher --url="https://github.com/GeoOSM/backend_nodejs/tree/master/python_script/style_default"
-cp ./style_default/*.qml $geosm_dir$db/style/
-rm -r style_default
+rm -rf  ./backend_nodejs_temp
+git clone https://github.com/GeoOSM/backend_nodejs/ ./backend_nodejs_temp
+cp ./backend_nodejs_temp/python_script/style_default/*.qml $geosm_dir$db/style/
+rm -rf  ./backend_nodejs_temp
 
 echo "====== TELECHARGEMENT DES STYLES PAR DEFAUT DE GEOSM TERMINE ======"
 
-echo "====== clone de GeoOSM_Backend ======"
+echo "====== Telechargements des elements pour DOCKER ======"
 
+rm -r $path_projet/docker/
+mkdir -m 777 -p $path_projet/docker/
+cp -r  $geosm_nodejs_dir/docker/ $path_projet/
+
+mkdir -m 777 -p $path_projet/docker/public/upload
+mkdir -m 777 -p $path_projet/docker/public/assets/images
+mkdir -m 777 -p $path_projet/docker/public/assets/admin/images
+
+mkdir -m 777 -p $path_projet/docker/client/
+
+rm -rf  ./GeoOSM_Backend
 git clone https://github.com/GeoOSM/GeoOSM_Backend/
-mv GeoOSM_Backend $path_backend_reppo
-cd $path_backend && composer install
+mv ./GeoOSM_Backend/projet_laravel/.env.exemple $path_projet/docker/public/.env.exemple
+mv ./GeoOSM_Backend/projet_laravel/public/assets/config_template.js $path_projet/docker/public/assets/config_template.js
+mv ./GeoOSM_Backend/projet_laravel/public/assets/images $path_projet/docker/public/assets/
+mv ./GeoOSM_Backend/projet_laravel/public/assets/admin/images $path_projet/docker/public/assets/admin/
+rm -rf  ./GeoOSM_Backend
 
+rm -rf  ./GeoOSM_Frontend
+git clone -b dev https://github.com/GeoOSM/GeoOSM_Frontend/
+mv ./GeoOSM_Frontend/src/assets/ $path_projet/docker/client/
+mv ./GeoOSM_Frontend/src/environments/ $path_projet/docker/client/environments/
+cp $path_projet/docker/client/environments/environment-exemple.ts $path_projet/docker/client/environments/environment.ts
+sed -i "s+'path_qgis_value'+"'"'${geosm_dir}'"'"+g" $path_projet/docker/client/environments/environment.ts
+sed -i "s/'pojet_nodejs_value'/"'"'${db}'"'"/g" $path_projet/docker/client/environments/environment.ts
+chmod -R 755 $path_projet/docker/
+rm -rf  ./GeoOSM_Frontend
 
-echo "====== clone de GeoOSM_Backend TERMINE======"
+cp $geosm_nodejs_dir/docker/htaccess.txt $path_projet/docker/client/htaccess.txt
+
+echo "====== Telechargements des elements pour DOCKER TERMINE======"
 
 echo "====== CONFIGURATION DES FICHIERS DE CONFIG DE NODE JS ET LARAVEL ======"
 
-jq --arg path_backend $path_backend --arg db $db --arg user_bd $user_bd --arg pass_bd $pass_bd --arg port_bd $port_bd --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"user":$user_bd,"password":$pass_bd,"port":$port_bd,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
+jq --arg path_backend $path_projet"/docker/" --arg db $db --arg user_bd $user_bd --arg pass_bd $pass_bd --arg port_bd $port_bd --arg destination_style $geosm_dir$db/style/ --arg destination $geosm_dir$db/gpkg/ '.projet[$db] = {"destination_style":$destination_style,"destination":$destination,"database":$db,"user":$user_bd,"password":$pass_bd,"port":$port_bd,"path_backend":$path_backend}'  ${list_projet} |sponge  ${list_projet}
 
 echo "Fichier de configuration pour NODE js crée"
 
-jq -n --arg rootApp $path_backend --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_backend"public/assets/config.js"
-sed  -i '1i var config_projet =' $path_backend"public/assets/config.js"
+cp $path_projet"/docker/public/assets/config_template.js" $path_projet"/docker/public/assets/config.js" 
 
-cp $path_backend".env.exemple" $path_backend".env"
-sed -i 's/database_name/'${db}'/g' $path_backend".env"
-sed -i 's/database_username/'${user_bd}'/g' $path_backend".env"
-sed -i 's/database_password/'${pass_bd}'/g' $path_backend".env"
+jq -n  --arg rootApp "/var/www/GeoOSM_Backend/projet_laravel/" --arg urlNodejs $urlNodejs_backend"importation" --arg urlNodejs_backend $urlNodejs_backend --arg projet_qgis_server $db '{"rootApp":$rootApp,"urlNodejs":$urlNodejs,"urlNodejs_backend":$urlNodejs_backend,"projet_qgis_server":$projet_qgis_server}' > $path_projet"/docker/public/assets/config.js"
+
+sed  -i '1i var config_projet =' $path_projet"/docker/public/assets/config.js"
+
+cp $path_projet"/docker/public/.env.exemple" $path_projet"/docker/public/.env"
+sed -i 's/database_username/'${user_bd}'/g' $path_projet"/docker/public/.env"
+sed -i 's/database_password/'${pass_bd}'/g' $path_projet"/docker/public/.env"
+sed -i 's/database_name/'${db}'/g' $path_projet"/docker/public/.env"
 
 echo "Fichier de configuration pour laravel crée"
 echo "====== CONFIGURATION DES FICHIERS DE CONFIG DE NODE JS ET LARAVEL TERMINE ======"
 
 
 
-mkdir -m 777 -p $path_projet/docker/
-cp -r  $geosm_nodejs_dir/docker/ $path_projet/docker/
-
-mkdir -m 777 -p $path_projet/docker/public/upload
-mkdir -m 777 -p $path_projet/docker/public/assets/images
-mkdir -m 777 -p $path_projet/docker/public/assets/admin/images
-
-mkdir -m 777 -p $path_projet/docker/client/assets
-
-fetcher --url="https://github.com/GeoOSM/GeoOSM_Backend/tree/master/projet_laravel/public/assets/images" --out=$path_projet/docker/public/assets/
-fetcher --url="https://github.com/GeoOSM/GeoOSM_Backend/tree/master/projet_laravel/public/assets/admin/images" --out=$path_projet/docker/public/assets/admin/images
-
-fetcher --url="https://github.com/GeoOSM/GeoOSM_Frontend/tree/dev/src/assets" --out=$path_projet/docker/client/assets
-
-cp $path_projet/docker/htaccess.txt $path_projet/docker/client/htaccess.txt
-
-curl "https://raw.githubusercontent.com/GeoOSM/GeoOSM_Frontend/dev/src/environments/environment-exemple.ts"
-cp environment-exemple.ts $path_projet/docker/client/environment.ts 
 
 echo "termne !!!!! !!! !"
 exit

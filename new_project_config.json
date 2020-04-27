@@ -1,0 +1,15 @@
+{
+    "roi": "/var/www/GeoOSM_Backend/mali.shp",
+    "path_pbf":"http://download.geofabrik.de/africa/mali-latest.osm.pbf",
+    "urlNodejs_backend":"http: //servicetest.geocameroun.xyz/",
+    "path_projet":"/var/www/civ_temp/",
+    "geosm_dir":"/var/www/geosm/",
+    "db":"civ_temp",
+    "user_bd":"postgres",
+    "pass_bd":"postgres237",
+    "port_bd":5432,
+
+    "path_qgis":"",
+    "pojet_nodejs":""
+    
+}

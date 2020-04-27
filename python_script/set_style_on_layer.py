@@ -36,10 +36,15 @@ def run():
 
 
     layer = project.mapLayersByName(layername)
-    #print layer
-    for lay in layer:
-        lay.loadNamedStyle(style_file)
-    succes1 = project.write()
-    if succes1 :print ('ok')
 
+    if len(layer) == 0:
+        print('couche '+ layername +' introuvable dans le projet qgis '+pathqgisproject)
+        print('k0')
+    
+    elif len(layer) >0:
+        for lay in layer:
+            lay.loadNamedStyle(style_file)
+        succes1 = project.write()
+        if succes1 :print ('ok')
+    
 run()
