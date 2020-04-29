@@ -17,19 +17,18 @@ $ git clone https://github.com/GeoOSM/backend_nodejs
 $ cd ./backend_nodejs
 $ npm install
 ```
+##### 2. Modification du projet Node JS
+
 Editer le fichier config.js
 
 | variable | valeur attendue |
 | ------ | ------ |
 | path_style_qml | empty path where we will store temporarely style files  |
-| url_qgis_server | link to the osm.pbf of your region of interest |
+| url_qgis_server | url de votre QGIS server sous la forme : http://xxx.xxx.xxx/cgi-bin/qgis_mapserv.fcgi?map= |
 | url_node_js | url que vous donnerez à ce projet dans la partie 3 ci dessous (**www.backend_nodejs.geoosm**)|
 
 Le projet Node JS est prèt ! 
 
-##### 2. Modification du projet Node JS
-- Remplissez la variable **url_qgis_server** url de votre QGIS server sous la forme : http://xxx.xxx.xxx/cgi-bin/qgis_mapserv.fcgi?map=
-- Modifiee la variable **url_node_js** url que vous donnerez à ce projet dans la partie 3 ci dessous (**www.backend_nodejs.geoosm**)
 ##### 3. Configurer Apache ou Nginx pour associer un nom de domaine au projet node js
 On appellera ce nom de domaine par la suite **www.backend_nodejs.geoosm**
 ##### 4. Créer votre  première instance geosm
