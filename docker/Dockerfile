@@ -25,7 +25,7 @@ RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - && apt-get install -
 RUN rm -rf /var/www/GeoOSM_Backend/ || true
 RUN git clone https://github.com/GeoOSM/GeoOSM_Backend 
 RUN cd /var/www/GeoOSM_Backend/projet_laravel && composer install
-RUN  chmod -R 777 /var/www/GeoOSM_Backend/projet_laravel
+
 
 
 RUN rm -rf /var/www/GeoOSM_Frontend/ || true
@@ -39,5 +39,5 @@ RUN rm -rf /var/www/backend_nodejs/ || true
 
 RUN touch /var/www/GeoOSM_Backend/projet_laravel/.env
 RUN touch /var/www/GeoOSM_Backend/projet_laravel/public/assets/config.js
-
+RUN  chmod -R 777 /var/www/GeoOSM_Backend/
 RUN ["chmod", "+x", "/var/www/boot.sh"]

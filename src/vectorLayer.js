@@ -216,7 +216,7 @@ var addGpkgLayerToProjet = async function (path_projet_qgis_projet, nom_shp, nam
                 resolve(true)
 
             } else {
-                console.log('un problème est survenu lors de l ajout d une couche :  ', nom_shp, results)
+                console.log('un problème est survenu lors de l ajout d une couche :  ', nom_shp, err,results)
                 resolve(false)
             }
 

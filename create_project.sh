@@ -8,7 +8,6 @@ geosm_nodejs_dir='./'
 list_projet='./projet.json'
 
 echo "====== Création et initialisation de la BD ======"
-list_projet='./projet.json'
 psql -c "DROP DATABASE $db"
 psql -c "CREATE DATABASE $db"
 echo "db created"
@@ -155,8 +154,9 @@ exit
 # gpg --export --armor 51F523511C7028C3 | sudo apt-key add -
 # sudo apt-get update
 # apt install qgis-server
-#apt install apache2 libapache2-mod-fcgid
+#apt install  libapache2-mod-fcgid
 #a2enmod fcgid
+#a2enmod headers
 #apt-get install php7.2-gd
 
 # mkdir /var/log/qgis/

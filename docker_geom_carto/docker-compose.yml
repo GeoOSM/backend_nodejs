@@ -1,0 +1,17 @@
+version: '3'
+services:
+  geosm_carto:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: keopx/apache-php:7.3
+    container_name: geosm_carto
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - /var/www/:/var/www/
+      - /var/www/backend_nodejs/projet.json:/home/keopx/backend_nodejs/projet.json
+      - /var/www/backend_nodejs/config.js:/home/keopx/backend_nodejs/config.js
+      - ./boot_qgis_server.sh:/home/keopx/boot_qgis_server.sh
+    ports:
+      - "8080:80" 

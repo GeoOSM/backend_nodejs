@@ -9,9 +9,7 @@ services:
     restart: unless-stopped
     tty: true
     volumes: 
-        - type: volume
-          source: ./public/.env
-          target: /var/www/GeoOSM_Backend/projet_laravel/.env
+        - ./public/.env:/var/www/GeoOSM_Backend/projet_laravel/.env
         - ./public/assets/config.js:/var/www/GeoOSM_Backend/projet_laravel/public/assets/config.js
         - ./public/assets/images/:/var/www/GeoOSM_Backend/projet_laravel/public/assets/images/
         - ./public/assets/admin/images/:/var/www/GeoOSM_Backend/projet_laravel/public/assets/admin/images/

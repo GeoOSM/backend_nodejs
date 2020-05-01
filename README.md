@@ -47,15 +47,17 @@ Editer le fichier new_project_config.json :
 | port_bd | port of Database  |
 
 ```sh
+$ sudo chown -R postgres:postgres /var/www/
 $ chmod +x ./create_project.sh
 $ dos2unix ./create_project.sh
 $ su - postgres
 $ cd <relative path of create_project.sh>
 $ ./create_project.sh
     # generer toutes les couches #
-$ npm run initialiser_projet --projet=<name of database of project>
+$ docker  exec -i -t geosm_carto   /home/keopx/boot_geosm_carto.sh
+$ docker exec -ti geosm_carto npm run initialiser_projet --projet=<name of database of project>
     # Appliquer les styles par défaut à toutes les couches #
-$ npm run apply_style_projet --projet=<name of database of project>
+$ docker exec -ti geosm_carto npm run apply_style_projet --projet=<name of database of project>
 ```
 ##### 5. Configurer docker
 
@@ -66,8 +68,8 @@ Dans le dossier <path_projet>/docker/client/environments/
 
 | variable | valeur attendue |
 | ------ | ------ |
-| url_prefix | url of administration (In local you can put localost:8060 to your file docker-compose.yml)  |
-| url_frontend | url of portail (In local you can put localost:8070 according to your file docker-compose.yml ) |
+| url_prefix | url of administration (In local you can put http://localost:8060 to your file docker-compose.yml)  |
+| url_frontend | url of portail (In local you can put http://localost:8070 according to your file docker-compose.yml ) |
 | global_logo | empty or the path for the icon in https://github.com/GeoOSM/GeoOSM_Frontend/tree/dev/src/assets/images/Pays (eg. assets/images/Pays/ OUGANDA.svg) |
 | drapeau | empty or path to a flag |
 | nom | empy or the name of the project that will be show in the portail |

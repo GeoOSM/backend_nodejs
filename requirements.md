@@ -1,5 +1,5 @@
 ```sh
-$ sudo apt-get install wget zip jq curl
+$ sudo apt-get install wget gdal-bin zip jq curl moreutils
 ```
 
 # Node js 11

@@ -7,9 +7,6 @@
     "db":"civ_temp",
     "user_bd":"postgres",
     "pass_bd":"postgres237",
-    "port_bd":5432,
-
-    "path_qgis":"",
-    "pojet_nodejs":""
+    "port_bd":5432
     
 }
