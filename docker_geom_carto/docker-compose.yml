@@ -13,5 +13,6 @@ services:
       - /var/www/backend_nodejs/projet.json:/home/keopx/backend_nodejs/projet.json
       - /var/www/backend_nodejs/config.js:/home/keopx/backend_nodejs/config.js
       - ./boot_qgis_server.sh:/home/keopx/boot_qgis_server.sh
+      - ./service.conf:/etc/apache2/sites-available/service.conf
     ports:
       - "8080:80" 

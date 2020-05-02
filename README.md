@@ -1,21 +1,21 @@
 # Projet Python + Node JS GeOsm
 
 ## Pré requis
-Avant de continuer, vous devez avoir installé:
-- Qgis server >= 3
-- Qgis Python
-- Node JS
-- OGR2OGR et GDAL
+
+Installer les pré-recquis de requiements.md
 
 ## Installation
+
 Le bon fonctionnement de GeOsm nécessite le respect des étapes suivantes..
 
 ##### 1. Déploiement du projet Node JS
 
 ```sh
 $ git clone https://github.com/GeoOSM/backend_nodejs
-$ cd ./backend_nodejs
-$ npm install
+$ cd ./backend_nodejs/docker_geom_carto
+$ docker-compose build --no-cache
+$ docker-compose up -d
+$ docker  exec -i -t geosm_carto  /home/keopx/boot_geosm_carto.sh
 ```
 ##### 2. Modification du projet Node JS
 
@@ -27,12 +27,16 @@ Editer le fichier config.js
 | url_qgis_server | url de votre QGIS server sous la forme : http://xxx.xxx.xxx/cgi-bin/qgis_mapserv.fcgi?map= |
 | url_node_js | url que vous donnerez à ce projet dans la partie 3 ci dessous (**www.backend_nodejs.geoosm**)|
 
-Le projet Node JS est prèt ! 
+Le projet Node JS est prèt sur le port 8080 ! 
 
 ##### 3. Configurer Apache ou Nginx pour associer un nom de domaine au projet node js
 On appellera ce nom de domaine par la suite **www.backend_nodejs.geoosm**
-##### 4. Créer votre  première instance geosm
-Editer le fichier new_project_config.json :
+
+❌  NB : les fichiers projet.json et config.js ne doivent jamais ètre supprimés de ce dossier, même lors d'une mise à jour du dépot !
+
+## Créer une instance geosm
+
+##### 1. Editer le fichier new_project_config.json :
 
 | variable | valeur attendue |
 | ------ | ------ |
@@ -46,25 +50,31 @@ Editer le fichier new_project_config.json :
 | pass_bd | password of Database |
 | port_bd | port of Database  |
 
+##### 2. Créer le projet :
+
 ```sh
 $ sudo chown -R postgres:postgres /var/www/
 $ chmod +x ./create_project.sh
 $ dos2unix ./create_project.sh
 $ su - postgres
-$ cd <relative path of create_project.sh>
 $ ./create_project.sh
+
+```
+
+##### 2. Créer les couches avec leurs styles par defaut :
+
+```sh
     # generer toutes les couches #
-$ docker  exec -i -t geosm_carto   /home/keopx/boot_geosm_carto.sh
 $ docker exec -ti geosm_carto npm run initialiser_projet --projet=<name of database of project>
     # Appliquer les styles par défaut à toutes les couches #
 $ docker exec -ti geosm_carto npm run apply_style_projet --projet=<name of database of project>
 ```
-##### 5. Configurer docker
 
+##### 3. Configurer docker pour l'administration et le portail public
 
 
 ###### Editer le fichier environment.ts et color.scss
-Dans le dossier <path_projet>/docker/client/environments/
+Dans le dossier <path_projet>/docker/client/environments/ <path_projet> du new_project_config.json de l'étape 1
 
 | variable | valeur attendue |
 | ------ | ------ |
@@ -77,11 +87,12 @@ Dans le dossier <path_projet>/docker/client/environments/
 | primaryColor | color of portail (hex,rgb,rgba|
 | default_language | fr or en |
 | projetOsmCm | true or false |
+
 Editer le fichier et color.scss avec la meme coucleur que celle mise à primaryColor
 
 ###### Editer le fichier docker-compose.yml
-Dans le dossier <path_projet>
-Nomer votre docker dans le fichier docker-compose.yml grâce à la variable **container_name**
+Dans le dossier <path_projet>/
+Nomer votre container docker dans le fichier docker-compose.yml grâce à la variable ""**container_name**""
 Editer les ports:
 - 8060 -> Pour l'administration
 - 8070 -> Pour le portail 
@@ -90,7 +101,26 @@ Editer les ports:
 
 ```sh
 $ cd <path_projet>/docker
-$ docker-compose build
+$ docker-compose build --no-cache
 $ docker-compose up -d
-$ docker  exec -i -t <container_name>   /var/www/boot.sh
+$ docker  exec -i -t ""container_name""   /var/www/boot.sh
+```
+
+## Pour mettre à jour la BD OSM
+```sh
+# mettre à jour la BD (https://github.com/Magellium/magOSM/tree/master/database)
+
+$ osmosis --read-replication-interval-init workingDirectory=/var/www/geosm/<name of database of project>/up-to-date
+$ osmium fileinfo -e --progress -v /var/www/backend_nodejs/osm.pbf
+$ nano /var/www/geosm/<name of database of project>/up-to-date/state.txt
+    timestamp=osmosis_replication_timestamp - 24h (Ex 2020-04-28T20:59:03Z - 24h = 2020-04-27T20:59:03Z)
+	sequenceNumber=osmosis_replication_sequence_number (Ex 2595)
+$ nano /var/www/geosm/<name of database of project>/up-to-date/configuration.txt (le fichier existe déja normalement, il a été crée par la première commande avec osmosis)
+    baseUrl=osmosis_replication_base_url (EX http://download.geofabrik.de/europe/france-updates)
+    maxInterval=jours en secondes ( Pour une semaine : 7 * 24 * 3600 = 604800)
+$ mkdir /var/www/geosm/<name of database of project>/up-to-date
+$ mkdir /var/www/geosm/<name of database of project>/up-to-date/keepup-cron-logs/
+$ chmod +x /var/www/geosm/<name of database of project>/up-to-date/update_osm_db.sh
+$ cron tous les 5 jours à minuit : 0 0 */5 * *  /var/www/geosm/<name of database of project>/up-to-date/update_osm_db.sh > /var/www/geosm/france/up-to-date/keepup-cron-logs/keepup-cron.log 2>&1
+
 ```

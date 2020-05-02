@@ -5,8 +5,20 @@ RUN apt-get update && apt-get install -y \
     sed  \
     curl \
     git \
-    iproute2
+    iproute2 \
+    software-properties-common
 
+RUN apt-add-repository --remove 'deb https://qgis.org/debian buster main'
+
+RUN apt-add-repository 'deb https://qgis.org/debian buster main'
+
+RUN wget -O - https://qgis.org/downloads/qgis-2019.gpg.key | gpg --import
+RUN gpg --export --armor 51F523511C7028C3 | apt-key add -
+
+RUN apt-get update && apt-get install -y \
+    qgis \
+    python3-qgis
+    
 RUN a2enmod proxy_http
 RUN a2enmod headers
 # RUN sed -i "s/PassEnv/#PassEnv/g" /etc/apache2/conf-available/qgis.conf 

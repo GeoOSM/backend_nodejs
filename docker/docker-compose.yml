@@ -5,7 +5,7 @@ services:
         context: .
         dockerfile: Dockerfile
     image: geosm
-    container_name: geosm_civ
+    container_name: geosm_
     restart: unless-stopped
     tty: true
     volumes: 
@@ -14,6 +14,7 @@ services:
         - ./public/assets/images/:/var/www/GeoOSM_Backend/projet_laravel/public/assets/images/
         - ./public/assets/admin/images/:/var/www/GeoOSM_Backend/projet_laravel/public/assets/admin/images/
         - ./public/upload/:/var/www/GeoOSM_Backend/projet_laravel/public/upload
+        - ./public/download/:/var/www/GeoOSM_Backend/projet_laravel/public/download
 
         - ./client/environments/environment.ts:/var/www/GeoOSM_Frontend/src/environments/environment.ts
         - ./client/htaccess.txt:/var/www/GeoOSM_Frontend/htaccess.txt

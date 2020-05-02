@@ -1,5 +1,5 @@
 ```sh
-$ sudo apt-get install wget gdal-bin zip jq curl moreutils
+$ sudo apt-get install wget gdal-bin zip jq curl moreutils 
 ```
 
 # Node js 11
@@ -58,5 +58,11 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```sh
 $ sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 $ sudo chmod +x /usr/local/bin/docker-compose
+```
 
+# osmosis
+
+```sh
+$ apt-get install osmosis
+$ export JAVACMD_OPTIONS=-Xmx5G
 ```
