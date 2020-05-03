@@ -36,7 +36,7 @@ On appellera ce nom de domaine par la suite **www.backend_nodejs.geoosm**
 
 ## Créer une instance geosm
 
-##### 1. Editer le fichier new_project_config.json :
+##### 1. Editer le fichier backend_nodejs/new_project_config.json :
 
 | variable | valeur attendue |
 | ------ | ------ |
@@ -61,7 +61,7 @@ $ ./create_project.sh
 
 ```
 
-##### 2. Créer les couches avec leurs styles par defaut :
+##### 3. Créer les couches avec leurs styles par defaut :
 
 ```sh
     # generer toutes les couches #
@@ -70,11 +70,12 @@ $ docker exec -ti geosm_carto npm run initialiser_projet --projet=<name of datab
 $ docker exec -ti geosm_carto npm run apply_style_projet --projet=<name of database of project>
 ```
 
-##### 3. Configurer docker pour l'administration et le portail public
+##### 4. Configurer docker pour l'administration et le portail public
 
 
 ###### Editer le fichier environment.ts et color.scss
-Dans le dossier <path_projet>/docker/client/environments/ <path_projet> du new_project_config.json de l'étape 1
+Dans le dossier <path_projet>/docker/client/environments/ <path_projet> du new_project_config.json de l'étape 1:
+- Editer le fichier environment.ts
 
 | variable | valeur attendue |
 | ------ | ------ |
@@ -88,11 +89,15 @@ Dans le dossier <path_projet>/docker/client/environments/ <path_projet> du new_p
 | default_language | fr or en |
 | projetOsmCm | true or false |
 
-Editer le fichier et color.scss avec la meme coucleur que celle mise à primaryColor
+- Editer le fichier color.scss avec la meme coucleur que celle mise à primaryColor
 
 ###### Editer le fichier docker-compose.yml
 Dans le dossier <path_projet>/
-Nomer votre container docker dans le fichier docker-compose.yml grâce à la variable ""**container_name**""
+
+dans le fichier docker-compose.yml:
+Modifier les valeurs:
+- services_name : service_<nom_pays>
+- container_name: geosm_<nom_pays>
 Editer les ports:
 - 8060 -> Pour l'administration
 - 8070 -> Pour le portail 

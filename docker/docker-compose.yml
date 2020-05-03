@@ -1,11 +1,11 @@
 version: '3'
-services:
+<services_name>:
   backend:
     build:
         context: .
         dockerfile: Dockerfile
-    image: geosm
-    container_name: geosm_
+    image: keopx/apache-php:7.3
+    container_name: <container_name>
     restart: unless-stopped
     tty: true
     volumes: 
