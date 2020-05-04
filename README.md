@@ -104,7 +104,8 @@ Editer les ports:
 
 ###### construire l'image docker
 
-```sh
+```
+$ chmod -R 777 <path_projet>/docker
 $ cd <path_projet>/docker
 $ docker-compose build --no-cache
 $ docker-compose up -d

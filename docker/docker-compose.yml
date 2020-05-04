@@ -17,6 +17,7 @@ version: '3'
         - ./public/download/:/var/www/GeoOSM_Backend/projet_laravel/public/download
 
         - ./client/environments/environment.ts:/var/www/GeoOSM_Frontend/src/environments/environment.ts
+        - ./client/environments/color.scss:/var/www/GeoOSM_Frontend/src/environments/color.scss
         - ./client/htaccess.txt:/var/www/GeoOSM_Frontend/htaccess.txt
         - ./client/assets/:/var/www/GeoOSM_Frontend/assets/
 
