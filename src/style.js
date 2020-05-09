@@ -7,7 +7,7 @@ const config = require('../config')
 const pte_projet = require('../config_projet')
 const { get_projet_qgis, get_all_projet_qgis } = require('./projet')
 
-const path_style_qml = config.path_style_qml+'style/'
+const path_style_qml = config.path_style_qml+'/'
 const path_style_qml_template = config.path_style_qml_template
 const path_script_python = config.path_script_python
 
@@ -18,7 +18,7 @@ const path_script_python = config.path_script_python
  * @param {string} projet_qgis 
  */
 async function cluster_layer_point(props, projet_qgis) {
-
+    
     let options = {
         mode: 'text',
         pythonPath: 'python3',
@@ -34,7 +34,7 @@ async function cluster_layer_point(props, projet_qgis) {
                 console.error(err)
                 resolve(false)
             }else{
-                save_qml_layer_projet(props, projet_qgis)
+                save_qml_layer_projet(props, props['projet_qgis'],props["destination"]+'/../style/')
                 console.log('Clusterisation termine')
                 resolve(true)
             }
@@ -49,11 +49,9 @@ async function cluster_layer_point(props, projet_qgis) {
  * @param {Object} props {layername,id_couche}
  * @param {string} projet_qgis 
  */
-function save_qml_layer_projet(props, projet_qgis) {
+async function  save_qml_layer_projet(props, projet_qgis,destination_style) {
 
-    var destination = pte_projet(projet_qgis).destination
-    var destination_style = pte_projet(projet_qgis).destination_style
-    var path_projet_qgis = destination + '/../' + projet_qgis + '.qgs'
+    var path_projet_qgis = projet_qgis
 
     let options = {
         mode: 'text',
@@ -61,16 +59,20 @@ function save_qml_layer_projet(props, projet_qgis) {
         pythonOptions: ['-u'], // get print results in real-time
         args: [path_projet_qgis, props["layername"], props["id_couche"], destination_style]
     };
+    console.log(path_projet_qgis, props["layername"],destination_style)
+    return await new Promise(resolve => {
+        PythonShell.run(path_script_python + '/save_qml_layer_projet.py', options, function (err, results) {
 
-    PythonShell.run(path_script_python + '/save_qml_layer_projet.py', options, function (err, results) {
-
-        if (err) {
-            console.error(err)
-        }
-
-        console.log('Fichier de Style sauvergardé avec succès')
-
+            if (err) {
+                console.error(err)
+                resolve.log(false)
+            }
+    
+            console.log('Fichier de Style sauvergardé avec succès')
+            resolve(destination_style+'/'+props["id_couche"]+'.qml')
+        })
     })
+    
 }
 
 /**
@@ -192,7 +194,7 @@ var set_style_qml = function (projet_qgis, style_file_name, idndifiant, cb) {
                                 'status': 'ok'
                             })
 
-                            save_qml_layer_projet(pte, projet_qgis)
+                            save_qml_layer_projet(pte, path_projet_qgis,destination_style)
 
                         }
                     })
@@ -300,10 +302,67 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 	})
 }
 
+/**
+ * sauvegarde et renvois le lien d'un qml
+ * @param {string} projet_qgis 
+ * @param {string} identifiant 
+ * @returns {Promise}
+ */
+var saveAndDownloadStyleQgis = async function (projet_qgis, identifiant) {
+    var destination = pte_projet(projet_qgis).destination
+    var destination_style = pte_projet(projet_qgis).destination_style
+    var path_projet_qgis = null
+    var path_backend = pte_projet(projet_qgis).path_backend
 
+    const pool = new Pool(pte_projet(projet_qgis).bd_access)
+
+    return await new Promise(resolve => {
+        pool.query("SELECT identifiant,id_couche,geom,image_src, 'true' as sous_thematiques,id from public." + '"couche-sous-thematique"' + "where identifiant='" + identifiant + "' UNION SELECT identifiant,id_couche,geom,image_src, 'false' as sous_thematiques,id from public." + '"couche-thematique"' + "where identifiant='" + identifiant + "'", function (err, response) {
+            pool.end()
+
+            var rows = response.rows
+            if (rows.length > 0) {
+                var couche = rows[0]
+                if (couche.geom == 'point') {
+
+                    get_projet_qgis(projet_qgis, couche.sous_thematiques, couche.id, function (response) {
+                        if (response.error) {
+                            console.log("Impossible d'ajouter, projet QGIS introuvable")
+
+                        } else {
+                            path_projet_qgis = response.path_projet_qgis_projet
+
+                            var icon_path = path_backend + 'public/' + couche['image_src']
+                            var layername = couche['identifiant']
+                            var id_couche = couche['id_couche']
+                            var pte = {
+                                'projet_qgis': path_projet_qgis,
+                                'icon_png': icon_path,
+                                'layername': layername,
+                                'id_couche': id_couche,
+                                'destination': destination,
+                            }
+                            console.log(pte)
+                            save_qml_layer_projet(pte, pte['projet_qgis'],pte["destination"]+'/../style/').finally(() => {
+
+                            })
+                            .then((url) => {
+                                resolve(url)
+                            })
+
+                        }
+                    })
+
+                }
+            }
+        })
+
+    })
+}
 
 module.exports = {
     update_style_couche_qgis: update_style_couche_qgis,
     set_style_qml: set_style_qml,
-    setStyleAllShapeFromOsmBuilderCreate:setStyleAllShapeFromOsmBuilderCreate
+    setStyleAllShapeFromOsmBuilderCreate:setStyleAllShapeFromOsmBuilderCreate,
+    saveAndDownloadStyleQgis:saveAndDownloadStyleQgis
 };

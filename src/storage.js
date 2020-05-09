@@ -2,7 +2,7 @@
 const config = require('../config')
 var multer = require('multer')
 
-const path_style_qml = config.path_style_qml+'style/'
+const path_style_qml = config.path_style_qml+'/'
 
 // https://github.com/expressjs/multer#memorystorage npm install --save multer
 var storage = multer.diskStorage({

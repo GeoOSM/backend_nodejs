@@ -107,7 +107,6 @@ Editer les ports:
 ```
 $ chmod -R 777 <path_projet>/docker
 $ cd <path_projet>/docker
-$ docker-compose build --no-cache
 $ docker-compose up -d
 $ docker  exec -i -t ""container_name""   /var/www/boot.sh
 ```

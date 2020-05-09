@@ -42,7 +42,8 @@ const{
 const{
 	update_style_couche_qgis,
 	set_style_qml,
-	setStyleAllShapeFromOsmBuilderCreate
+	setStyleAllShapeFromOsmBuilderCreate,
+	saveAndDownloadStyleQgis
 }=require('./src/style')
 
 const path_nodejs = config.path_nodejs
@@ -106,6 +107,27 @@ app.get('/update_style_couche_qgis/:projet_qgis/:identifiant', cors(corsOptions)
 		.then((data) => {
 			res.send({ 'status': 'ok' })
 			console.log(data, 'update_style_couche_qgis termine, a t il marché ?')
+		})
+		.catch((err) => {
+			console.log(err)
+			res.send({ 'status': 'ko' })
+		})
+
+})
+
+app.get('/save_and_download_style_qgis/:projet_qgis/:identifiant', cors(corsOptions), function (req, res) {
+	saveAndDownloadStyleQgis(req.params["projet_qgis"], req.params["identifiant"])
+		.finally(() => {
+
+		})
+		.then((data) => {
+			if (data) {
+				res.send({ 'status': 'ok',data:data })
+			console.log(data, 'update_style_couche_qgis termine, a t il marché ?')
+			}else{
+				res.send({ 'status': 'ko',msg:'impossible d avoir le style' })
+			}
+			
 		})
 		.catch((err) => {
 			console.log(err)
