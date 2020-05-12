@@ -26,7 +26,8 @@ var get_projet_qgis = function (projet_qgis, sous_thematiques, key_couche, cb) {
 			var path_projet_qgis_projet = destination + '/../' + projet_qgis + id_thematique.toString() + '.qgs'
 			cb({
 				'error': false,
-				path_projet_qgis_projet: path_projet_qgis_projet
+				path_projet_qgis_projet: path_projet_qgis_projet,
+				id_thematique:id_thematique
 			})
 		} else {
 			cb({

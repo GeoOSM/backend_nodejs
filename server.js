@@ -46,6 +46,11 @@ const{
 	saveAndDownloadStyleQgis
 }=require('./src/style')
 
+const{
+	generateTags,
+	getMostOccurenceTags
+}=require('./src/tags')
+
 const path_nodejs = config.path_nodejs
 const path_script_python = config.path_script_python
 const path_projet_qgis = config.path_projet_qgis
@@ -168,15 +173,26 @@ module.exports.reset_projet = function (projet) {
 	resetProjet(projet)
 }
 
-module.exports.initialiser_projet = function (projet) {
-	console.log('projet :', projet);
-	generateAllShapeFromOsmBuilderCreate(projet)
+module.exports.initialiser_projet = function (projet,id_thematique=null) {
+	console.log('projet :', projet,id_thematique);
+	generateAllShapeFromOsmBuilderCreate(projet,id_thematique)
 }
 
 module.exports.apply_style_projet = function (projet) {
 	console.log('projet :', projet);
 	setStyleAllShapeFromOsmBuilderCreate(projet)
 }
+
+module.exports.generateAllTags = function (projet) {
+	console.log('projet :', projet);
+	generateTags(projet)
+}
+
+module.exports.getMostOccurenceTags = function (projet) {
+	console.log('projet :', projet);
+	getMostOccurenceTags(projet)
+}
+
 
 var httpServer = http.createServer(app);
 

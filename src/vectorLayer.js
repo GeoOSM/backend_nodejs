@@ -53,6 +53,70 @@ function reload_all_qgis(projet_qgis, cb) {
 
 
 }
+
+/**
+ * execute une requète sql avec ogr2ogr pour ecrirer un gpkg en 4326
+ * @param {number} i iteration
+ * @param {string} path_shp chemin ou il devra ecrire le gpkg
+ * @param {Object} bd_access parametre de connexion à la BD
+ * @param {string | Array<string>} sql la requète
+ * @param {Funtion} cb callback
+ */
+function executeOgr2ogrFun(i, path_shp, bd_access, sql, cb) {
+
+    var type = 'GPKG'
+
+
+    if (sql.split(';').length == 1) {
+        var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
+            .format(type)
+            .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", sql])
+            .project('EPSG:4326')
+            .timeout(1800000)
+            .onStderr(function (data) {
+                //console.log('azerty',data);
+            })
+            .skipfailures()
+            .destination(path_shp);
+
+        shapefile.exec(function (er, data) {
+            cb(i)
+        })
+    } else if (sql.split(';').length == 2) {
+        var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
+            .format(type)
+            .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", sql.split(';')[0]])
+            .project('EPSG:4326')
+            .timeout(1800000)
+            .onStderr(function (data) {
+                //console.log('azerty',data);
+            })
+            .skipfailures()
+            .destination(path_shp);
+
+        shapefile.exec(function (er, data) {
+            //console.log(query.sql.split(';')[0])
+            var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
+                .format(type)
+                .options(["-append", "--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", sql.split(';')[1]])
+                .project('EPSG:4326')
+                .timeout(1800000)
+                .onStderr(function (data) {
+                    //console.log('azerty',data);
+                })
+                .skipfailures()
+                .destination(path_shp);
+
+            shapefile.exec(function (er, data) {
+                //console.log(query.sql.split(';')[1])
+                cb(i)
+            })
+        })
+    }
+    console.log(i, path_shp)
+
+}
+
 /**
  * reload one projet qgis
  * @param {string} path_projet_qgis_projet 
@@ -107,68 +171,15 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
             } else {
                 path_projet_qgis_projet = response.path_projet_qgis_projet
 
-                var executeOgr2ogr = function (i) {
-
-                    var type = 'GPKG'
-                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat
-
-
-                    if (query[i].sql.split(';').length == 1) {
-                        var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
-                            .format(type)
-                            .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql])
-                            .project('EPSG:4326')
-                            .timeout(1800000)
-                            .onStderr(function (data) {
-                                //console.log('azerty',data);
-                            })
-                            .skipfailures()
-                            .destination(destination + nom_shp + '.gpkg');
-
-                        shapefile.exec(function (er, data) {
-                            whrite_gpkg(i)
-                        })
-                    } else if (query[i].sql.split(';').length == 2) {
-                        var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
-                            .format(type)
-                            .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[0]])
-                            .project('EPSG:4326')
-                            .timeout(1800000)
-                            .onStderr(function (data) {
-                                //console.log('azerty',data);
-                            })
-                            .skipfailures()
-                            .destination(destination + nom_shp + '.gpkg');
-
-                        shapefile.exec(function (er, data) {
-                            //console.log(query.sql.split(';')[0])
-                            var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
-                                .format(type)
-                                .options(["-append", "--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[1]])
-                                .project('EPSG:4326')
-                                .timeout(1800000)
-                                .onStderr(function (data) {
-                                    //console.log('azerty',data);
-                                })
-                                .skipfailures()
-                                .destination(destination + nom_shp + '.gpkg');
-
-                            shapefile.exec(function (er, data) {
-                                //console.log(query.sql.split(';')[1])
-                                whrite_gpkg(i)
-                            })
-                        })
-                    }
-                    console.log(i, nom_shp)
-
-                }
-
                 var whrite_gpkg = function (i) {
                     check_function(i)
                 }
 
                 if (query.length > 0) {
-                    executeOgr2ogr(i)
+                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat
+                    executeOgr2ogrFun(i, destination + nom_shp + '.gpkg', bd_access, query[i].sql, function () {
+                        whrite_gpkg(i)
+                    })
                 } else {
                     console.log('finish')
                 }
@@ -185,7 +196,10 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
                         })
 
                     } else {
-                        executeOgr2ogr(compteur.length)
+                        var nom_shp = query[compteur.length].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[compteur.length].sous_thematiques + '_' + query[compteur.length].key_couche + '_' + query[compteur.length].id_cat
+                        executeOgr2ogrFun(compteur.length, destination + nom_shp + '.gpkg', bd_access, query[compteur.length].sql, function () {
+                            whrite_gpkg(compteur.length)
+                        })
                     }
                 }
             }
@@ -216,7 +230,7 @@ var addGpkgLayerToProjet = async function (path_projet_qgis_projet, nom_shp, nam
                 resolve(true)
 
             } else {
-                console.log('un problème est survenu lors de l ajout d une couche :  ', nom_shp, err,results)
+                console.log('un problème est survenu lors de l ajout d une couche :  ', nom_shp, err, results)
                 resolve(false)
             }
 
@@ -257,7 +271,7 @@ var resetProjet = function (projet_qgis) {
                 }
 
                 var addLayer = function (i) {
-                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat+ '.gpkg'
+                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat + '.gpkg'
 
                     addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
                         .finally(() => {
@@ -291,7 +305,7 @@ var resetProjet = function (projet_qgis) {
  * reload all his QGIS projects at the end
  * @param {string} projet_qgis 
  */
-var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
+var generateAllShapeFromOsmBuilderCreate = function (projet_qgis, id_thematique) {
     var bd_access = pte_projet(projet_qgis).bd_access
     var destination = pte_projet(projet_qgis).destination
     var path_projet_qgis_projet = null
@@ -314,25 +328,14 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
                     check_function(i)
                 } else {
                     path_projet_qgis_projet = response.path_projet_qgis_projet
+                    var id_thematique_projet = response.id_thematique
+                    if (id_thematique == null || id_thematique == id_thematique_projet) {
 
-                    var type = 'GPKG'
-                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat+ '.gpkg'
-                    var name_layer = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')
-                    var key_couche = query[i].key_couche
 
-                    if (query[i].sql.split(';').length == 1) {
-                        var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
-                            .format(type)
-                            .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql])
-                            .project('EPSG:4326')
-                            .timeout(1800000)
-                            .onStderr(function (data) {
-                                // console.log('azerty1',data);
-                            })
-                            .skipfailures()
-                            .destination(destination + nom_shp );
-
-                        shapefile.exec(function (er, data) {
+                        var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat + '.gpkg'
+                        var name_layer = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_')
+                        var key_couche = query[i].key_couche
+                        executeOgr2ogrFun(i, destination + nom_shp, bd_access, query[i].sql, function () {
                             addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, name_layer).finally(() => {
 
                             })
@@ -353,64 +356,108 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 
                                             check_function(i)
                                         })
-                                    }else{
+                                    } else {
                                         check_function(i)
                                     }
-                                    
+                                    console.log(i, ' sur ', query.length, nom_shp)
                                 })
                         })
-                    } else if (query[i].sql.split(';').length == 2) {
-                        var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
-                            .format(type)
-                            .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[0]])
-                            .project('EPSG:4326')
-                            .timeout(1800000)
-                            .onStderr(function (data) {
-                                // console.log('azerty2',data);
-                            })
-                            .skipfailures()
-                            .destination(destination + nom_shp );
 
-                        shapefile.exec(function (er, data) {
-                            var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
-                                .format(type)
-                                .options(["-append", "--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[1]])
-                                .project('EPSG:4326')
-                                .timeout(1800000)
-                                .onStderr(function (data) {
-                                })
-                                .skipfailures()
-                                .destination(destination + nom_shp );
-
-                            shapefile.exec(function (er, data) {
-                                addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, name_layer).finally(() => {
-
-                                })
-                                    .then((response_whrite_gpkg) => {
-                                        if (response_whrite_gpkg) {
-                                            var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
-
-                                            var url = config.url_qgis_server + path_projet_qgis_projet
-
-                                            if (query[i].sous_thematiques) {
-                                                var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
-                                            } else {
-                                                var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
-                                            }
-
-                                            pool1.query(query_update, (err, response) => {
-                                                pool1.end()
-
-                                                check_function(i)
-                                            })
-                                        } else {
-                                            check_function(i)
-                                        }
-                                    })
-                            })
-                        })
+                    } else {
+                        console.log(i, ' sur pas à modifier ', query.length, nom_shp)
+                        check_function(i)
                     }
-                    console.log(i, ' sur ', query.length, nom_shp)
+                    // if (query[i].sql.split(';').length == 1) {
+                    //     var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
+                    //         .format(type)
+                    //         .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql])
+                    //         .project('EPSG:4326')
+                    //         .timeout(1800000)
+                    //         .onStderr(function (data) {
+                    //             // console.log('azerty1',data);
+                    //         })
+                    //         .skipfailures()
+                    //         .destination(destination + nom_shp );
+
+                    //     shapefile.exec(function (er, data) {
+                    //         addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, name_layer).finally(() => {
+
+                    //         })
+                    //             .then((response_whrite_gpkg) => {
+                    //                 if (response_whrite_gpkg) {
+                    //                     var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
+
+                    //                     var url = config.url_qgis_server + path_projet_qgis_projet
+
+                    //                     if (query[i].sous_thematiques) {
+                    //                         var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+                    //                     } else {
+                    //                         var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+                    //                     }
+
+                    //                     pool1.query(query_update, (err, response) => {
+                    //                         pool1.end()
+
+                    //                         check_function(i)
+                    //                     })
+                    //                 }else{
+                    //                     check_function(i)
+                    //                 }
+
+                    //             })
+                    //     })
+                    // } else if (query[i].sql.split(';').length == 2) {
+                    //     var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
+                    //         .format(type)
+                    //         .options(["--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[0]])
+                    //         .project('EPSG:4326')
+                    //         .timeout(1800000)
+                    //         .onStderr(function (data) {
+                    //             // console.log('azerty2',data);
+                    //         })
+                    //         .skipfailures()
+                    //         .destination(destination + nom_shp );
+
+                    //     shapefile.exec(function (er, data) {
+                    //         var shapefile = ogr2ogr('PG:host=' + bd_access.host + ' port=5432 user=' + bd_access.user + ' dbname=' + bd_access.database + ' password=' + bd_access.password)
+                    //             .format(type)
+                    //             .options(["-append", "--config", "-select", "osm_id,hstore_to_json", "CPL_DEBUG", "ON", "-sql", query[i].sql.split(';')[1]])
+                    //             .project('EPSG:4326')
+                    //             .timeout(1800000)
+                    //             .onStderr(function (data) {
+                    //             })
+                    //             .skipfailures()
+                    //             .destination(destination + nom_shp );
+
+                    //         shapefile.exec(function (er, data) {
+                    //             addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, name_layer).finally(() => {
+
+                    //             })
+                    //                 .then((response_whrite_gpkg) => {
+                    //                     if (response_whrite_gpkg) {
+                    //                         var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
+
+                    //                         var url = config.url_qgis_server + path_projet_qgis_projet
+
+                    //                         if (query[i].sous_thematiques) {
+                    //                             var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+                    //                         } else {
+                    //                             var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
+                    //                         }
+
+                    //                         pool1.query(query_update, (err, response) => {
+                    //                             pool1.end()
+
+                    //                             check_function(i)
+                    //                         })
+                    //                     } else {
+                    //                         check_function(i)
+                    //                     }
+                    //                 })
+                    //         })
+                    //     })
+                    // }
+
                 }
             })
         }
@@ -432,7 +479,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
             } else {
                 executeOgr2ogr(compteur.length)
             }
-            
+
         }
 
 
@@ -446,7 +493,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis) {
  * @param {boolean} addtowms add it to QGIS Project or it is a update ?
  * @param {function} cb callbck
  */
-var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms,cb) {
+var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms, cb) {
     var destination = pte_projet(projet_qgis).destination
     var bd_access = pte_projet(projet_qgis).bd_access
     var path_projet_qgis_projet = null
@@ -466,13 +513,13 @@ var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms,cb)
                 path_projet_qgis_projet = response.path_projet_qgis_projet
 
                 var type = "GPKG"
-                var nom_shp = query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query.sous_thematiques + '_' + query.key_couche + '_' + query.id_cat+ '.gpkg'
+                var nom_shp = query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query.sous_thematiques + '_' + query.key_couche + '_' + query.id_cat + '.gpkg'
 
                 var add_to_qgis = function () {
 
                     if (addtowms == 'false') {
 
-                        reload_projet_qgis(path_projet_qgis_projet,function (params) {
+                        reload_projet_qgis(path_projet_qgis_projet, function (params) {
                             cb({
                                 'status': 'ok',
                                 'addtowms': false
@@ -481,50 +528,50 @@ var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms,cb)
 
                     } else if (addtowms == 'true') {
                         addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
-                        .finally(() => {
-                        })
-                        .then(
-                            (response_whrite_gpkg) => {
-                                if (response_whrite_gpkg) {
-                                    
-                                    console.log("couche ajoutée", response_whrite_gpkg)
-                                    const pool1 = new Pool(pte_projet(projet_qgis).bd_access)
+                            .finally(() => {
+                            })
+                            .then(
+                                (response_whrite_gpkg) => {
+                                    if (response_whrite_gpkg) {
 
-                                    var url = config.url_qgis_server + path_projet_qgis_projet
+                                        console.log("couche ajoutée", response_whrite_gpkg)
+                                        const pool1 = new Pool(pte_projet(projet_qgis).bd_access)
 
-                                    if (query.sous_thematiques) {
-                                        var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '\' WHERE id =' + query.key_couche
+                                        var url = config.url_qgis_server + path_projet_qgis_projet
+
+                                        if (query.sous_thematiques) {
+                                            var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '\' WHERE id =' + query.key_couche
+                                        } else {
+                                            var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '\' WHERE id =' + query.key_couche
+                                        }
+
+                                        pool1.query(query_update, (err, response) => {
+                                            pool1.end()
+                                            //console.log('sql =',response, 'results: ', results,query_update)
+                                            update_style_couche_qgis(projet_qgis, query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
+                                            cb({
+                                                'status': 'ok',
+                                                'addtowms': true,
+                                                'identifiant': query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'),
+                                                'projet_qgis': url
+                                            })
+                                        })
+
                                     } else {
-                                        var query_update = 'UPDATE public."couche-thematique" SET url= \' ' + url + ' \', identifiant= \'' + query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '\' WHERE id =' + query.key_couche
+                                        cb({
+                                            'status': 'ko',
+                                        })
                                     }
 
-                                    pool1.query(query_update, (err, response) => {
-                                        pool1.end()
-                                        //console.log('sql =',response, 'results: ', results,query_update)
-                                        update_style_couche_qgis(projet_qgis, query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
-                                        cb({
-                                            'status': 'ok',
-                                            'addtowms': true,
-                                            'identifiant': query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_'),
-                                            'projet_qgis': url
-                                        })
-                                    })
-
-                                }else{
+                                },
+                                (error) => {
                                     cb({
-                                        'status': 'ko',
+                                        'status': false,
+                                        'message': error
                                     })
                                 }
+                            )
 
-                            },
-                            (error)=>{
-                                cb({
-                                    'status': false,
-                                    'message': error
-                                })
-                            }
-                        )
-                      
                     }
                 }
 
