@@ -95,12 +95,15 @@ Dans le dossier <path_projet>/docker/client/environments/ <path_projet> du new_p
 Dans le dossier <path_projet>/
 
 dans le fichier docker-compose.yml:
+
 Modifier les valeurs:
 - services_name : service_<nom_pays>
 - container_name: geosm_<nom_pays>
 Editer les ports:
 - 8060 -> Pour l'administration
 - 8070 -> Pour le portail 
+Seulement pour le thème ville:
+-image: geosm_ville
 
 ###### construire l'image docker
 
