@@ -26,7 +26,7 @@ const config = require('./config')
 const {get_projet_qgis} = require('./src/projet')
 const {
 	generateAllShapeFromOsmBuilder,
-	addGpkgLayerToProjet,
+	reload_all_qgis,
 	resetProjet,
 	generateAllShapeFromOsmBuilderCreate,
 	generateOneShapeFromOsmBuilder,
@@ -167,10 +167,21 @@ app.get('/set_style_qgs/:projet_qgis/:style_file/:idndifiant', cors(corsOptions)
 
 })
 
-
-module.exports.reset_projet = function (projet) {
+module.exports.reload_all_qgis = function (projet) {
 	console.log('projet :', projet);
-	resetProjet(projet)
+	reload_all_qgis(projet,function(){
+		process.exit()
+	})
+}
+
+module.exports.generate_gpkg_giles = function (projet) {
+	console.log('projet :', projet);
+	generateAllShapeFromOsmBuilder(projet)
+}
+
+module.exports.reset_projet = function (projet,id_thematique=null) {
+	console.log('projet :', projet,id_thematique);
+	resetProjet(projet,id_thematique)
 }
 
 module.exports.initialiser_projet = function (projet,id_thematique=null) {
@@ -178,9 +189,9 @@ module.exports.initialiser_projet = function (projet,id_thematique=null) {
 	generateAllShapeFromOsmBuilderCreate(projet,id_thematique)
 }
 
-module.exports.apply_style_projet = function (projet) {
-	console.log('projet :', projet);
-	setStyleAllShapeFromOsmBuilderCreate(projet)
+module.exports.apply_style_projet = function (projet,id_thematique=null) {
+	console.log('projet :', projet,id_thematique);
+	setStyleAllShapeFromOsmBuilderCreate(projet,id_thematique)
 }
 
 module.exports.generateAllTags = function (projet) {

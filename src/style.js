@@ -211,7 +211,7 @@ var set_style_qml = function (projet_qgis, style_file_name, idndifiant, cb) {
  * Apply style on 
  * @param {string} projet_qgis 
  */
-var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
+var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis,id_thematique) {
 	const pool = new Pool(pte_projet(projet_qgis).bd_access)
 	var destination = pte_projet(projet_qgis).destination
 	var destination_style = pte_projet(projet_qgis).destination_style
@@ -274,8 +274,11 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 						console.log("Impossible d'ajouter, projet QGIS introuvable")
 						check_function(455555)
 					} else {
-						path_projet_qgis_projet = response.path_projet_qgis_projet
-						var layername = element['identifiant']
+                        path_projet_qgis_projet = response.path_projet_qgis_projet
+                        var id_thematique_projet = response.id_thematique
+
+                    if (id_thematique == null || id_thematique == id_thematique_projet) {
+                        var layername = element['identifiant']
 						var id_couche = element['id_couche']
 						var pte ={
 							'projet_qgis': path_projet_qgis_projet,
@@ -283,6 +286,11 @@ var setStyleAllShapeFromOsmBuilderCreate = function (projet_qgis) {
 							'layername': layername,
 						}
 						set_qml(pte)
+                    }else {
+                        console.log(i, ' sur pas à appliquer le style ')
+                        check_function(i)
+                    }
+						
 					}
 				})
 			}

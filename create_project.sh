@@ -20,7 +20,7 @@ wget $path_pbf -O osm.pbf
 echo "====== Création et initialisation de la BD terminé ======"
 
 echo "====== import termine et telechargement du osm.pbf ======"
-osm2pgsql --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
+osm2pgsql --cache 10000 --number-processes 5 --extra-attributes --slim -G -c -U postgres -d $db -H localhost -W --hstore-all -S ./BD/default.style osm.pbf
 echo "====== import du osm.pbf termine ======"
 
 colones=`psql -d $db  -c "select distinct(action) as key from sous_categorie"`

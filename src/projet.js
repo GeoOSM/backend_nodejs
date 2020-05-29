@@ -50,7 +50,7 @@ var get_all_projet_qgis = function (projet_qgis,cb) {
         var path_projet_qgis_projet = []
         for (let index = 0; index < query.length; index++) {
             var id_thematique = query[index]['id']
-            var path_projet_qgis_projet = destination + '/../' + projet_qgis + id_thematique.toString() + '.qgs'
+            path_projet_qgis_projet.push( destination + '/../' + projet_qgis + id_thematique.toString() + '.qgs')
         }
         cb({
             'error': false,

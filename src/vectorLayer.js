@@ -17,7 +17,7 @@ const {
  * @param {string} projet_qgis 
  * @param {Function} cb 
  */
-function reload_all_qgis(projet_qgis, cb) {
+var reload_all_qgis = function (projet_qgis, cb) {
 
     get_all_projet_qgis(projet_qgis, function (response) {
         if (response.error) {
@@ -25,16 +25,11 @@ function reload_all_qgis(projet_qgis, cb) {
 
         } else {
             all_projet_qgis = response.path_projet_qgis_projet
-
-            if (all_projet_qgis.length > 0) {
-                check_function(i)
-            } else {
-                console.log('finish')
-            }
+            
             var compteur = []
             var check_function = function (a) {
-                if (compteur.length == query.length) {
-                    console.log(results, 'mise à jour terminé avec succès')
+                if (compteur.length == all_projet_qgis.length) {
+                    console.log('mise à jour terminé avec succès')
                     cb({
                         error: false,
                         msg: ''
@@ -45,6 +40,12 @@ function reload_all_qgis(projet_qgis, cb) {
                     })
                 }
                 compteur.push(a)
+            }
+
+            if (all_projet_qgis.length > 0) {
+                check_function(2)
+            } else {
+                console.log('finish')
             }
 
         }
@@ -165,45 +166,44 @@ var generateAllShapeFromOsmBuilder = function (projet_qgis) {
 
         console.log(query.length)
 
-        get_projet_qgis(projet_qgis, query[i].sous_thematiques, query[i].key_couche, function (response) {
-            if (response.error) {
-                console.log("Impossible d'ajouter, projet QGIS introuvable")
-            } else {
-                path_projet_qgis_projet = response.path_projet_qgis_projet
-
-                var whrite_gpkg = function (i) {
+        var executeOgr2ogr = function (i) {
+            get_projet_qgis(projet_qgis, query[i].sous_thematiques, query[i].key_couche, function (response) {
+                if (response.error) {
+                    console.log(query[i].nom_cat,"Impossible de produire le fichier, projet QGIS introuvable")
                     check_function(i)
-                }
-
-                if (query.length > 0) {
-                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat
-                    executeOgr2ogrFun(i, destination + nom_shp + '.gpkg', bd_access, query[i].sql, function () {
-                        whrite_gpkg(i)
-                    })
                 } else {
-                    console.log('finish')
+                    path_projet_qgis_projet = response.path_projet_qgis_projet
+
+                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat
+
+                    executeOgr2ogrFun(i, destination + nom_shp + '.gpkg', bd_access, query[i].sql, function () {
+                        check_function(i)
+                    })
+
+                   
                 }
-                var compteur = []
-                var check_function = function (a) {
-                    compteur.push(a)
+            })
+        }
 
-                    if (compteur.length == query.length) {
-                        console.log(results, 'mise à jour terminé avec succès')
-
-
-                        reload_all_qgis(projet_qgis, function () {
-                            process.exit()
-                        })
-
-                    } else {
-                        var nom_shp = query[compteur.length].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[compteur.length].sous_thematiques + '_' + query[compteur.length].key_couche + '_' + query[compteur.length].id_cat
-                        executeOgr2ogrFun(compteur.length, destination + nom_shp + '.gpkg', bd_access, query[compteur.length].sql, function () {
-                            whrite_gpkg(compteur.length)
-                        })
-                    }
-                }
+        if (query.length > 0) {
+            executeOgr2ogr(i)
+        } else {
+            console.log('finish')
+        }
+        var compteur = []
+        var check_function= function (a) {
+            compteur.push(a)
+            if (compteur.length == query.length) {
+                reload_all_qgis(projet_qgis, function (results) {
+                    console.log(results, 'Reset terminé')
+                    process.exit()
+                })
+            } else {
+                executeOgr2ogr(compteur.length)
             }
-        })
+
+        }
+
     })
 }
 
@@ -243,7 +243,7 @@ var addGpkgLayerToProjet = async function (path_projet_qgis_projet, nom_shp, nam
  * NB: doesn't regenerate GPKG files ! Only recreate all QGIS projects
  * @param {string} projet_qgis 
  */
-var resetProjet = function (projet_qgis) {
+var resetProjet = function (projet_qgis, id_thematique) {
     var bd_access = pte_projet(projet_qgis).bd_access
     var destination = pte_projet(projet_qgis).destination
     var path_projet_qgis_projet = null
@@ -251,52 +251,63 @@ var resetProjet = function (projet_qgis) {
 
     pool.query('SELECT * from public.categorie where sql is not null', (err, response) => {
         pool.end()
-
-
         var query = response.rows
         var i = 0
         console.log(query.length, ' Couche à ajouter')
-        get_projet_qgis(projet_qgis, query[i].sous_thematiques, query[i].key_couche, function (response) {
-            if (response.error) {
-                res.send({
-                    'status': false,
-                    'message': "Impossible d'ajouter, projet QGIS introuvable"
+
+        var executeOgr2ogr = function (i) {
+            get_projet_qgis(projet_qgis, query[i].sous_thematiques, query[i].key_couche, function (response) {
+                if (response.error) {
+                    console.log(i, 'Impossible de trouver son projet ', query[i].sous_thematiques, query[i].key_couche)
+                    check_function(i)
+                } else {
+                    path_projet_qgis_projet = response.path_projet_qgis_projet
+                    var id_thematique_projet = response.id_thematique
+
+                    if (id_thematique == null || id_thematique == id_thematique_projet) {
+                        var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat + '.gpkg'
+                        addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
+                            .finally(() => {
+                            })
+                            .then((response_whrite_gpkg) => {
+                                console.log(i, "couche ajoutée", response_whrite_gpkg)
+                                i++
+                                if (query.length - 1 == i) {
+                                    console.log('reset du projet terminé')
+                                    process.exit()
+                                } else {
+                                    check_function(i)
+                                }
+
+                            })
+                    } else {
+                        console.log(i, ' sur pas à ajouter ', query.length, nom_shp)
+                        check_function(i)
+                    }
+                }
+            })
+        }
+
+        if (query.length > 0) {
+            executeOgr2ogr(i)
+        } else {
+            console.log('finish')
+        }
+        var compteur = []
+        var check_function = function (a) {
+            compteur.push(a)
+            if (compteur.length == query.length) {
+                reload_projet_qgis(projet_qgis, function (results) {
+                    console.log(results, 'Reset terminé')
+                    process.exit()
                 })
             } else {
-                path_projet_qgis_projet = response.path_projet_qgis_projet
-                try {
-                    fs.unlinkSync(path_projet_qgis_projet);
-                } catch (error) {
-
-                }
-
-                var addLayer = function (i) {
-                    var nom_shp = query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query[i].sous_thematiques + '_' + query[i].key_couche + '_' + query[i].id_cat + '.gpkg'
-
-                    addGpkgLayerToProjet(path_projet_qgis_projet, destination + nom_shp, query[i].nom_cat.replace(/[^a-zA-Z0-9]/g, '_'))
-                        .finally(() => {
-                        })
-                        .then((response_whrite_gpkg) => {
-                            console.log(i, "couche ajoutée", response_whrite_gpkg)
-                            i++
-                            if (query.length - 1 == i) {
-                                console.log('reset du projet terminé')
-                                process.exit()
-                            } else {
-                                addLayer(i)
-                            }
-
-                        })
-                }
-
-                if (query.length > 0) {
-                    addLayer(i)
-                }
+                executeOgr2ogr(compteur.length)
             }
-        })
+
+        }
 
     })
-
 
 }
 
@@ -631,6 +642,7 @@ module.exports = {
     generateAllShapeFromOsmBuilder: generateAllShapeFromOsmBuilder,
     addGpkgLayerToProjet: addGpkgLayerToProjet,
     resetProjet: resetProjet,
+    reload_all_qgis:reload_all_qgis,
     generateAllShapeFromOsmBuilderCreate: generateAllShapeFromOsmBuilderCreate,
     generateOneShapeFromOsmBuilder: generateOneShapeFromOsmBuilder,
 };
