@@ -61,16 +61,7 @@ $ ./create_project.sh
 
 ```
 
-##### 3. Créer les couches avec leurs styles par defaut :
-
-```sh
-    # generer toutes les couches #
-$ docker exec -ti geosm_carto npm run initialiser_projet --projet=<name of database of project>
-    # Appliquer les styles par défaut à toutes les couches #
-$ docker exec -ti geosm_carto npm run apply_style_projet --projet=<name of database of project>
-```
-
-##### 4. Configurer docker pour l'administration et le portail public
+##### 3. Configurer docker pour l'administration et le portail public
 
 
 ###### Editer le fichier environment.ts et color.scss
@@ -91,6 +82,16 @@ Dans le dossier <path_projet>/docker/client/environments/ <path_projet> du new_p
 
 - Editer le fichier color.scss avec la meme coucleur que celle mise à primaryColor
 
+###### Pour le thème Ville,Editer le fichier .env
+NB : Si vous faite le thème classique (pays), vous pouvez passer cette étape
+
+Dans le dossier <path_projet>/docker/public/ <path_projet> du new_project_config.json de l'étape 1:
+- Editer le fichier .env
+
+| variable | valeur attendue |
+| ------ | ------ |
+| intersection | true |
+
 ###### Editer le fichier docker-compose.yml
 Dans le dossier <path_projet>/
 
@@ -101,9 +102,11 @@ Modifier les valeurs:
 - container_name: geosm_<nom_pays>
 Editer les ports:
 - 8060 -> Pour l'administration
-- 8070 -> Pour le portail 
+- 8070 -> Pour le portail
+
 Seulement pour le thème ville:
--image: geosm_ville
+- image: geosm_ville
+
 
 ###### construire l'image docker
 
@@ -112,6 +115,14 @@ $ chmod -R 777 <path_projet>/docker
 $ cd <path_projet>/docker
 $ docker-compose up -d
 $ docker  exec -i -t ""container_name""   /var/www/boot.sh
+```
+##### 4. Créer les couches avec leurs styles par defaut :
+
+```sh
+    # generer toutes les couches #
+$ docker exec -ti geosm_carto npm run initialiser_projet --projet=<name of database of project>
+    # Appliquer les styles par défaut à toutes les couches #
+$ docker exec -ti geosm_carto npm run apply_style_projet --projet=<name of database of project>
 ```
 
 ## Pour mettre à jour la BD OSM
