@@ -74,7 +74,7 @@ var corsOptions = {
 app.use(express.static('/'));
 
 //toujours comme dernier des middleware
-app.use(timeout(900000));
+app.use(timeout(1800000));
 app.use(haltOnTimedout);
 
 function haltOnTimedout(req, res, next) {
@@ -90,7 +90,7 @@ app.get('/generateAllShapeFromOsmBuilder/:projet_qgis', cors(corsOptions), funct
 
 app.use('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', function (req, res, next) {
 	req.clearTimeout(); // clear request timeout
-	req.setTimeout(900000); //set a 20s timeout for this request
+	req.setTimeout(1800000); //set a 300s timeout for this request
 	next();
 })
 app.get('/generateShapeFromOsmBuilder/:projet_qgis/:id_cat/:addtowms', cors(corsOptions), function (req, res) {
