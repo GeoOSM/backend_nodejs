@@ -1,9 +1,10 @@
 Pour Debian 10 (Buster)
-Il manque QGIS server ici
 
 ```sh
 $ sudo apt-get install wget gdal-bin zip jq curl moreutils dos2unix
 ```
+# QGIS Server
+ Suivre : https://www.qgis.org/fr/site/forusers/alldownloads.html#debian-ubuntu
 
 # Node js 11
 ```sh

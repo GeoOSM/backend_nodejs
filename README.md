@@ -34,6 +34,12 @@ On appellera ce nom de domaine par la suite **www.backend_nodejs.geoosm**
 
 ❌  NB : les fichiers projet.json et config.js ne doivent jamais ètre supprimés de ce dossier, même lors d'une mise à jour du dépot !
 
+## Création des images DOCKER
+
+```
+$ cd docker_geosm
+$ docker build --no-cache  -t geosm .
+```
 ## Créer une instance geosm
 
 ##### 1. Editer le fichier backend_nodejs/new_project_config.json :
