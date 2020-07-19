@@ -149,3 +149,23 @@ $ chmod +x /var/www/geosm/<name of database of project>/up-to-date/update_osm_db
 $ cron tous les 5 jours à minuit : 0 0 */5 * *  /var/www/geosm/<name of database of project>/up-to-date/update_osm_db.sh > /var/www/geosm/france/up-to-date/keepup-cron-logs/keepup-cron.log 2>&1
 
 ```
+
+## Existing replication 
+
+* Cameroun ([GeoCameroun]( http://geoportail.geocameroun.cm/))
+* Itasy (Region in Madagascar)  ([geoitasy beta]( http://geoitasy.com))
+* France ([Data OSM](http://geosm.openstreetmap.fr/))
+
+## Thanks
+
+GEOSM is what it is because of some crazy people, company and free and open source projects. Let's name a few:
+* Karl TAYOU : Main developer
+* Willy Franck SOB : The energy he put through GeoCameroon which was the first GEOSM implementation. This helped to ameliorate the user interface and to the addition of some new awesome features
+ * Anas LAGHRISSI
+* Jean-Louis Zimmerman : For his implication which resulted in the definition of more than 300 layers
+* SOGEFI CAMEROUN ([Website](http://sogefi.cm)): firstly, for the initial code system of the administrative panel, and for the beautiful design of the frontend ( Aka les CAURI)
+* OpenStreetMap ([OSM](http://osm.org))
+* Openlayers ([Website](http://openlayers.com))
+* QGIS SERVER ([Website](https://docs.qgis.org/3.4/en/docs/training_manual/qgis_server/index.html))
+
+
