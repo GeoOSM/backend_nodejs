@@ -363,6 +363,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis, id_thematique)
     var bd_access = pte_projet(projet_qgis).bd_access
     var destination = pte_projet(projet_qgis).destination
     var path_projet_qgis_projet = null
+    var path_projet_qgis_projet_docker = null
     const pool = new Pool(bd_access)
 
     pool.query('SELECT * from public.categorie where sql is not null', (err, response) => {
@@ -382,6 +383,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis, id_thematique)
                     check_function(i)
                 } else {
                     path_projet_qgis_projet = response.path_projet_qgis_projet
+                    path_projet_qgis_projet_docker = response.path_projet_qgis_projet_docker
                     var id_thematique_projet = response.id_thematique
                     if (id_thematique == null || id_thematique == id_thematique_projet) {
 
@@ -402,7 +404,7 @@ var generateAllShapeFromOsmBuilderCreate = function (projet_qgis, id_thematique)
                                         if (response_whrite_gpkg) {
                                             var pool1 = new Pool(pte_projet(projet_qgis).bd_access)
 
-                                            var url = config.url_qgis_server + path_projet_qgis_projet
+                                            var url = config.url_qgis_server + path_projet_qgis_projet_docker
 
                                             if (query[i].sous_thematiques) {
                                                 var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + name_layer + '\' WHERE id =' + key_couche
@@ -467,6 +469,7 @@ var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms, cb
     var destination = pte_projet(projet_qgis).destination
     var bd_access = pte_projet(projet_qgis).bd_access
     var path_projet_qgis_projet = null
+    var path_projet_qgis_projet_docker = null
     const pool = new Pool(pte_projet(projet_qgis).bd_access)
 
     pool.query('SELECT * from public.categorie where id_cat = ' + id_cat, (err, response) => {
@@ -481,6 +484,7 @@ var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms, cb
                 })
             } else {
                 path_projet_qgis_projet = response.path_projet_qgis_projet
+                path_projet_qgis_projet_docker = response.path_projet_qgis_projet_docker
 
                 var type = "GPKG"
                 var nom_shp = query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '_' + query.sous_thematiques + '_' + query.key_couche + '_' + query.id_cat + '.gpkg'
@@ -507,7 +511,7 @@ var generateOneShapeFromOsmBuilder = function (projet_qgis, id_cat, addtowms, cb
                                         console.log("couche ajoutée", response_whrite_gpkg)
                                         const pool1 = new Pool(pte_projet(projet_qgis).bd_access)
 
-                                        var url = config.url_qgis_server + path_projet_qgis_projet
+                                        var url = config.url_qgis_server + path_projet_qgis_projet_docker
 
                                         if (query.sous_thematiques) {
                                             var query_update = 'UPDATE public."couche-sous-thematique" SET url= \' ' + url + '\', identifiant= \'' + query.nom_cat.replace(/[^a-zA-Z0-9]/g, '_') + '\' WHERE id =' + query.key_couche

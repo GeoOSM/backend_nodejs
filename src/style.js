@@ -89,7 +89,7 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
 
     const pool = new Pool(pte_projet(projet_qgis).bd_access)
 
-    return await new Promise(resolve => {
+    return await new Promise((resolve,reject) => {
         pool.query("SELECT identifiant,id_couche,geom,image_src, 'true' as sous_thematiques,id from public." + '"couche-sous-thematique"' + "where identifiant='" + identifiant + "' UNION SELECT identifiant,id_couche,geom,image_src, 'false' as sous_thematiques,id from public." + '"couche-thematique"' + "where identifiant='" + identifiant + "'", function (err, response) {
             pool.end()
 
@@ -101,7 +101,7 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
                     get_projet_qgis(projet_qgis, couche.sous_thematiques, couche.id, function (response) {
                         if (response.error) {
                             console.log("Impossible d'ajouter, projet QGIS introuvable")
-
+                           reject(response.error)
                         } else {
                             path_projet_qgis = response.path_projet_qgis_projet
 
@@ -115,8 +115,7 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
                                 'id_couche': id_couche,
                                 'destination': destination,
                             }
-                            console.log(pte)
-                            cluster_layer_point(pte, projet_qgis)
+                            return cluster_layer_point(pte, projet_qgis)
                                 .finally(() => {
 
                                 })
@@ -124,11 +123,15 @@ var update_style_couche_qgis = async function (projet_qgis, identifiant) {
                                     console.log('Clusterisation termine !')
                                     resolve(data)
                                 })
-                                .catch(console.error)
+                                .catch((error)=>{
+                                    reject(error)
+                                   
+                                }
+                                 
+                            )
 
                         }
                     })
-
                 }
             }
         })
