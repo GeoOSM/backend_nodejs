@@ -121,6 +121,12 @@ $ chmod -R 777 <path_projet>/docker
 $ cd <path_projet>/docker
 $ docker-compose up -d
 $ docker  exec -i -t ""container_name""   /var/www/boot.sh
+$ docker  exec -i -t ""container_name"" bash (entrer dans le container)
+$ cd GeoOSM_Backend/projet_laravel/
+$ php artisan createAllTablesOSM
+$ CTRL + D (sortir du container)
+$ cd /var/www/geosm/container_name/
+- supprimer tous les fichiers avec les extentions .qgs (un logiciel ftp comme fileZilla peut etre utilisé)
 ```
 ##### 4. Créer les couches avec leurs styles par defaut :
 
