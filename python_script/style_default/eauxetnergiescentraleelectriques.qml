@@ -1,21 +1,21 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis styleCategories="AllStyleCategories" minScale="100000000" version="3.14.1-Pi" simplifyLocal="1" simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="0" labelsEnabled="0" simplifyAlgorithm="0" maxScale="0" simplifyMaxScale="1" readOnly="0" simplifyDrawingHints="0">
+<qgis version="3.14.1-Pi" styleCategories="AllStyleCategories" minScale="100000000" simplifyLocal="1" simplifyDrawingHints="0" readOnly="0" simplifyAlgorithm="0" labelsEnabled="0" simplifyMaxScale="1" maxScale="0" simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <temporal accumulate="0" durationUnit="min" durationField="" startField="" endExpression="" mode="0" endField="" fixedDuration="0" startExpression="" enabled="0">
+  <temporal enabled="0" endExpression="" fixedDuration="0" startExpression="" durationUnit="min" accumulate="0" mode="0" startField="" endField="" durationField="">
     <fixedRange>
       <start></start>
       <end></end>
     </fixedRange>
   </temporal>
-  <renderer-v2 type="pointCluster" forceraster="0" enableorderby="0" tolerance="20" toleranceUnit="MM" toleranceUnitScale="3x:0,0,0,0,0,0">
-    <renderer-v2 type="singleSymbol" symbollevels="0" forceraster="0" enableorderby="0">
+  <renderer-v2 tolerance="20" type="pointCluster" toleranceUnit="MM" enableorderby="0" forceraster="0" toleranceUnitScale="3x:0,0,0,0,0,0">
+    <renderer-v2 symbollevels="0" type="singleSymbol" enableorderby="0" forceraster="0">
       <symbols>
-        <symbol name="0" type="marker" alpha="1" force_rhr="0" clip_to_extent="1">
-          <layer locked="0" class="SvgMarker" pass="0" enabled="1">
+        <symbol clip_to_extent="1" name="0" type="marker" alpha="1" force_rhr="0">
+          <layer enabled="1" pass="0" locked="0" class="SvgMarker">
             <prop v="0" k="angle"/>
             <prop v="231,113,72,255" k="color"/>
             <prop v="0" k="fixedAspectRatio"/>
@@ -46,8 +46,8 @@
       <rotation/>
       <sizescale/>
     </renderer-v2>
-    <symbol name="centerSymbol" type="marker" alpha="1" force_rhr="0" clip_to_extent="1">
-      <layer locked="0" class="SvgMarker" pass="0" enabled="1">
+    <symbol clip_to_extent="1" name="centerSymbol" type="marker" alpha="1" force_rhr="0">
+      <layer enabled="1" pass="0" locked="0" class="SvgMarker">
         <prop v="0" k="angle"/>
         <prop v="245,75,80,255" k="color"/>
         <prop v="0" k="fixedAspectRatio"/>
@@ -73,7 +73,7 @@
           </Option>
         </data_defined_properties>
       </layer>
-      <layer locked="0" class="SimpleMarker" pass="0" enabled="1">
+      <layer enabled="1" pass="0" locked="0" class="SimpleMarker">
         <prop v="0" k="angle"/>
         <prop v="33,150,243,255" k="color"/>
         <prop v="1" k="horizontal_anchor_point"/>
@@ -100,7 +100,7 @@
           </Option>
         </data_defined_properties>
       </layer>
-      <layer locked="0" class="FontMarker" pass="0" enabled="1">
+      <layer enabled="1" pass="0" locked="0" class="FontMarker">
         <prop v="0" k="angle"/>
         <prop v="A" k="chr"/>
         <prop v="255,255,254,255" k="color"/>
@@ -136,8 +136,8 @@
     </symbol>
   </renderer-v2>
   <customproperties>
-    <property value="fid" key="dualview/previewExpressions"/>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="dualview/previewExpressions" value="fid"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -145,12 +145,12 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory penWidth="0" lineSizeType="MM" scaleBasedVisibility="0" rotationOffset="270" direction="1" sizeType="MM" backgroundAlpha="255" labelPlacementMethod="XHeight" showAxis="0" width="15" sizeScale="3x:0,0,0,0,0,0" maxScaleDenominator="1e+08" penColor="#000000" opacity="1" minScaleDenominator="0" penAlpha="255" enabled="0" minimumSize="0" spacing="0" spacingUnitScale="3x:0,0,0,0,0,0" barWidth="5" lineSizeScale="3x:0,0,0,0,0,0" diagramOrientation="Up" backgroundColor="#ffffff" spacingUnit="MM" height="15" scaleDependency="Area">
+    <DiagramCategory spacing="0" lineSizeType="MM" diagramOrientation="Up" penColor="#000000" spacingUnitScale="3x:0,0,0,0,0,0" backgroundAlpha="255" penAlpha="255" maxScaleDenominator="1e+08" enabled="0" width="15" sizeScale="3x:0,0,0,0,0,0" direction="1" minScaleDenominator="0" lineSizeScale="3x:0,0,0,0,0,0" scaleDependency="Area" barWidth="5" backgroundColor="#ffffff" minimumSize="0" spacingUnit="MM" sizeType="MM" rotationOffset="270" opacity="1" labelPlacementMethod="XHeight" scaleBasedVisibility="0" height="15" penWidth="0" showAxis="0">
       <fontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute color="#000000" label="" field=""/>
+      <attribute label="" color="#000000" field=""/>
       <axisSymbol>
-        <symbol name="" type="line" alpha="1" force_rhr="0" clip_to_extent="1">
-          <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+        <symbol clip_to_extent="1" name="" type="line" alpha="1" force_rhr="0">
+          <layer enabled="1" pass="0" locked="0" class="SimpleLine">
             <prop v="square" k="capstyle"/>
             <prop v="5;2" k="customdash"/>
             <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
@@ -179,7 +179,7 @@
       </axisSymbol>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings linePlacementFlags="18" placement="0" priority="0" zIndex="0" obstacle="0" showAll="1" dist="0">
+  <DiagramLayerSettings showAll="1" zIndex="0" priority="0" obstacle="0" placement="0" dist="0" linePlacementFlags="18">
     <properties>
       <Option type="Map">
         <Option name="name" type="QString" value=""/>
@@ -188,7 +188,7 @@
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -232,47 +232,47 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" index="0" field="fid"/>
-    <alias name="" index="1" field="osm_id"/>
-    <alias name="" index="2" field="name"/>
-    <alias name="" index="3" field="amenity"/>
-    <alias name="" index="4" field="hstore_to_json"/>
+    <alias name="" field="fid" index="0"/>
+    <alias name="" field="osm_id" index="1"/>
+    <alias name="" field="name" index="2"/>
+    <alias name="" field="amenity" index="3"/>
+    <alias name="" field="hstore_to_json" index="4"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" field="fid" applyOnUpdate="0"/>
-    <default expression="" field="osm_id" applyOnUpdate="0"/>
-    <default expression="" field="name" applyOnUpdate="0"/>
-    <default expression="" field="amenity" applyOnUpdate="0"/>
-    <default expression="" field="hstore_to_json" applyOnUpdate="0"/>
+    <default applyOnUpdate="0" field="fid" expression=""/>
+    <default applyOnUpdate="0" field="osm_id" expression=""/>
+    <default applyOnUpdate="0" field="name" expression=""/>
+    <default applyOnUpdate="0" field="amenity" expression=""/>
+    <default applyOnUpdate="0" field="hstore_to_json" expression=""/>
   </defaults>
   <constraints>
-    <constraint unique_strength="1" notnull_strength="1" constraints="3" exp_strength="0" field="fid"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="osm_id"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="name"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="amenity"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" exp_strength="0" field="hstore_to_json"/>
+    <constraint constraints="3" notnull_strength="1" field="fid" exp_strength="0" unique_strength="1"/>
+    <constraint constraints="0" notnull_strength="0" field="osm_id" exp_strength="0" unique_strength="0"/>
+    <constraint constraints="0" notnull_strength="0" field="name" exp_strength="0" unique_strength="0"/>
+    <constraint constraints="0" notnull_strength="0" field="amenity" exp_strength="0" unique_strength="0"/>
+    <constraint constraints="0" notnull_strength="0" field="hstore_to_json" exp_strength="0" unique_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="fid" desc="" exp=""/>
-    <constraint field="osm_id" desc="" exp=""/>
-    <constraint field="name" desc="" exp=""/>
-    <constraint field="amenity" desc="" exp=""/>
-    <constraint field="hstore_to_json" desc="" exp=""/>
+    <constraint exp="" field="fid" desc=""/>
+    <constraint exp="" field="osm_id" desc=""/>
+    <constraint exp="" field="name" desc=""/>
+    <constraint exp="" field="amenity" desc=""/>
+    <constraint exp="" field="hstore_to_json" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
     <columns>
-      <column name="fid" type="field" hidden="0" width="-1"/>
-      <column name="osm_id" type="field" hidden="0" width="-1"/>
-      <column name="name" type="field" hidden="0" width="-1"/>
-      <column name="amenity" type="field" hidden="0" width="-1"/>
-      <column name="hstore_to_json" type="field" hidden="0" width="-1"/>
-      <column type="actions" hidden="1" width="-1"/>
+      <column name="fid" type="field" width="-1" hidden="0"/>
+      <column name="osm_id" type="field" width="-1" hidden="0"/>
+      <column name="name" type="field" width="-1" hidden="0"/>
+      <column name="amenity" type="field" width="-1" hidden="0"/>
+      <column name="hstore_to_json" type="field" width="-1" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>

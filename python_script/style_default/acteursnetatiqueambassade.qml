@@ -1,21 +1,21 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis maxScale="0" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyDrawingHints="0" simplifyAlgorithm="0" version="3.14.1-Pi" simplifyLocal="1" labelsEnabled="0" simplifyDrawingTol="1" minScale="100000000" styleCategories="AllStyleCategories" readOnly="0">
+<qgis minScale="100000000" styleCategories="AllStyleCategories" simplifyDrawingHints="0" simplifyAlgorithm="0" simplifyDrawingTol="1" simplifyMaxScale="1" simplifyLocal="1" maxScale="0" readOnly="0" version="3.14.1-Pi" hasScaleBasedVisibilityFlag="0" labelsEnabled="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <temporal durationUnit="min" fixedDuration="0" startExpression="" enabled="0" mode="0" startField="" endField="" durationField="" accumulate="0" endExpression="">
+  <temporal durationUnit="min" fixedDuration="0" durationField="" enabled="0" endExpression="" accumulate="0" startExpression="" startField="" mode="0" endField="">
     <fixedRange>
       <start></start>
       <end></end>
     </fixedRange>
   </temporal>
-  <renderer-v2 enableorderby="0" toleranceUnit="MM" toleranceUnitScale="3x:0,0,0,0,0,0" forceraster="0" type="pointCluster" tolerance="20">
-    <renderer-v2 enableorderby="0" forceraster="0" type="singleSymbol" symbollevels="0">
+  <renderer-v2 enableorderby="0" type="pointCluster" tolerance="20" toleranceUnit="MM" forceraster="0" toleranceUnitScale="3x:0,0,0,0,0,0">
+    <renderer-v2 enableorderby="0" type="singleSymbol" symbollevels="0" forceraster="0">
       <symbols>
-        <symbol alpha="1" type="marker" clip_to_extent="1" force_rhr="0" name="0">
-          <layer pass="0" locked="0" class="SvgMarker" enabled="1">
+        <symbol name="0" alpha="1" type="marker" force_rhr="0" clip_to_extent="1">
+          <layer enabled="1" locked="0" pass="0" class="SvgMarker">
             <prop v="0" k="angle"/>
             <prop v="231,113,72,255" k="color"/>
             <prop v="0" k="fixedAspectRatio"/>
@@ -35,9 +35,9 @@
             <prop v="1" k="vertical_anchor_point"/>
             <data_defined_properties>
               <Option type="Map">
-                <Option type="QString" name="name" value=""/>
+                <Option name="name" type="QString" value=""/>
                 <Option name="properties"/>
-                <Option type="QString" name="type" value="collection"/>
+                <Option name="type" type="QString" value="collection"/>
               </Option>
             </data_defined_properties>
           </layer>
@@ -46,8 +46,8 @@
       <rotation/>
       <sizescale/>
     </renderer-v2>
-    <symbol alpha="1" type="marker" clip_to_extent="1" force_rhr="0" name="centerSymbol">
-      <layer pass="0" locked="0" class="SvgMarker" enabled="1">
+    <symbol name="centerSymbol" alpha="1" type="marker" force_rhr="0" clip_to_extent="1">
+      <layer enabled="1" locked="0" pass="0" class="SvgMarker">
         <prop v="0" k="angle"/>
         <prop v="245,75,80,255" k="color"/>
         <prop v="0" k="fixedAspectRatio"/>
@@ -67,13 +67,13 @@
         <prop v="1" k="vertical_anchor_point"/>
         <data_defined_properties>
           <Option type="Map">
-            <Option type="QString" name="name" value=""/>
+            <Option name="name" type="QString" value=""/>
             <Option name="properties"/>
-            <Option type="QString" name="type" value="collection"/>
+            <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
-      <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
+      <layer enabled="1" locked="0" pass="0" class="SimpleMarker">
         <prop v="0" k="angle"/>
         <prop v="33,150,243,255" k="color"/>
         <prop v="1" k="horizontal_anchor_point"/>
@@ -94,13 +94,13 @@
         <prop v="1" k="vertical_anchor_point"/>
         <data_defined_properties>
           <Option type="Map">
-            <Option type="QString" name="name" value=""/>
+            <Option name="name" type="QString" value=""/>
             <Option name="properties"/>
-            <Option type="QString" name="type" value="collection"/>
+            <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
-      <layer pass="0" locked="0" class="FontMarker" enabled="1">
+      <layer enabled="1" locked="0" pass="0" class="FontMarker">
         <prop v="0" k="angle"/>
         <prop v="A" k="chr"/>
         <prop v="255,255,254,255" k="color"/>
@@ -121,15 +121,15 @@
         <prop v="1" k="vertical_anchor_point"/>
         <data_defined_properties>
           <Option type="Map">
-            <Option type="QString" name="name" value=""/>
-            <Option type="Map" name="properties">
-              <Option type="Map" name="char">
-                <Option type="bool" name="active" value="true"/>
-                <Option type="QString" name="expression" value="@cluster_size"/>
-                <Option type="int" name="type" value="3"/>
+            <Option name="name" type="QString" value=""/>
+            <Option name="properties" type="Map">
+              <Option name="char" type="Map">
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="@cluster_size"/>
+                <Option name="type" type="int" value="3"/>
               </Option>
             </Option>
-            <Option type="QString" name="type" value="collection"/>
+            <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
@@ -145,12 +145,12 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory lineSizeType="MM" opacity="1" penWidth="0" backgroundColor="#ffffff" scaleBasedVisibility="0" spacing="0" penAlpha="255" minScaleDenominator="0" scaleDependency="Area" direction="1" maxScaleDenominator="1e+08" sizeType="MM" spacingUnitScale="3x:0,0,0,0,0,0" penColor="#000000" height="15" width="15" barWidth="5" lineSizeScale="3x:0,0,0,0,0,0" spacingUnit="MM" rotationOffset="270" showAxis="0" backgroundAlpha="255" minimumSize="0" diagramOrientation="Up" sizeScale="3x:0,0,0,0,0,0" labelPlacementMethod="XHeight" enabled="0">
+    <DiagramCategory minScaleDenominator="0" minimumSize="0" backgroundAlpha="255" diagramOrientation="Up" lineSizeType="MM" sizeType="MM" opacity="1" spacing="0" penAlpha="255" barWidth="5" direction="1" backgroundColor="#ffffff" maxScaleDenominator="1e+08" penColor="#000000" enabled="0" scaleDependency="Area" showAxis="0" height="15" spacingUnit="MM" spacingUnitScale="3x:0,0,0,0,0,0" width="15" scaleBasedVisibility="0" lineSizeScale="3x:0,0,0,0,0,0" penWidth="0" sizeScale="3x:0,0,0,0,0,0" rotationOffset="270" labelPlacementMethod="XHeight">
       <fontProperties style="" description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0"/>
-      <attribute field="" color="#000000" label=""/>
+      <attribute label="" color="#000000" field=""/>
       <axisSymbol>
-        <symbol alpha="1" type="line" clip_to_extent="1" force_rhr="0" name="">
-          <layer pass="0" locked="0" class="SimpleLine" enabled="1">
+        <symbol name="" alpha="1" type="line" force_rhr="0" clip_to_extent="1">
+          <layer enabled="1" locked="0" pass="0" class="SimpleLine">
             <prop v="square" k="capstyle"/>
             <prop v="5;2" k="customdash"/>
             <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
@@ -169,9 +169,9 @@
             <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
             <data_defined_properties>
               <Option type="Map">
-                <Option type="QString" name="name" value=""/>
+                <Option name="name" type="QString" value=""/>
                 <Option name="properties"/>
-                <Option type="QString" name="type" value="collection"/>
+                <Option name="type" type="QString" value="collection"/>
               </Option>
             </data_defined_properties>
           </layer>
@@ -179,12 +179,12 @@
       </axisSymbol>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings priority="0" obstacle="0" showAll="1" zIndex="0" linePlacementFlags="18" placement="0" dist="0">
+  <DiagramLayerSettings linePlacementFlags="18" placement="0" obstacle="0" dist="0" showAll="1" priority="0" zIndex="0">
     <properties>
       <Option type="Map">
-        <Option type="QString" name="name" value=""/>
+        <Option name="name" type="QString" value=""/>
         <Option name="properties"/>
-        <Option type="QString" name="type" value="collection"/>
+        <Option name="type" type="QString" value="collection"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -232,46 +232,46 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="fid" index="0" name=""/>
-    <alias field="osm_id" index="1" name=""/>
-    <alias field="name" index="2" name=""/>
-    <alias field="amenity" index="3" name=""/>
-    <alias field="hstore_to_json" index="4" name=""/>
+    <alias name="" field="fid" index="0"/>
+    <alias name="" field="osm_id" index="1"/>
+    <alias name="" field="name" index="2"/>
+    <alias name="" field="amenity" index="3"/>
+    <alias name="" field="hstore_to_json" index="4"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="fid" expression=""/>
-    <default applyOnUpdate="0" field="osm_id" expression=""/>
-    <default applyOnUpdate="0" field="name" expression=""/>
-    <default applyOnUpdate="0" field="amenity" expression=""/>
-    <default applyOnUpdate="0" field="hstore_to_json" expression=""/>
+    <default expression="" applyOnUpdate="0" field="fid"/>
+    <default expression="" applyOnUpdate="0" field="osm_id"/>
+    <default expression="" applyOnUpdate="0" field="name"/>
+    <default expression="" applyOnUpdate="0" field="amenity"/>
+    <default expression="" applyOnUpdate="0" field="hstore_to_json"/>
   </defaults>
   <constraints>
-    <constraint field="fid" exp_strength="0" notnull_strength="1" unique_strength="1" constraints="3"/>
-    <constraint field="osm_id" exp_strength="0" notnull_strength="0" unique_strength="0" constraints="0"/>
-    <constraint field="name" exp_strength="0" notnull_strength="0" unique_strength="0" constraints="0"/>
-    <constraint field="amenity" exp_strength="0" notnull_strength="0" unique_strength="0" constraints="0"/>
-    <constraint field="hstore_to_json" exp_strength="0" notnull_strength="0" unique_strength="0" constraints="0"/>
+    <constraint unique_strength="1" notnull_strength="1" exp_strength="0" constraints="3" field="fid"/>
+    <constraint unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0" field="osm_id"/>
+    <constraint unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0" field="name"/>
+    <constraint unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0" field="amenity"/>
+    <constraint unique_strength="0" notnull_strength="0" exp_strength="0" constraints="0" field="hstore_to_json"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="fid" exp="" desc=""/>
-    <constraint field="osm_id" exp="" desc=""/>
-    <constraint field="name" exp="" desc=""/>
-    <constraint field="amenity" exp="" desc=""/>
-    <constraint field="hstore_to_json" exp="" desc=""/>
+    <constraint desc="" field="fid" exp=""/>
+    <constraint desc="" field="osm_id" exp=""/>
+    <constraint desc="" field="name" exp=""/>
+    <constraint desc="" field="amenity" exp=""/>
+    <constraint desc="" field="hstore_to_json" exp=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig actionWidgetStyle="dropDown" sortOrder="0" sortExpression="">
+  <attributetableconfig sortOrder="0" sortExpression="" actionWidgetStyle="dropDown">
     <columns>
-      <column hidden="0" width="-1" type="field" name="fid"/>
-      <column hidden="0" width="-1" type="field" name="osm_id"/>
-      <column hidden="0" width="-1" type="field" name="name"/>
-      <column hidden="0" width="-1" type="field" name="amenity"/>
-      <column hidden="0" width="-1" type="field" name="hstore_to_json"/>
+      <column hidden="0" name="fid" width="-1" type="field"/>
+      <column hidden="0" name="osm_id" width="-1" type="field"/>
+      <column hidden="0" name="name" width="-1" type="field"/>
+      <column hidden="0" name="amenity" width="-1" type="field"/>
+      <column hidden="0" name="hstore_to_json" width="-1" type="field"/>
       <column hidden="1" width="-1" type="actions"/>
     </columns>
   </attributetableconfig>
@@ -311,11 +311,11 @@ def my_form_open(dialog, layer, feature):
     <field name="osm_id" editable="1"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="amenity"/>
-    <field labelOnTop="0" name="fid"/>
-    <field labelOnTop="0" name="hstore_to_json"/>
-    <field labelOnTop="0" name="name"/>
-    <field labelOnTop="0" name="osm_id"/>
+    <field name="amenity" labelOnTop="0"/>
+    <field name="fid" labelOnTop="0"/>
+    <field name="hstore_to_json" labelOnTop="0"/>
+    <field name="name" labelOnTop="0"/>
+    <field name="osm_id" labelOnTop="0"/>
   </labelOnTop>
   <dataDefinedFieldProperties/>
   <widgets/>

@@ -24,7 +24,7 @@ Editer le fichier config.js
 | variable | valeur attendue |
 | ------ | ------ |
 | path_style_qml | empty path where we will store temporarely style files  |
-| url_qgis_server | url de votre QGIS server sous la forme : http://xxx.xxx.xxx/cgi-bin/qgis_mapserv.fcgi?map= |
+| url_qgis_server | url de votre QGIS server sous la forme : http://xxx.xxx.xxx/ows/?map= |
 | url_node_js | url que vous donnerez à ce projet dans la partie 3 ci dessous (**www.backend_nodejs.geoosm**)|
 
 Le projet Node JS est prèt sur le port 8080 ! 

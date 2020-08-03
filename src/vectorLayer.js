@@ -170,8 +170,8 @@ var getTableOfLayer = function (projet_qgis, id_couche, cb) {
             var pool_ct = new Pool(bd_access)
             pool_ct.query('SELECT ct.id_couche,t.shema from public."couche-thematique" as ct, public.thematique as t where ct.id=' + id_couche + ' and t.id=ct."id-thematique"', (err, response) => {
                 pool_ct.end()
-                var response = response.rows
-                if (response.length > 0) {
+                var query = response.rows
+                if (query.length > 0) {
                     var table = query[0]['id_couche']
                     var shema = query[0]['shema']
                     if (shema) {
