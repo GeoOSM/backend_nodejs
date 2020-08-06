@@ -177,7 +177,7 @@ var getTableOfLayer = function (projet_qgis, id_couche, cb) {
                     if (shema) {
                         cb({
                             table: table,
-                            shema: table
+                            shema: shema
                         })
                     } else {
                         cb(false)
