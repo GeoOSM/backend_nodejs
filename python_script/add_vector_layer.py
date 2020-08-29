@@ -46,6 +46,10 @@ def run():
     # layer.setCustomProperty("labeling/placement", "2")
 
     project.addMapLayer(layer)
+    
+    addGeometry = project.readEntry('WMSAddWktGeometry',None)
+    if list(addGeometry)[0] is not None:
+        project.writeEntry('WMSAddWktGeometry','','true')
 
     WFSLayers = project.readListEntry('WFSLayers','')
     b = list(WFSLayers)[0]
