@@ -8,13 +8,13 @@ $ sudo apt-get install wget gdal-bin zip jq curl moreutils dos2unix
 On utilise le docker de 3liz/py-qgis-server :https://github.com/3liz/py-qgis-server/tree/master/docker
 
 ```sh
-$ docker run -p 8080:8080 \
+$ docker run -d -p 5050:8080 \
        -v /path/to/qgis/projects:/projects \
-       -e QGSRV_SERVER_WORKERS=2 \
+       -e QGSRV_SERVER_WORKERS=5 \
        -e QGSRV_LOGGING_LEVEL=DEBUG  \
        -e QGSRV_CACHE_ROOTDIR=/projects \
-       -e QGSRV_CACHE_SIZE=10 \
-       3liz/qgis-map-server
+       -e QGSRV_CACHE_SIZE=10500 \
+       3liz/qgis-map-server:3.10
 ```
 
 # Node js 11
