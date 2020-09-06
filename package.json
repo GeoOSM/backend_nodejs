@@ -12,6 +12,7 @@
     "reload_all_qgis": "node -e 'require(\"./server\").reload_all_qgis(process.env.npm_config_projet)'",
     "generate_all_tags": "node -e 'require(\"./server\").generateAllTags(process.env.npm_config_projet)'",
     "getMostOccurenceTags": "node -e 'require(\"./server\").getMostOccurenceTags(process.env.npm_config_projet)'",
+    "saveAllStyleQmlOfProject": "node -e 'require(\"./server\").saveAllStyleQmlOfProject(process.env.npm_config_projet)'",
     "start": "node server.js"
   },
   "author": "Karl TAYOU",

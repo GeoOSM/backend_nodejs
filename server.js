@@ -43,7 +43,8 @@ const{
 	update_style_couche_qgis,
 	set_style_qml,
 	setStyleAllShapeFromOsmBuilderCreate,
-	saveAndDownloadStyleQgis
+	saveAndDownloadStyleQgis,
+	saveAllStyleQmlOfProject
 }=require('./src/style')
 
 const{
@@ -192,6 +193,14 @@ module.exports.initialiser_projet = function (projet,id_thematique=null) {
 module.exports.apply_style_projet = function (projet,id_thematique=null) {
 	console.log('projet :', projet,id_thematique);
 	setStyleAllShapeFromOsmBuilderCreate(projet,id_thematique)
+}
+
+/**
+ * Save all style of geosm project in QML files
+ * @param {string} projet 
+ */
+module.exports.saveAllStyleQmlOfProject = function(projet){
+	saveAllStyleQmlOfProject(projet)
 }
 
 module.exports.generateAllTags = function (projet) {
