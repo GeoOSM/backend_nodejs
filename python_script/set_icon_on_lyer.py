@@ -57,7 +57,7 @@ def set_icons(img_svg):
         # tous les symbols pour le cluster contenu dans la symbologie
         symbols = symbol_layer.clusterSymbol().symbolLayers()
         try:
-            symbol_layer.symbols(QgsRenderContext())[0].setSize(70)
+            symbol_layer.symbols(QgsRenderContext())[0].symbolLayers()[0].setPath(pathSvg)
         except :
             pass
 
@@ -65,14 +65,14 @@ def set_icons(img_svg):
         for symbol in symbols:
             if  type(symbol) is QgsSvgMarkerSymbolLayer:
                 # print(symbol.path(),'yess')
-                symbol.setSize(70)
+                # symbol.setSize(70)
                 symbol.setPath(img_svg_encoded)
-            if  type(symbol) is QgsSimpleMarkerSymbolLayer:
+            # if  type(symbol) is QgsSimpleMarkerSymbolLayer:
                 # print(symbol.properties(),'yess')
-                symbol.setSize(45)
-                symbol.setColor(QColor.fromRgb(3,63,94))
-            if type(symbol) is QgsFontMarkerSymbolLayer:
-                symbol.setSize(19)
+                # symbol.setSize(45)
+                # symbol.setColor(QColor.fromRgb(3,63,94))
+            # if type(symbol) is QgsFontMarkerSymbolLayer:
+                # symbol.setSize(19)
             #,symbol_layer.symbols(QgsRenderContext())[0].symbolLayer(0).properties(),
 
         print('ok',project.write())
