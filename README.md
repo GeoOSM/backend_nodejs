@@ -133,7 +133,7 @@ $ docker exec -ti geosm_carto npm run apply_style_projet --projet=<name of datab
 
 ## Pour mettre à jour la BD OSM
 ```sh
-# mettre à jour la BD (https://github.com/Magellium/magOSM/tree/master/database)
+# mettre à jour la BD (https://github.com/Magellium/magosm_db)
 
 $ osmosis --read-replication-interval-init workingDirectory=/var/www/geosm/<name of database of project>/up-to-date
 $ osmium fileinfo -e --progress -v /var/www/backend_nodejs/osm.pbf
